@@ -16,5 +16,8 @@ module.exports = {
   ],
   // add your custom rules here
   rules: {
+  },
+  settings: {
+    'import/core-modules': ['vue', 'vuex'] // these modules are included in nuxt.js
   }
 }
