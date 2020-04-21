@@ -40,9 +40,10 @@ export default {
   /*
    ** Nuxt.js dev-modules
    */
-  // env: {
-  //   baseUrl: process.env.BASE_URL || 'http://localhost:3000'
-  // },
+  env: {
+    API_PROTOCOL: process.env.API_PROTOCOL,
+    API_BASE: process.env.API_BASE
+  },
   buildModules: [
     '@nuxt/typescript-build',
     // Doc: https://github.com/nuxt-community/stylelint-module
