@@ -1,5 +1,7 @@
 import colors from 'vuetify/es5/util/colors'
 
+require('dotenv').config()
+
 export default {
   mode: 'spa',
   /*
@@ -10,15 +12,15 @@ export default {
     htmlAttrs: {
       lang: 'pt-br'
     },
-    titleTemplate: '%s - ' + process.env.npm_package_name,
-    title: process.env.npm_package_name || '',
+    titleTemplate: '%s - ' + 'ConTTudOweb',
+    title: 'Início',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       {
         hid: 'description',
         name: 'description',
-        content: process.env.npm_package_description || ''
+        content: 'ConTTudOweb - Soluções em Tecnologia'
       }
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
@@ -34,10 +36,13 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [],
+  plugins: ['~/plugins/tenant', '~/plugins/axios'],
   /*
    ** Nuxt.js dev-modules
    */
+  // env: {
+  //   baseUrl: process.env.BASE_URL || 'http://localhost:3000'
+  // },
   buildModules: [
     '@nuxt/typescript-build',
     // Doc: https://github.com/nuxt-community/stylelint-module
@@ -48,17 +53,77 @@ export default {
    ** Nuxt.js modules
    */
   modules: [
+    '@nuxtjs/toast',
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
     // Doc: https://github.com/nuxt-community/dotenv-module
-    '@nuxtjs/dotenv'
+    '@nuxtjs/dotenv',
+    '@nuxtjs/auth'
   ],
+  toast: {
+    position: 'top-right',
+    duration: 5000,
+    keepOnHover: true,
+    theme: 'bubble',
+    register: [
+      // Register custom toasts
+      {
+        name: 'my-error',
+        message: 'Oops...Something went wrong',
+        options: {
+          type: 'error'
+        }
+      },
+      {
+        name: 'my-success',
+        message: (payload) => {
+          // if there is no message passed show default message
+          if (!payload.message) {
+            return 'Uhull...OK!'
+          }
+
+          // if there is a message show it with the message
+          return payload.message
+        },
+        options: {
+          type: 'success'
+        }
+      }
+    ]
+  },
+  auth: {
+    strategies: {
+      local: {
+        endpoints: {
+          login: {
+            url: '/rest-auth/login/',
+            method: 'post',
+            propertyName: 'key'
+          },
+          logout: { url: '/rest-auth/logout/', method: 'post' },
+          user: { url: '/rest-auth/user/', method: 'get', propertyName: false }
+        },
+        tokenType: 'Token'
+      }
+    },
+    watchLoggedIn: true,
+    redirect: {
+      login: '/login',
+      logout: '/dashboard',
+      callback: '/login',
+      home: '/dashboard'
+    },
+    localStorage: false,
+    cookie: false
+  },
   /*
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
    */
-  axios: {},
+  axios: {
+    debug: process.env.NUXT_ENV_AXIOS_DEBUG || false
+  },
   /*
    ** vuetify module configuration
    ** https://github.com/nuxt-community/vuetify-module
@@ -80,6 +145,9 @@ export default {
       }
     }
   },
+  router: {
+    middleware: ['auth']
+  },
   /*
    ** Build configuration
    */
@@ -87,6 +155,6 @@ export default {
     /*
      ** You can extend webpack config here
      */
-    // extend(config, ctx) {}
+    extend(config, ctx) {}
   }
 }

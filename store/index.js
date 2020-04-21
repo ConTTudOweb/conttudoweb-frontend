@@ -1,9 +1,9 @@
 export const state = () => ({
-  drawer: true
+  subDomain: null
 })
 
 export const mutations = {
-  toogleDrawer(state) {
-    state.drawer = !state.drawer
+  SET_SUBDOMAIN(state, subDomain) {
+    state.subDomain = subDomain
   }
 }
