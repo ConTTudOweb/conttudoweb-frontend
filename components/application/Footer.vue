@@ -13,7 +13,7 @@
       </v-btn>
       <small>
         &copy; 2014-{{ new Date().getFullYear() }} —
-        <strong>ConTTudOweb</strong>
+        <strong>{{ $g('empresa.nome') }}</strong>
       </small>
     </v-row>
   </v-footer>

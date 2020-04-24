@@ -1,4 +1,5 @@
 import colors from 'vuetify/es5/util/colors'
+import light from './plugins/vuetify/light_theme.js'
 
 require('dotenv').config()
 
@@ -36,7 +37,7 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: ['~/plugins/tenant', '~/plugins/axios'],
+  plugins: ['~/plugins/vue-inject', '~/plugins/tenant', '~/plugins/axios'],
   /*
    ** Nuxt.js dev-modules
    */
@@ -134,6 +135,7 @@ export default {
     theme: {
       dark: false,
       themes: {
+        light,
         dark: {
           primary: colors.blue.darken2,
           accent: colors.grey.darken3,

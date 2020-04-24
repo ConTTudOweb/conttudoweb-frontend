@@ -6,10 +6,8 @@
       :clipped="clipped"
       @toggle-drawer="$refs.menu.drawer = !$refs.menu.drawer"
     />
-    <v-content class="white">
-      <v-container class="px-4">
-        <nuxt />
-      </v-container>
+    <v-content>
+      <nuxt />
     </v-content>
     <c-footer :clipped="clipped" />
   </v-app>

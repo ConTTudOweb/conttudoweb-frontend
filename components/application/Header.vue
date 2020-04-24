@@ -1,6 +1,6 @@
 <template>
   <v-app-bar
-    :color="!clipped ? 'orange lighten-2' : ''"
+    :color="!clipped ? 'primary' : ''"
     :clipped-left="clipped"
     :dark="isDark"
     fixed
