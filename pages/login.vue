@@ -1,7 +1,7 @@
 <template>
   <v-container class="fill-height" fluid>
     <v-row align="center" justify="center">
-      <v-col cols="12" sm="8" md="6">
+      <v-col cols="12" sm="8" md="6" lg="4" xl="3">
         <v-card class="elevation-12">
           <v-toolbar color="primary" dark flat>
             <v-toolbar-title>Acessar</v-toolbar-title>
@@ -37,14 +37,20 @@
             </v-card-actions>
           </v-form>
         </v-card>
+        <breakpoint />
       </v-col>
     </v-row>
   </v-container>
 </template>
 
 <script>
+import Breakpoint from '~/components/application/Breakpoint'
+
 export default {
-  layout: 'public',
+  layout: 'empty',
+  components: {
+    Breakpoint
+  },
   middleware({ store, redirect }) {
     if (!store.state.subDomain) {
       return redirect('/')
@@ -66,18 +72,14 @@ export default {
             data: this.credentials
           })
           .then(() => this.$toast.success('Bem vindo!'))
-      } catch (err) {
-        let msgErrors = ''
-        for (const prop in err.response.data) {
-          if (prop === 'non_field_errors') {
-            msgErrors += err.response.data[prop]
-          }
-        }
-        if (msgErrors === '') {
-          msgErrors = err
-        }
-        this.$toast.error(msgErrors)
+      } catch (error) {
+        this.$toast.error(error)
       }
+    }
+  },
+  head() {
+    return {
+      title: 'Login'
     }
   }
 }

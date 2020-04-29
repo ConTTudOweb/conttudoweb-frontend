@@ -1,15 +1,20 @@
 <template>
-  <v-app dark>
-    <h1 v-if="error.statusCode === 404">
-      {{ pageNotFound }}
-    </h1>
-    <h1 v-else>
-      {{ otherError }}
-    </h1>
-    <NuxtLink to="/">
-      Home page
-    </NuxtLink>
-  </v-app>
+  <v-container class="fill-height" fluid>
+    <v-row justify="center" class="text-center">
+      <v-col cols="12">
+        <!-- eslint-disable-next-line vue/no-v-html -->
+        <h1 v-if="statusCode === 404" v-html="pageNotFound" />
+        <!-- eslint-disable-next-line vue/no-v-html -->
+        <h1 v-else v-html="otherError" />
+      </v-col>
+      <v-col cols="12">
+        Voltar para a
+        <NuxtLink to="/" class="text-uppercase subtitle-1 font-weight-medium">
+          Página inicial
+        </NuxtLink>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
@@ -23,13 +28,25 @@ export default {
   },
   data() {
     return {
-      pageNotFound: '404 Not Found',
-      otherError: 'An error occurred'
+      pageNotFound:
+        'Ops... Página não encontrada!<br /><small class="overline">(404 ' +
+        this.error.message +
+        ')</small>',
+      otherError:
+        'Ops... Ocorreu um erro inesperado!<br /><small class="overline">(' +
+        this.error.statusCode +
+        ' ' +
+        this.error.message +
+        ')</small>'
+    }
+  },
+  computed: {
+    statusCode() {
+      return (this.error && this.error.statusCode) || 500
     }
   },
   head() {
-    const title =
-      this.error.statusCode === 404 ? this.pageNotFound : this.otherError
+    const title = this.statusCode === 404 ? this.pageNotFound : this.otherError
     return {
       title
     }

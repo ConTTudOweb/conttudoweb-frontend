@@ -32,12 +32,12 @@ export default {
           icon: 'mdi-home',
           title: 'Início',
           to: '/'
-        },
-        {
-          icon: 'mdi-information',
-          title: 'Sobre nós',
-          to: '/sobre'
         }
+        // {
+        //   icon: 'mdi-information',
+        //   title: 'Sobre nós',
+        //   to: '/sobre'
+        // }
       ],
       drawer: null,
       clipped: false

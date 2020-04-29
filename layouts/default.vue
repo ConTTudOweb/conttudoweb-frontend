@@ -37,8 +37,8 @@
     <c-header
       :title="title"
       :clipped="clipped"
-      @toggle-drawer="$refs.menu.drawer = !$refs.menu.drawer"
       :is-dark="false"
+      @toggle-drawer="$refs.menu.drawer = !$refs.menu.drawer"
     />
 
     <v-content>
@@ -80,6 +80,11 @@ export default {
           icon: 'mdi-chart-bubble',
           title: 'Inspire',
           to: '/inspire'
+        },
+        {
+          icon: 'mdi-icon',
+          title: 'Unidade federativas',
+          to: '/federative-unit'
         }
       ],
       miniVariant: false,

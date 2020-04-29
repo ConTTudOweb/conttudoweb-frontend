@@ -1,4 +1,5 @@
 import colors from 'vuetify/es5/util/colors'
+import pt from 'vuetify/es5/locale/pt'
 import light from './plugins/vuetify/light_theme.js'
 
 require('dotenv').config()
@@ -37,7 +38,12 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: ['~/plugins/vue-inject', '~/plugins/tenant', '~/plugins/axios'],
+  plugins: [
+    '~/plugins/vue-inject',
+    '~/plugins/tenant',
+    '~/plugins/axios',
+    '~/plugins/repository'
+  ],
   /*
    ** Nuxt.js dev-modules
    */
@@ -146,6 +152,10 @@ export default {
           success: colors.green.accent3
         }
       }
+    },
+    lang: {
+      locales: { pt },
+      current: 'pt'
     }
   },
   router: {
@@ -158,6 +168,6 @@ export default {
     /*
      ** You can extend webpack config here
      */
-    extend(config, ctx) {}
+    // extend(config, ctx) {}
   }
 }

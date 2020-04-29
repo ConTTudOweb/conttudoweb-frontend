@@ -6,8 +6,8 @@ import globals from '~/global_vars.json'
 // usage in script: this.$g('social.facebook.url')
 Vue.prototype.$g = (key) => {
   const val = _get(globals, key, null)
-  console.info(val)
   if (val == null) {
+    // eslint-disable-next-line no-console
     console.warn(key, ' não existe em $g')
     return key
   } else {

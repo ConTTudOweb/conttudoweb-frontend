@@ -1,5 +1,27 @@
 {
   "empresa": {
     "nome": "ConTTudOweb"
-  }
+  },
+  "social": [
+    {
+      "nome": "Facebook",
+      "icon": "mdi-facebook",
+      "link": "https://www.facebook.com/conttudoweb/"
+    },
+    {
+      "nome": "Instagram",
+      "icon": "mdi-instagram",
+      "link": "https://www.instagram.com/conttudoweb/"
+    },
+    {
+      "nome": "Linkedin",
+      "icon": "mdi-linkedin",
+      "link": "https://www.linkedin.com/company/conttudoweb/"
+    },
+    {
+      "nome": "Whatsapp",
+      "icon": "mdi-whatsapp",
+      "link": "https://bit.ly/whatsConTTudOweb"
+    }
+  ]
 }
