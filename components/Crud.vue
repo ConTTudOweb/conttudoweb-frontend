@@ -79,6 +79,14 @@
           </v-dialog>
         </v-toolbar>
       </template>
+      <template v-slot:item._actions="{ item }">
+        <v-icon small class="mr-2" @click="editItem(item)">
+          mdi-pencil
+        </v-icon>
+        <v-icon small @click="deleteItem(item)">
+          mdi-delete
+        </v-icon>
+      </template>
     </v-data-table>
   </v-layout>
 </template>
@@ -136,7 +144,11 @@ export default {
       if (this.$refs.form.validate()) {
         this.loading = true
         try {
-          await this.repository.create(this.form)
+          if (this.editedIndex > -1) {
+            await this.repository.update(this.form.id, this.form)
+          } else {
+            await this.repository.create(this.form)
+          }
           await this.load()
           this.loading = false
           this.close()
@@ -146,6 +158,18 @@ export default {
           // this.erro = true
           this.loading = false
         }
+      }
+    },
+    editItem(item) {
+      this.editedIndex = this.items.indexOf(item)
+      this.form = Object.assign({}, item)
+      this.dialog = true
+    },
+    async deleteItem(item) {
+      const id = item.id
+      if (confirm(`Tem certeza que deseja deletar o registro de ID: ${id}?`)) {
+        await this.repository.delete(id)
+        await this.load()
       }
     }
   }

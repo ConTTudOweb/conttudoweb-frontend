@@ -1,7 +1,7 @@
 import createRepository from '~/api/repository'
 
-const baseUrlAPI = '/api/'
-const urlFederativeUnit = baseUrlAPI + 'federative-unit/'
+const baseUrlAPI = '/api'
+const urlFederativeUnit = baseUrlAPI + '/federative-unit'
 
 const rules = {
   required: (value) => !!value || 'Campo obrigatório!',
@@ -18,9 +18,10 @@ export default (ctx, inject) => {
     label,
     allowForm = false,
     alignGrid = 'left',
+    sortable = true,
     form = {}
   }) {
-    return { field, label, allowForm, alignGrid, form }
+    return { field, label, allowForm, alignGrid, sortable, form }
   }
 
   const fieldTypeTextTag = 'v-text-field'
@@ -51,6 +52,11 @@ export default (ctx, inject) => {
         label: 'nome',
         allowForm: true,
         form: { type: fieldTypeTextTag, sm: 8, rules: [rules.required] }
+      }),
+      getField({
+        field: '_actions',
+        label: '',
+        sortable: false
       })
     ])
   )

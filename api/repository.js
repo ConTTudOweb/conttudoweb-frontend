@@ -2,27 +2,31 @@
 // I've used typical CRUD method names and actions here
 export default ($axios) => (resource, title, fields) => ({
   index() {
-    return $axios.$get(`${resource}`)
+    return $axios.$get(`${resource}/`)
   },
 
   show(id) {
-    return $axios.$get(`${resource}/${id}`)
+    return $axios.$get(`${resource}/${id}/`)
   },
 
   create(payload) {
-    return $axios.$post(`${resource}`, payload)
+    return $axios.$post(`${resource}/`, payload)
   },
 
   update(id, payload) {
-    return $axios.$post(`${resource}/${id}`, payload)
+    return $axios.$put(`${resource}/${id}/`, payload)
   },
 
   delete(id) {
-    return $axios.$delete(`${resource}/${id}`)
+    return $axios.$delete(`${resource}/${id}/`)
   },
 
   displayFields() {
-    return fields.map((m) => ({ value: m.field, text: m.label }))
+    return fields.map((m) => ({
+      value: m.field,
+      text: m.label,
+      sortable: m.sortable
+    }))
   },
 
   formFields() {
