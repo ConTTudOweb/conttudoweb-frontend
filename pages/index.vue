@@ -69,7 +69,7 @@
 </template>
 
 <script>
-import CardServices from '~/components/CardServices'
+import CardServices from '~/components/site/CardServices'
 // import Breakpoint from '~/components/application/Breakpoint'
 
 export default {
