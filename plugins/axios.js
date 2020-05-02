@@ -1,14 +1,13 @@
 export default function({ $axios, store }) {
-  $axios.onRequest((config) => {
-    config.baseURL = process.env.API_PROTOCOL
-    if (store.state.subDomain) {
-      // TODO: Tirar as duas linhas abaixo!
-      // eslint-disable-next-line no-console
-      console.log('setou o subDomain no baseurl')
-      config.baseURL += store.state.subDomain + '.'
-    }
-    config.baseURL += process.env.API_BASE
-  })
+  $axios.setHeader('Tenant', store.state.subDomain)
+
+  // $axios.onRequest((config) => {
+  //   config.baseURL = process.env.API_PROTOCOL
+  //   if (store.state.subDomain) {
+  //     config.baseURL += store.state.subDomain + '.'
+  //   }
+  //   config.baseURL += process.env.API_BASE
+  // })
 
   $axios.onError((error) => {
     const { response = null } = error

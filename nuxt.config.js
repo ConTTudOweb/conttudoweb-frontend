@@ -47,10 +47,7 @@ export default {
   /*
    ** Nuxt.js dev-modules
    */
-  env: {
-    API_PROTOCOL: process.env.API_PROTOCOL,
-    API_BASE: process.env.API_BASE
-  },
+  env: {},
   buildModules: [
     '@nuxt/typescript-build',
     // Doc: https://github.com/nuxt-community/stylelint-module
@@ -130,7 +127,8 @@ export default {
    ** See https://axios.nuxtjs.org/options
    */
   axios: {
-    debug: process.env.NUXT_ENV_AXIOS_DEBUG || false
+    debug: process.env.NUXT_ENV_AXIOS_DEBUG || false,
+    baseURL: process.env.NUXT_ENV_API_URL || 'http://localhost:8000'
   },
   /*
    ** vuetify module configuration
