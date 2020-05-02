@@ -33,6 +33,7 @@
                 <v-card-text>
                   <v-container>
                     <v-row>
+                      formFields: {{ repository.formFields() }}
                       <v-col
                         v-for="(f, i) in repository.formFields()"
                         :key="i"
