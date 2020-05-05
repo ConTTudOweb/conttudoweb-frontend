@@ -1,32 +1,16 @@
 import colors from 'vuetify/es5/util/colors'
 import pt from 'vuetify/es5/locale/pt'
 import light from './plugins/vuetify/light_theme.js'
+import head from './config/head'
 
 require('dotenv').config()
 
 export default {
   mode: 'spa',
-  /*
-   ** Headers of the page
-   */
-  head: {
-    // this htmlAttrs you need
-    htmlAttrs: {
-      lang: 'pt-br'
-    },
-    titleTemplate: '%s - ' + 'ConTTudOweb',
-    title: 'Início',
-    meta: [
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      {
-        hid: 'description',
-        name: 'description',
-        content: 'ConTTudOweb - Soluções em Tecnologia'
-      }
-    ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
-  },
+
+  watch: ['~/config/*.js'],
+
+  head,
   /*
    ** Customize the progress-bar color
    */
