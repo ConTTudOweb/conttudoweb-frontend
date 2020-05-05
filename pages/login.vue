@@ -12,10 +12,13 @@
                 v-model="credentials.username"
                 :rules="usernameRules"
                 label="Usuário"
+                placeholder="nome@email.com"
                 name="login"
-                prepend-icon="mdi-account"
+                prepend-inner-icon="mdi-account"
                 type="text"
                 required
+                outlined
+                rounded
               />
 
               <v-text-field
@@ -23,10 +26,13 @@
                 v-model="credentials.password"
                 :rules="passwordRules"
                 label="Senha"
+                placeholder="****"
                 name="password"
-                prepend-icon="mdi-lock"
+                prepend-inner-icon="mdi-lock"
                 type="password"
                 required
+                outlined
+                rounded
               />
             </v-card-text>
             <v-card-actions>

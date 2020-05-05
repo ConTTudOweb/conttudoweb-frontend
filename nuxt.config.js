@@ -51,32 +51,43 @@ export default {
     '@nuxtjs/auth'
   ],
   toast: {
-    position: 'top-right',
+    position: 'bottom-center',
     duration: 5000,
     keepOnHover: true,
     theme: 'bubble',
+    iconPack: 'mdi',
     register: [
       // Register custom toasts
       {
-        name: 'my-error',
-        message: 'Oops...Something went wrong',
-        options: {
-          type: 'error'
-        }
-      },
-      {
-        name: 'my-success',
+        name: 'error_save',
         message: (payload) => {
           // if there is no message passed show default message
-          if (!payload.message) {
-            return 'Uhull...OK!'
+          if (!payload) {
+            return 'Oops...Algo deu errado! :('
           }
 
           // if there is a message show it with the message
-          return payload.message
+          return payload
         },
         options: {
-          type: 'success'
+          type: 'error',
+          icon: 'message-alert'
+        }
+      },
+      {
+        name: 'success_save',
+        message: (payload) => {
+          // if there is no message passed show default message
+          if (!payload) {
+            return 'Registro salvo!'
+          }
+
+          // if there is a message show it with the message
+          return payload
+        },
+        options: {
+          type: 'success',
+          icon: 'check'
         }
       }
     ]
@@ -153,6 +164,6 @@ export default {
     // extend(config, ctx) {}
   },
   server: {
-    host: '0.0.0.0' // default: localhost
+    // host: '0.0.0.0' // default: localhost
   }
 }

@@ -58,7 +58,7 @@
                   <v-spacer></v-spacer>
                   <v-btn
                     :disabled="loading"
-                    color="blue darken-1"
+                    color="red darken-1"
                     text
                     @click="close"
                   >
