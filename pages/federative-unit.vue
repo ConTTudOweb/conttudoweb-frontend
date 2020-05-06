@@ -57,7 +57,7 @@
                       <v-container>
                         <v-row>
                           <v-col
-                            v-for="(f, i) in repository.formFields()"
+                            v-for="(f, i) in this.$nuxt.context.app.$federativeUnitRepository.formFields()"
                             :key="i"
                             :cols="f.xs || 12"
                             :sm="f.sm"
