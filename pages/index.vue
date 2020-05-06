@@ -13,8 +13,7 @@
               <div
                 class="text-uppercase caption mb-4 grey--text text--darken-2 font-weight-black"
               >
-                <!--
-                <breakpoint />-->
+                <breakpoint />
                 Bem vindo!
               </div>
               <span class="display-1 font-weight-medium">
@@ -70,7 +69,7 @@
 
 <script>
 import CardServices from '~/components/site/CardServices'
-// import Breakpoint from '~/components/application/Breakpoint'
+import Breakpoint from '~/components/application/Breakpoint'
 
 export default {
   layout: 'public',
@@ -81,8 +80,8 @@ export default {
     }
   },
   components: {
-    CardServices
-    // Breakpoint
+    CardServices,
+    Breakpoint
   },
   data() {
     return {

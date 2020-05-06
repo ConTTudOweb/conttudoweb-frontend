@@ -5,17 +5,18 @@
     :clipped="clipped"
     fixed
     app
-    :dark="isDark"
+    :dark="true"
+    color="secondary darken-4"
   >
     <v-list nav dense class="py-0">
-      <div v-if="!clipped">
+      <div v-if="!clipped" class="d-none d-lg-flex">
         <v-list-item two-line>
           <v-list-item-content>
             <img src="@/assets/img/logo_800.png" contain width="100%" />
           </v-list-item-content>
         </v-list-item>
-        <v-divider :inset="false" class="py-1"></v-divider>
       </div>
+      <v-divider :inset="false" class="py-1"></v-divider>
       <v-list-item
         v-for="(item, i) in items"
         :key="i"
