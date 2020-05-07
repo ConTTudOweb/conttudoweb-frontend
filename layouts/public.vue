@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <c-menu ref="menu" :items="items" :clipped="clipped" />
+<!--    <c-menu ref="menu" :items="items" :clipped="clipped" />-->
     <c-header
       :title="title"
       :clipped="clipped"

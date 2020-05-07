@@ -2,6 +2,7 @@ import createRepository from '~/api/repository'
 
 const baseUrlAPI = '/api'
 const urlFederativeUnit = baseUrlAPI + '/federative-unit'
+const urlPeople = baseUrlAPI + '/people'
 
 const rules = {
   required: (value) => !!value || 'Campo obrigatório!',
@@ -52,6 +53,50 @@ export default (ctx, inject) => {
         label: 'nome',
         allowForm: true,
         form: { type: fieldTypeTextTag, sm: 8, rules: [rules.required] }
+      }),
+      getField({
+        field: '_actions',
+        label: '',
+        sortable: false
+      })
+    ])
+  )
+  inject(
+    'peopleRepository',
+    repositoryWithAxios(urlPeople, 'Cliente / Fornecedor', [
+      getField({
+        field: 'id',
+        label: '#'
+      }),
+      getField({
+        field: 'customer',
+        label: 'cliente?',
+        allowForm: true,
+        form: { type: fieldTypeTextTag, rules: [rules.required] }
+      }),
+      getField({
+        field: 'supplier',
+        label: 'fornecedor?',
+        allowForm: true,
+        form: { type: fieldTypeTextTag, rules: [rules.required] }
+      }),
+      getField({
+        field: 'name',
+        label: 'nome',
+        allowForm: true,
+        form: { type: fieldTypeTextTag, rules: [rules.required] }
+      }),
+      getField({
+        field: 'person_type',
+        label: 'tipo',
+        allowForm: true,
+        form: { type: fieldTypeTextTag, rules: [rules.required] }
+      }),
+      getField({
+        field: 'federation_subscription_number',
+        label: 'CPF/CNPJ',
+        allowForm: true,
+        form: { type: fieldTypeTextTag, rules: [rules.required] }
       }),
       getField({
         field: '_actions',

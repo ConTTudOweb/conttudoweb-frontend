@@ -13,7 +13,7 @@
               <div
                 class="text-uppercase caption mb-4 grey--text text--darken-2 font-weight-black"
               >
-                <breakpoint />
+                <!-- <breakpoint /> -->
                 Bem vindo!
               </div>
               <span class="display-1 font-weight-medium">
@@ -68,8 +68,8 @@
 </template>
 
 <script>
+// import Breakpoint from '~/components/application/Breakpoint'
 import CardServices from '~/components/site/CardServices'
-import Breakpoint from '~/components/application/Breakpoint'
 
 export default {
   layout: 'public',
@@ -80,13 +80,14 @@ export default {
     }
   },
   components: {
-    CardServices,
-    Breakpoint
+    // Breakpoint,
+    CardServices
   },
   data() {
     return {
       img_background_src: require('~/assets/img/laptop-3174729_1920.jpg'),
       image_center_src: require('~/assets/img/welcome-monitor.png'),
+      image_logo: require('~/assets/img/logo_800.png'),
       services: [
         {
           title: 'Sistemas web',

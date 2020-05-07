@@ -5,17 +5,10 @@
     :clipped="clipped"
     fixed
     app
-    :dark="true"
-    color="secondary darken-4"
+    :dark="false"
+    color="primary darken-4"
   >
     <v-list nav dense class="py-0">
-      <div v-if="!clipped" class="d-none d-lg-flex">
-        <v-list-item two-line>
-          <v-list-item-content>
-            <img :src="image_logo" width="100%" alt="logotipo" />
-          </v-list-item-content>
-        </v-list-item>
-      </div>
       <v-divider :inset="false" class="py-1"></v-divider>
       <v-subheader>CADASTROS</v-subheader>
       <v-list-item

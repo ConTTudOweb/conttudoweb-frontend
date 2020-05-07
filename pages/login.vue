@@ -37,26 +37,26 @@
             </v-card-text>
             <v-card-actions>
               <v-spacer />
-              <v-btn type="submit" color="primary" :disabled="!isValid">
+              <v-btn type="submit" color="primary" :disabled="!isValid" :loading="loading">
                 Login
               </v-btn>
             </v-card-actions>
           </v-form>
         </v-card>
-        <breakpoint />
+        <!--<breakpoint />-->
       </v-col>
     </v-row>
   </v-container>
 </template>
 
 <script>
-import Breakpoint from '~/components/application/Breakpoint'
+// import Breakpoint from '~/components/application/Breakpoint'
 
 export default {
   layout: 'empty',
-  components: {
-    Breakpoint
-  },
+  // components: {
+  //   Breakpoint
+  // },
   middleware({ store, redirect }) {
     if (!store.state.subDomain) {
       return redirect('/')
@@ -65,6 +65,7 @@ export default {
   data() {
     return {
       isValid: false,
+      loading: false,
       credentials: {},
       usernameRules: [(v) => !!v || 'Usuário obrigatório'],
       passwordRules: [(v) => !!v || 'Senha obrigatória']
@@ -73,13 +74,16 @@ export default {
   methods: {
     async userLogin() {
       try {
+        this.loading = true
         await this.$auth
           .loginWith('local', {
             data: this.credentials
           })
           .then(() => this.$toast.success('Bem vindo!'))
+        this.loading = false
       } catch (error) {
         this.$toast.error(error)
+        this.loading = false
       }
     }
   },

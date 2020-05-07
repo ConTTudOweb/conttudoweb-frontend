@@ -48,8 +48,13 @@ export default {
         // },
         {
           icon: 'mdi-border-color',
-          title: 'Unidade federativas',
+          title: 'Unidades federativas',
           to: '/federative-unit'
+        },
+        {
+          icon: 'mdi-border-color',
+          title: 'Clientes / Fornecedores',
+          to: '/people'
         }
       ],
       miniVariant: false,

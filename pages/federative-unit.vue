@@ -222,10 +222,6 @@ export default {
 </script>
 
 <style>
-.my-table-grid-list thead {
-  text-transform: uppercase;
-}
-
 .my-field label {
   text-transform: capitalize;
 }

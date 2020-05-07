@@ -24,7 +24,7 @@ export default ($axios) => (resource, title, fields) => ({
   displayFields() {
     return fields.map((m) => ({
       value: m.field,
-      text: m.label,
+      text: m.label.toUpperCase(),
       sortable: m.sortable
     }))
   },
