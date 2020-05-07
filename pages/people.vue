@@ -1,5 +1,4 @@
 <template>
-  <!--<crud :repository="this.$nuxt.context.app.$federativeUnitRepository" />-->
   <div>
     <v-row>
       <v-col>
