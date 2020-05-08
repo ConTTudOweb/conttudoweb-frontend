@@ -21,12 +21,20 @@ export default ($axios) => (resource, title, fields) => ({
     return $axios.$delete(`${resource}/${id}/`)
   },
 
+  _getDisplayFields() {
+    return fields
+  },
+
   displayFields() {
     return fields.map((m) => ({
       value: m.field,
       text: m.label.toUpperCase(),
       sortable: m.sortable
     }))
+  },
+
+  booleanDisplayFields() {
+    return fields.filter((f) => f.type === 'boolean').map((m) => [m.field])
   },
 
   formFields() {

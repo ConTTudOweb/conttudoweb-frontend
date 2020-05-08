@@ -17,12 +17,14 @@ export default (ctx, inject) => {
   function getField({
     field,
     label,
+    type = 'string',
+    choices = [],
     allowForm = false,
     alignGrid = 'left',
     sortable = true,
     form = {}
   }) {
-    return { field, label, allowForm, alignGrid, sortable, form }
+    return { field, label, type, choices, allowForm, alignGrid, sortable, form }
   }
 
   const fieldTypeTextTag = 'v-text-field'
@@ -71,14 +73,19 @@ export default (ctx, inject) => {
       getField({
         field: 'customer',
         label: 'cliente?',
+        type: 'boolean',
         allowForm: true,
-        form: { type: fieldTypeTextTag, rules: [rules.required] }
+        form: {
+          type: fieldTypeTextTag,
+          autofocus: true
+        }
       }),
       getField({
         field: 'supplier',
         label: 'fornecedor?',
+        type: 'boolean',
         allowForm: true,
-        form: { type: fieldTypeTextTag, rules: [rules.required] }
+        form: { type: fieldTypeTextTag }
       }),
       getField({
         field: 'name',
@@ -89,8 +96,19 @@ export default (ctx, inject) => {
       getField({
         field: 'person_type',
         label: 'tipo',
+        type: 'choice',
+        choices: [
+          {
+            value: 'F',
+            display_name: 'Pessoa Física'
+          },
+          {
+            value: 'J',
+            display_name: 'Pessoa Jurídica'
+          }
+        ],
         allowForm: true,
-        form: { type: fieldTypeTextTag, rules: [rules.required] }
+        form: { type: fieldTypeTextTag }
       }),
       getField({
         field: 'federation_subscription_number',

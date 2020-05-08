@@ -13,6 +13,17 @@
           :loading="$fetchState.pending"
           class="my-table-grid-list"
         >
+          <template
+            v-for="(field, i) in booleanFieldsSlots"
+            v-slot:[getItemSlot(field)]="{ item }"
+          >
+            <template v-if="item[field] === true">
+              <v-icon :key="`${i}-${item.id}`" color="green">mdi-check</v-icon>
+            </template>
+            <template v-else>
+              <v-icon :key="`${i}-${item.id}`" color="red">mdi-close</v-icon>
+            </template>
+          </template>
           <template v-slot:top>
             <v-toolbar flat color="white">
               <v-toolbar-title v-text="title" />
@@ -54,20 +65,6 @@
                     <v-card-text>
                       <v-container>
                         <v-row>
-                          <v-col cols="6" sm="4">
-                            <v-text-field
-                              v-model="form['initials']"
-                              :rules="[
-                                (value) => !!value || 'Campo obrigatório!'
-                              ]"
-                              label="sigla"
-                              placeholder=" "
-                              class="my-field"
-                              outlined
-                              dense
-                              autofocus
-                            ></v-text-field>
-                          </v-col>
                           <v-col
                             v-for="(f, i) in repository.formFields()"
                             :key="i"
@@ -82,6 +79,7 @@
                               v-model="form[f.field]"
                               :rules="f.rules"
                               :label="f.label"
+                              :autofocus="f.autofocus"
                               placeholder=" "
                               class="my-field"
                               outlined
@@ -151,6 +149,7 @@ export default {
   fetch() {
     this.title = this.repository.props().title
     this.headers = this.repository.displayFields()
+    this.booleanFieldsSlots = this.repository.booleanDisplayFields()
     this.load()
   },
   data() {
@@ -158,6 +157,7 @@ export default {
       // repository: this.$nuxt.context.app.$federativeUnitRepository,
       title: '',
       headers: [],
+      booleanFieldsSlots: [],
       items: [],
       dialog: false,
       loading: false,
@@ -179,6 +179,9 @@ export default {
     }
   },
   methods: {
+    getItemSlot(field) {
+      return `item.${field}`
+    },
     async load() {
       this.items = await this.repository.index()
     },
@@ -201,7 +204,7 @@ export default {
           await this.load()
           this.loading = false
           this.close()
-          this.$toast.global.success_save()
+          this.$toasted.global.success_save()
         } catch (e) {
           this.loading = false
           this.$toast.global.error_save(e)
@@ -219,6 +222,11 @@ export default {
         await this.repository.delete(id)
         await this.load()
       }
+    }
+  },
+  head() {
+    return {
+      title: this.repository.props().title
     }
   }
 }

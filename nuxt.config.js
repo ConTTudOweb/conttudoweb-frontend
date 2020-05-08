@@ -62,12 +62,12 @@ export default {
         name: 'error_save',
         message: (payload) => {
           // if there is no message passed show default message
-          if (!payload) {
+          if (!payload.message) {
             return 'Oops...Algo deu errado! :('
           }
 
           // if there is a message show it with the message
-          return payload
+          return payload.message
         },
         options: {
           type: 'error',
@@ -78,12 +78,12 @@ export default {
         name: 'success_save',
         message: (payload) => {
           // if there is no message passed show default message
-          if (!payload) {
+          if (!payload.message) {
             return 'Registro salvo!'
           }
 
           // if there is a message show it with the message
-          return payload
+          return payload.message
         },
         options: {
           type: 'success',
