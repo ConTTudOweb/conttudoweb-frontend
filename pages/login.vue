@@ -16,6 +16,7 @@
                 name="login"
                 prepend-inner-icon="mdi-account"
                 type="text"
+                autofocus
                 required
                 outlined
                 rounded

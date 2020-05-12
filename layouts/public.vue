@@ -1,12 +1,25 @@
 <template>
   <v-app>
-<!--    <c-menu ref="menu" :items="items" :clipped="clipped" />-->
+    <!--<c-menu ref="menu" :items="items" :clipped="clipped" />-->
     <c-header
       :title="title"
       :clipped="clipped"
       @toggle-drawer="$refs.menu.drawer = !$refs.menu.drawer"
     />
     <v-content>
+      <v-btn
+        v-if="$vuetify.breakpoint.smAndUp"
+        fixed
+        dark
+        fab
+        bottom
+        right
+        color="success"
+        :href="this.$g('site.whatsapp')"
+        target="_blank"
+      >
+        <v-icon>mdi-whatsapp</v-icon>
+      </v-btn>
       <nuxt />
     </v-content>
     <c-footer :clipped="clipped" />
@@ -14,13 +27,13 @@
 </template>
 
 <script>
-import CMenu from '~/components/application/Menu.vue'
+// import CMenu from '~/components/application/Menu.vue'
 import CHeader from '~/components/application/Header.vue'
 import CFooter from '~/components/application/Footer.vue'
 
 export default {
   components: {
-    CMenu,
+    // CMenu,
     CHeader,
     CFooter
   },

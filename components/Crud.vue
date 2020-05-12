@@ -79,17 +79,60 @@
                               v-model="form[f.field]"
                               :rules="f.rules"
                               :label="f.label"
+                              :maxlength="f.maxlength"
                               :autofocus="f.autofocus"
                               placeholder=" "
+                              hide-details="auto"
                               class="my-field"
                               outlined
                               dense
                             ></v-text-field>
+                            <v-autocomplete
+                              v-if="f.type === 'v-autocomplete'"
+                              v-model="form[f.field]"
+                              :rules="f.rules"
+                              :label="f.label"
+                              :autofocus="f.autofocus"
+                              placeholder=" "
+                              hide-details="auto"
+                              class="my-field"
+                              outlined
+                              dense
+                            ></v-autocomplete>
+                            <v-checkbox
+                              v-else-if="f.type === 'v-checkbox'"
+                              v-model="form[f.field]"
+                              :rules="f.rules"
+                              :label="f.label"
+                              :autofocus="f.autofocus"
+                              class="my-field"
+                              outlined
+                              dense
+                            ></v-checkbox>
+                            <v-radio-group
+                              v-else-if="f.type === 'v-radio-group'"
+                              v-model="form[f.field]"
+                              :rules="f.rules"
+                              :label="f.label"
+                              :autofocus="f.autofocus"
+                              class="my-field"
+                              outlined
+                              dense
+                              :row="$vuetify.breakpoint.smAndUp"
+                            >
+                              <v-radio
+                                v-for="c in f.choices"
+                                :key="`${i}-${c.value}`"
+                                :label="c.display_name"
+                                :value="c.value"
+                              ></v-radio>
+                            </v-radio-group>
                           </v-col>
                         </v-row>
                       </v-container>
                     </v-card-text>
                     <v-card-actions>
+                      <c-breakpoint />
                       <v-spacer></v-spacer>
                       <v-btn
                         :disabled="loading"
@@ -117,7 +160,13 @@
           <template v-slot:item._actions="{ item }">
             <v-tooltip top>
               <template v-slot:activator="{ on }">
-                <v-icon small class="mr-2" @click="editItem(item)" v-on="on">
+                <v-icon
+                  small
+                  class="mx-1"
+                  color="yellow darken-2"
+                  @click="editItem(item)"
+                  v-on="on"
+                >
                   mdi-pencil
                 </v-icon>
               </template>
@@ -125,7 +174,13 @@
             </v-tooltip>
             <v-tooltip top>
               <template v-slot:activator="{ on }">
-                <v-icon small @click="deleteItem(item)" v-on="on">
+                <v-icon
+                  small
+                  class="mx-1"
+                  color="red lighten-2"
+                  @click="deleteItem(item)"
+                  v-on="on"
+                >
                   mdi-delete
                 </v-icon>
               </template>
@@ -138,8 +193,14 @@
   </div>
 </template>
 
+<!--suppress JSUnusedGlobalSymbols, JSUnresolvedFunction -->
 <script>
+import CBreakpoint from '~/components/application/Breakpoint'
+
 export default {
+  components: {
+    CBreakpoint
+  },
   props: {
     repository: {
       type: Object,
@@ -175,6 +236,8 @@ export default {
     dialog(value) {
       if (!value) {
         this.$refs.form.resetValidation()
+        this.form = {}
+        this.editedIndex = -1
       }
     }
   },
@@ -187,10 +250,10 @@ export default {
     },
     close() {
       this.dialog = false
-      this.$nextTick(() => {
-        this.form = {}
-        this.editedIndex = -1
-      })
+      // this.$nextTick(() => {
+      //   this.form = {}
+      //   this.editedIndex = -1
+      // })
     },
     async save() {
       if (this.$refs.form.validate()) {

@@ -1,9 +1,11 @@
 <template>
   <div>
-    <span>
-      [{{ $vuetify.breakpoint.name }}] / [{{ $vuetify.breakpoint.width }} x
-      {{ $vuetify.breakpoint.height }}]
-    </span>
+    <small>
+      <i
+        >[{{ $vuetify.breakpoint.name }}] / [{{ $vuetify.breakpoint.width }} x
+        {{ $vuetify.breakpoint.height }}]</i
+      >
+    </small>
     <br />
   </div>
 </template>

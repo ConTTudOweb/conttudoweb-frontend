@@ -2,6 +2,7 @@ import createRepository from '~/api/repository'
 
 const baseUrlAPI = '/api'
 const urlFederativeUnit = baseUrlAPI + '/federative-unit'
+const urlCity = baseUrlAPI + '/city'
 const urlPeople = baseUrlAPI + '/people'
 
 const rules = {
@@ -19,15 +20,29 @@ export default (ctx, inject) => {
     label,
     type = 'string',
     choices = [],
+    allowGrid = true,
     allowForm = false,
     alignGrid = 'left',
     sortable = true,
     form = {}
   }) {
-    return { field, label, type, choices, allowForm, alignGrid, sortable, form }
+    return {
+      field,
+      label,
+      type,
+      choices,
+      allowGrid,
+      allowForm,
+      alignGrid,
+      sortable,
+      form
+    }
   }
 
   const fieldTypeTextTag = 'v-text-field'
+  const fieldTypeCheckTag = 'v-checkbox'
+  const fieldTypeRadioTag = 'v-radio-group'
+  const fieldTypeAutoCompleteTag = 'v-autocomplete'
 
   // inject the repository in the context (ctx.app.$repository)
   // And in the Vue instances (this.$repository in your components)
@@ -47,14 +62,59 @@ export default (ctx, inject) => {
           type: fieldTypeTextTag,
           xs: 6,
           sm: 4,
-          rules: [rules.required]
+          rules: [rules.required],
+          maxlength: 2,
+          autofocus: true
         }
       }),
       getField({
         field: 'name',
         label: 'nome',
         allowForm: true,
-        form: { type: fieldTypeTextTag, sm: 8, rules: [rules.required] }
+        form: {
+          type: fieldTypeTextTag,
+          sm: 8,
+          rules: [rules.required],
+          maxlength: 255
+        }
+      }),
+      getField({
+        field: '_actions',
+        label: '',
+        sortable: false
+      })
+    ])
+  )
+  inject(
+    'cityRepository',
+    repositoryWithAxios(urlCity, 'Cidade', [
+      getField({
+        field: 'id',
+        label: '#'
+      }),
+      getField({
+        field: 'name',
+        label: 'Nome',
+        allowForm: true,
+        form: {
+          type: fieldTypeTextTag,
+          xs: 6,
+          sm: 4,
+          rules: [rules.required],
+          maxlength: 2,
+          autofocus: true
+        }
+      }),
+      getField({
+        field: 'uf',
+        label: 'UF',
+        allowForm: true,
+        form: {
+          type: fieldTypeTextTag,
+          sm: 8,
+          rules: [rules.required],
+          maxlength: 255
+        }
       }),
       getField({
         field: '_actions',
@@ -76,7 +136,8 @@ export default (ctx, inject) => {
         type: 'boolean',
         allowForm: true,
         form: {
-          type: fieldTypeTextTag,
+          type: fieldTypeCheckTag,
+          xs: 6,
           autofocus: true
         }
       }),
@@ -85,17 +146,17 @@ export default (ctx, inject) => {
         label: 'fornecedor?',
         type: 'boolean',
         allowForm: true,
-        form: { type: fieldTypeTextTag }
+        form: { type: fieldTypeCheckTag, xs: 6 }
       }),
       getField({
         field: 'name',
-        label: 'nome',
+        label: 'Nome',
         allowForm: true,
-        form: { type: fieldTypeTextTag, rules: [rules.required] }
+        form: { type: fieldTypeTextTag, required: true, rules: [rules.required], maxlength: 60 }
       }),
       getField({
         field: 'person_type',
-        label: 'tipo',
+        label: 'Tipo',
         type: 'choice',
         choices: [
           {
@@ -107,14 +168,85 @@ export default (ctx, inject) => {
             display_name: 'Pessoa Jurídica'
           }
         ],
+        allowGrid: false,
         allowForm: true,
-        form: { type: fieldTypeTextTag }
+        form: { type: fieldTypeRadioTag }
       }),
       getField({
         field: 'federation_subscription_number',
         label: 'CPF/CNPJ',
+        allowGrid: false,
         allowForm: true,
-        form: { type: fieldTypeTextTag, rules: [rules.required] }
+        form: { type: fieldTypeTextTag, sm: 6, maxlength: 18 }
+      }),
+      getField({
+        field: 'state_subscription_number',
+        label: 'RG/IE',
+        allowGrid: false,
+        allowForm: true,
+        form: { type: fieldTypeTextTag, sm: 6, maxlength: 18 }
+      }),
+      getField({
+        field: 'phone',
+        label: 'Telefone',
+        allowForm: true,
+        form: { type: fieldTypeTextTag, sm: 6, maxlength: 20 }
+      }),
+      getField({
+        field: 'email',
+        label: 'Email',
+        allowForm: true,
+        form: { type: fieldTypeTextTag, sm: 6, maxlength: 254 }
+      }),
+      getField({
+        field: 'zip_code',
+        label: 'CEP',
+        allowGrid: false,
+        allowForm: true,
+        form: { type: fieldTypeTextTag, xs: 6, maxlength: 10 }
+      }),
+      getField({
+        field: 'address',
+        label: 'Logradouro',
+        allowGrid: false,
+        allowForm: true,
+        form: { type: fieldTypeTextTag, sm: 10, maxlength: 255 }
+      }),
+      getField({
+        field: 'address_number',
+        label: 'Número',
+        allowGrid: false,
+        allowForm: true,
+        form: { type: fieldTypeTextTag, sm: 2, maxlength: 60 }
+      }),
+      getField({
+        field: 'complement',
+        label: 'Complemento',
+        allowGrid: false,
+        allowForm: true,
+        form: { type: fieldTypeTextTag, sm: 6, maxlength: 60 }
+      }),
+      getField({
+        field: 'neighborhood',
+        label: 'Bairro',
+        allowGrid: false,
+        allowForm: true,
+        form: { type: fieldTypeTextTag, sm: 6, maxlength: 60 }
+      }),
+      getField({
+        field: 'city',
+        label: 'Cidade',
+        type: 'field',
+        allowGrid: false,
+        allowForm: true,
+        form: { type: fieldTypeAutoCompleteTag, items: 'cities' }
+      }),
+      getField({
+        field: 'observation',
+        label: 'Observação',
+        allowGrid: false,
+        allowForm: true,
+        form: { type: fieldTypeTextTag }
       }),
       getField({
         field: '_actions',

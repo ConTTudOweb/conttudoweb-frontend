@@ -9,7 +9,7 @@
       <v-layout column justify-center align-center class="px-4">
         <v-flex xs12 sm8 md6>
           <v-row align="center" justify="center">
-            <div class="section-header text-center mb-12">
+            <div class="section-header text-center mb-6">
               <div
                 class="text-uppercase caption mb-4 grey--text text--darken-2 font-weight-black"
               >
@@ -29,14 +29,22 @@
                 Sabemos que o mais importante no mundo atual é trazer soluções
                 rápidas e descomplicadas sem perder a qualidade que você merece!
               </p>
+              <v-btn
+                v-if="$vuetify.breakpoint.xs"
+                x-large
+                color="success"
+                dark
+                :href="this.$g('site.whatsapp')"
+                target="_blank"
+                ><v-icon>mdi-whatsapp</v-icon>Fale conosco</v-btn
+              >
             </div>
           </v-row>
-          <v-row align="center" justify="space-around">
-            <v-col cols="6" sm="4" md="3">
-              <!--suppress HtmlUnknownTarget -->
+          <!-- <v-row align="center" justify="space-around">
+            <v-col cols="6" sm="3" md="2">
               <v-img :src="image_center_src" width="100%" contain />
             </v-col>
-          </v-row>
+          </v-row> -->
           <v-divider class="mini-divider my-3 mx-auto"></v-divider>
           <section>
             <v-row align="center" justify="center">
