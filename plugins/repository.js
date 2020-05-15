@@ -90,7 +90,7 @@ export default (ctx, inject) => {
     repositoryWithAxios(urlCity, 'Cidade', [
       getField({
         field: 'id',
-        label: '#'
+        label: 'ID'
       }),
       getField({
         field: 'name',
@@ -109,12 +109,17 @@ export default (ctx, inject) => {
         field: 'uf',
         label: 'UF',
         allowForm: true,
+        allowGrid: false,
         form: {
           type: fieldTypeTextTag,
           sm: 8,
           rules: [rules.required],
           maxlength: 255
         }
+      }),
+      getField({
+        field: 'uf__initials',
+        label: 'UF'
       }),
       getField({
         field: '_actions',
@@ -132,7 +137,7 @@ export default (ctx, inject) => {
       }),
       getField({
         field: 'customer',
-        label: 'cliente?',
+        label: 'Cliente?',
         type: 'boolean',
         allowForm: true,
         form: {
@@ -143,7 +148,7 @@ export default (ctx, inject) => {
       }),
       getField({
         field: 'supplier',
-        label: 'fornecedor?',
+        label: 'Fornecedor?',
         type: 'boolean',
         allowForm: true,
         form: { type: fieldTypeCheckTag, xs: 6 }
@@ -152,7 +157,12 @@ export default (ctx, inject) => {
         field: 'name',
         label: 'Nome',
         allowForm: true,
-        form: { type: fieldTypeTextTag, required: true, rules: [rules.required], maxlength: 60 }
+        form: {
+          type: fieldTypeTextTag,
+          required: true,
+          rules: [rules.required],
+          max_length: 60
+        }
       }),
       getField({
         field: 'person_type',

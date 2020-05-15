@@ -42,6 +42,7 @@ export default ($axios) => (resource, title, fields) => ({
       .filter((f) => f.allowForm)
       .map((m) => ({
         ...m.form,
+        type: m.type,
         field: m.field,
         label: m.label,
         choices: m.choices

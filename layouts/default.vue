@@ -15,7 +15,7 @@
       </v-container>
     </v-content>
 
-    <c-footer :clipped="clipped" :is-dark="true" />
+    <c-footer :is-dark="true" />
   </v-app>
 </template>
 
@@ -50,6 +50,11 @@ export default {
           icon: 'mdi-border-color',
           title: 'Unidades federativas',
           to: '/federative-unit'
+        },
+        {
+          icon: 'mdi-border-color',
+          title: 'Cidades',
+          to: '/city'
         },
         {
           icon: 'mdi-border-color',

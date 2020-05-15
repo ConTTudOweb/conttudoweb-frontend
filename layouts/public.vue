@@ -22,7 +22,7 @@
       </v-btn>
       <nuxt />
     </v-content>
-    <c-footer :clipped="clipped" />
+    <c-footer />
   </v-app>
 </template>
 

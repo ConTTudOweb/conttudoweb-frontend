@@ -34,137 +34,208 @@
         <v-toolbar flat>
           <v-toolbar-title v-text="title" />
           <v-spacer></v-spacer>
-          <v-dialog v-model="dialog" fullscreen scrollable>
-            <template v-slot:activator="{ on }">
-              <v-btn color="primary" v-on="on"
-                ><v-icon>mdi-plus-circle</v-icon>Adicionar</v-btn
-              >
-            </template>
-            <v-form ref="form" v-model="validateForm" @submit.prevent="save">
-              <v-card title>
-                <v-toolbar flat color="primary">
-                  <v-btn icon @click="dialog = false">
-                    <v-icon>mdi-close</v-icon>
-                  </v-btn>
-                  <v-toolbar-title
-                    >{{ title }}<br />
-                    <small>{{ formTitle }}</small></v-toolbar-title
-                  >
-                  <v-spacer></v-spacer>
-                  <v-toolbar-items>
-                    <v-btn
-                      :loading="loading"
-                      :disabled="!validateForm"
-                      color="blue darken-1"
-                      text
-                      type="submit"
-                    >
-                      Salvar
-                    </v-btn>
-                  </v-toolbar-items>
-                </v-toolbar>
+          <v-btn color="primary" outlined :to="$route.path + '/add'">
+            <v-icon>mdi-plus-circle</v-icon>
+            <span v-if="$vuetify.breakpoint.smAndUp">Adicionar</span>
+          </v-btn>
+          <!--<v-dialog v-model="dialog" fullscreen scrollable>-->
+          <!--  <template v-slot:activator="{ on }">-->
+          <!--    <v-btn color="primary" outlined v-on="on">-->
+          <!--      <v-icon>mdi-plus-circle</v-icon>-->
+          <!--      <span v-if="$vuetify.breakpoint.smAndUp">Adicionar</span>-->
+          <!--    </v-btn>-->
+          <!--  </template>-->
+          <!--  <v-form ref="form" v-model="validateForm" @submit.prevent="save">-->
+          <!--    <v-card title>-->
+          <!--      <v-toolbar flat color="primary">-->
+          <!--        <v-btn icon @click="dialog = false">-->
+          <!--          <v-icon>mdi-close</v-icon>-->
+          <!--        </v-btn>-->
+          <!--        <v-toolbar-title-->
+          <!--          >{{ title }}<br />-->
+          <!--          <small>{{ formTitle }}</small>-->
+          <!--        </v-toolbar-title>-->
+          <!--        <v-spacer></v-spacer>-->
+          <!--        <v-toolbar-items>-->
+          <!--          <v-btn-->
+          <!--            :loading="loading"-->
+          <!--            :disabled="!validateForm"-->
+          <!--            color="blue darken-1"-->
+          <!--            text-->
+          <!--            type="submit"-->
+          <!--          >-->
+          <!--            Salvar-->
+          <!--          </v-btn>-->
+          <!--        </v-toolbar-items>-->
+          <!--      </v-toolbar>-->
 
-                <v-card-text>
-                  <v-container>
-                    <v-row>
-                      <v-col
-                        v-for="(f, i) in repository.formFields()"
-                        :key="i"
-                        :cols="f.xs || 12"
-                        :sm="f.sm"
-                        :md="f.md"
-                        :lg="f.lg"
-                        :xl="f.xl"
-                      >
-                        <v-text-field
-                          v-if="f.type === 'v-text-field'"
-                          v-model="form[f.field]"
-                          :rules="f.rules"
-                          :label="f.label"
-                          :required="f.required"
-                          :maxlength="f.maxlength"
-                          :autofocus="f.autofocus"
-                          placeholder=" "
-                          hide-details="auto"
-                          class="my-field"
-                          v-bind="propsFields"
-                        ></v-text-field>
-                        <v-autocomplete
-                          v-if="f.type === 'v-autocomplete'"
-                          v-model="form[f.field]"
-                          :items="cities"
-                          :rules="f.rules"
-                          :label="f.label"
-                          :autofocus="f.autofocus"
-                          item-text="name"
-                          item-value="id"
-                          placeholder=" "
-                          hide-details="auto"
-                          class="my-field"
-                          v-bind="propsFields"
-                        ></v-autocomplete>
-                        <v-checkbox
-                          v-else-if="f.type === 'v-checkbox'"
-                          v-model="form[f.field]"
-                          :rules="f.rules"
-                          :label="f.label"
-                          :autofocus="f.autofocus"
-                          class="my-field"
-                          v-bind="propsFields"
-                        ></v-checkbox>
-                        <v-radio-group
-                          v-else-if="f.type === 'v-radio-group'"
-                          v-model="form[f.field]"
-                          :rules="f.rules"
-                          :label="f.label"
-                          :autofocus="f.autofocus"
-                          class="my-field"
-                          v-bind="propsFields"
-                          :row="$vuetify.breakpoint.smAndUp"
-                        >
-                          <v-radio
-                            v-for="c in f.choices"
-                            :key="`${i}-${c.value}`"
-                            :label="c.display_name"
-                            :value="c.value"
-                          ></v-radio>
-                        </v-radio-group>
-                      </v-col>
-                    </v-row>
-                  </v-container>
-                </v-card-text>
-                <v-card-actions>
-                  <c-breakpoint />
-                  <v-spacer></v-spacer>
-                  <v-btn
-                    :disabled="loading"
-                    color="red darken-1"
-                    text
-                    @click="close"
-                  >
-                    Cancelar
-                  </v-btn>
-                  <v-btn
-                    :loading="loading"
-                    :disabled="!validateForm"
-                    color="blue darken-1"
-                    text
-                    type="submit"
-                  >
-                    Salvar
-                  </v-btn>
-                </v-card-actions>
-              </v-card>
-            </v-form>
-          </v-dialog>
+          <!--      <v-card-text>-->
+          <!--        <v-container>-->
+          <!--          <v-row>-->
+          <!--            <v-col cols="6">-->
+          <!--              <v-checkbox-->
+          <!--                ref="firstItem"-->
+          <!--                v-model="form.customer"-->
+          <!--                label="Cliente?"-->
+          <!--                v-bind="propsFields"-->
+          <!--              />-->
+          <!--            </v-col>-->
+          <!--            <v-col cols="6">-->
+          <!--              <v-checkbox-->
+          <!--                v-model="form.supplier"-->
+          <!--                label="Fornecedor?"-->
+          <!--                v-bind="propsFields"-->
+          <!--              />-->
+          <!--            </v-col>-->
+          <!--            <v-col cols="12">-->
+          <!--              <v-text-field-->
+          <!--                v-model="form.name"-->
+          <!--                label="Nome"-->
+          <!--                :rules="[rules.required]"-->
+          <!--                v-bind="propsFields"-->
+          <!--                maxlength="60"-->
+          <!--                class="required"-->
+          <!--              />-->
+          <!--            </v-col>-->
+          <!--            <v-col cols="12">-->
+          <!--              <v-radio-group-->
+          <!--                v-model="form.person_type"-->
+          <!--                label="Tipo"-->
+          <!--                v-bind="propsFields"-->
+          <!--                :row="$vuetify.breakpoint.smAndUp"-->
+          <!--              >-->
+          <!--                <v-radio label="Pessoa Física" value="F"></v-radio>-->
+          <!--                <v-radio label="Pessoa Jurídica" value="J"></v-radio>-->
+          <!--              </v-radio-group>-->
+          <!--            </v-col>-->
+          <!--            <v-col cols="12" sm="6">-->
+          <!--              <v-text-field-->
+          <!--                v-model="form.federation_subscription_number"-->
+          <!--                label="CPF/CNPJ"-->
+          <!--                v-bind="propsFields"-->
+          <!--                maxlength="18"-->
+          <!--              />-->
+          <!--            </v-col>-->
+          <!--            <v-col cols="12" sm="6">-->
+          <!--              <v-text-field-->
+          <!--                v-model="form.state_subscription_number"-->
+          <!--                label="RG/IE"-->
+          <!--                v-bind="propsFields"-->
+          <!--                maxlength="18"-->
+          <!--              />-->
+          <!--            </v-col>-->
+          <!--            <v-col cols="12" sm="6">-->
+          <!--              <v-text-field-->
+          <!--                v-model="form.phone"-->
+          <!--                label="Telefone"-->
+          <!--                v-bind="propsFields"-->
+          <!--                maxlength="20"-->
+          <!--              />-->
+          <!--            </v-col>-->
+          <!--            <v-col cols="12" sm="6">-->
+          <!--              <v-text-field-->
+          <!--                v-model="form.email"-->
+          <!--                label="E-mail"-->
+          <!--                :rules="[rules.email]"-->
+          <!--                v-bind="propsFields"-->
+          <!--                maxlength="254"-->
+          <!--              />-->
+          <!--            </v-col>-->
+          <!--            <v-col cols="6">-->
+          <!--              <v-text-field-->
+          <!--                v-model="form.zip_code"-->
+          <!--                label="CEP"-->
+          <!--                v-bind="propsFields"-->
+          <!--                maxlength="10"-->
+          <!--              />-->
+          <!--            </v-col>-->
+          <!--            <v-col cols="12" sm="10">-->
+          <!--              <v-text-field-->
+          <!--                v-model="form.address"-->
+          <!--                label="Logradouro"-->
+          <!--                v-bind="propsFields"-->
+          <!--                maxlength="255"-->
+          <!--              />-->
+          <!--            </v-col>-->
+          <!--            <v-col cols="12" sm="2">-->
+          <!--              <v-text-field-->
+          <!--                v-model="form.address_number"-->
+          <!--                label="Número"-->
+          <!--                v-bind="propsFields"-->
+          <!--                maxlength="60"-->
+          <!--              />-->
+          <!--            </v-col>-->
+          <!--            <v-col cols="12" sm="6">-->
+          <!--              <v-text-field-->
+          <!--                v-model="form.complement"-->
+          <!--                label="Complemento"-->
+          <!--                v-bind="propsFields"-->
+          <!--                maxlength="60"-->
+          <!--              />-->
+          <!--            </v-col>-->
+          <!--            <v-col cols="12" sm="6">-->
+          <!--              <v-text-field-->
+          <!--                v-model="form.neighborhood"-->
+          <!--                label="Bairro"-->
+          <!--                v-bind="propsFields"-->
+          <!--                maxlength="60"-->
+          <!--              />-->
+          <!--            </v-col>-->
+          <!--            <v-col cols="12">-->
+          <!--              <v-autocomplete-->
+          <!--                v-model="form.city"-->
+          <!--                label="Cidade"-->
+          <!--                v-bind="propsFields"-->
+          <!--                :items="cities"-->
+          <!--                item-text="name"-->
+          <!--                item-value="id"-->
+          <!--              ></v-autocomplete>-->
+          <!--            </v-col>-->
+          <!--            <v-col cols="12">-->
+          <!--              <v-textarea-->
+          <!--                v-model="form.observation"-->
+          <!--                label="Observação"-->
+          <!--                v-bind="propsFields"-->
+          <!--              ></v-textarea>-->
+          <!--            </v-col>-->
+          <!--          </v-row>-->
+          <!--        </v-container>-->
+          <!--      </v-card-text>-->
+          <!--      <v-card-actions>-->
+          <!--        <div class="required">-->
+          <!--          <small><label></label> Campos obrigatórios.</small>-->
+          <!--        </div>-->
+          <!--        <v-spacer></v-spacer>-->
+          <!--        <c-breakpoint /><v-spacer></v-spacer>-->
+          <!--        <v-btn-->
+          <!--          :disabled="loading"-->
+          <!--          color="red darken-1"-->
+          <!--          tabindex="-1"-->
+          <!--          text-->
+          <!--          @click="close"-->
+          <!--        >-->
+          <!--          Cancelar-->
+          <!--        </v-btn>-->
+          <!--        <v-btn-->
+          <!--          :loading="loading"-->
+          <!--          :disabled="!validateForm"-->
+          <!--          color="blue darken-1"-->
+          <!--          text-->
+          <!--          type="submit"-->
+          <!--        >-->
+          <!--          Salvar-->
+          <!--        </v-btn>-->
+          <!--      </v-card-actions>-->
+          <!--    </v-card>-->
+          <!--  </v-form>-->
+          <!--</v-dialog>-->
         </v-toolbar>
       </template>
       <template v-slot:item._actions="{ item }">
         <v-tooltip top>
           <template v-slot:activator="{ on }">
             <v-icon
-              small
-              class="mx-1"
+              class="ma-2"
               color="yellow darken-2"
               @click="editItem(item)"
               v-on="on"
@@ -178,7 +249,7 @@
           <template v-slot:activator="{ on }">
             <v-icon
               small
-              class="mx-1"
+              class="ma-2"
               color="red lighten-2"
               @click="deleteItem(item)"
               v-on="on"
@@ -194,122 +265,26 @@
 </template>
 
 <script>
-import CBreakpoint from '~/components/application/Breakpoint'
-import fieldsMixin from '~/mixins/fields'
+// import CBreakpoint from '~/components/application/Breakpoint'
+// import fieldsMixin from '~/mixins/fields'
+import crudMixin from '~/mixins/crud'
+import gridMixin from '~/mixins/grid'
+// import CFieldForm from '~/components/fieldForm'
 
 export default {
   components: {
-    CBreakpoint
+    // CBreakpoint
+    // CFieldForm
   },
-  mixins: [fieldsMixin],
+  mixins: [crudMixin, gridMixin],
   async fetch() {
-    await this.load()
+    await this.loadData()
     this.cities = await this.$nuxt.context.app.$cityRepository.index()
   },
   data() {
     return {
-      // propsFields: {
-      //   outlined: true,
-      //   dense: true
-      // },
       repository: this.$nuxt.context.app.$peopleRepository,
-      title: 'Cliente / Fornecedor',
-      headers: [
-        {
-          value: 'id',
-          text: 'ID',
-          sortable: true
-        },
-        {
-          value: 'customer',
-          text: 'CLIENTE?',
-          sortable: true
-        },
-        {
-          value: 'supplier',
-          text: 'FORNECEDOR?',
-          sortable: true
-        },
-        {
-          value: 'name',
-          text: 'NOME',
-          sortable: true
-        },
-        {
-          value: 'phone',
-          text: 'TELEFONE',
-          sortable: true
-        },
-        {
-          value: 'email',
-          text: 'EMAIL',
-          sortable: true
-        },
-        {
-          value: '_actions',
-          text: '',
-          sortable: false
-        }
-      ],
-      items: [],
-      cities: [],
-      dialog: false,
-      form: {},
-      validateForm: false,
-      loading: false,
-      booleanFieldsSlots: ['customer', 'supplier']
-    }
-  },
-  computed: {
-    formTitle() {
-      return this.editedIndex === -1 ? 'Novo Item' : 'Editar Item'
-    }
-  },
-  methods: {
-    getItemSlot(field) {
-      return `item.${field}`
-    },
-    async load() {
-      this.items = await this.repository.index()
-    },
-    close() {
-      this.dialog = false
-    },
-    async save() {
-      if (this.$refs.form.validate()) {
-        this.loading = true
-        try {
-          if (this.editedIndex > -1) {
-            await this.repository.update(this.form.id, this.form)
-          } else {
-            await this.repository.create(this.form)
-          }
-          await this.load()
-          this.loading = false
-          this.close()
-          this.$toasted.global.success_save()
-        } catch (e) {
-          this.loading = false
-          this.$toast.global.error_save(e)
-        }
-      }
-    },
-    editItem(item) {
-      this.editedIndex = this.items.indexOf(item)
-      this.form = Object.assign({}, item)
-      this.dialog = true
-    },
-    async deleteItem(item) {
-      const id = item.id
-      if (confirm(`Tem certeza que deseja deletar o registro de ID: ${id}?`)) {
-        await this.repository.delete(id)
-        await this.load()
-      }
-    }
-  },
-  head() {
-    return {
-      title: this.title
+      cities: []
     }
   }
 }

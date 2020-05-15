@@ -1,6 +1,6 @@
 <template>
   <v-footer
-    :inset="!clipped"
+    :inset="true"
     :dark="isDark"
     absolute
     padless
@@ -30,13 +30,7 @@
 <script>
 export default {
   props: {
-    clipped: Boolean,
     isDark: Boolean
-  },
-  data() {
-    return {
-      // icons: ['mdi-facebook', 'mdi-instagram', 'mdi-linkedin', 'mdi-whatsapp']
-    }
   }
 }
 </script>
