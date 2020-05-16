@@ -16,7 +16,7 @@
       <v-card-text>
         <v-container>
           <v-row>
-            <v-col cols="2">
+            <v-col cols="6" sm="2">
               <v-text-field
                 v-model="form.initials"
                 label="Sigla"
@@ -27,7 +27,7 @@
                 autofocus
               />
             </v-col>
-            <v-col cols="10">
+            <v-col cols="12" sm="10">
               <v-text-field
                 v-model="form.name"
                 label="Nome"

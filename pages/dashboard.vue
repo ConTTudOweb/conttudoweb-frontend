@@ -1,10 +1,14 @@
 <template>
   <v-layout column justify-center align-center>
     <v-flex xs12 sm8 md6>
-      <div class="text-center">
-        <!--        <logo />-->
+      <!--<div class="text-center">
         <vuetify-logo />
-      </div>
+      </div>-->
+      <v-card outlined>
+        <v-card-title class="headline">
+          Bem vindo!!!
+        </v-card-title>
+      </v-card>
       <!--      <v-card>-->
       <!--        <v-card-title class="headline">-->
       <!--          Welcome to the Vuetify + Nuxt.js template-->
@@ -64,12 +68,12 @@
 
 <script>
 // import Logo from '~/components/Logo.vue'
-import VuetifyLogo from '~/components/VuetifyLogo.vue'
+// import VuetifyLogo from '~/components/VuetifyLogo.vue'
 
 export default {
-  components: {
-    // Logo,
-    VuetifyLogo
-  }
+  // components: {
+  //   Logo,
+  //   VuetifyLogo
+  // }
 }
 </script>
