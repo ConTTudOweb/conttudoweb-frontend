@@ -63,7 +63,7 @@ export default {
         message: (payload) => {
           // if there is no message passed show default message
           if (!payload.message) {
-            return 'Oops...Algo deu errado! :('
+            return `Oops...Algo deu errado! :(\n${payload}`
           }
 
           // if there is a message show it with the message
