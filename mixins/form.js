@@ -43,7 +43,7 @@ export default {
           this.$router.push({ name: this.name })
         } catch (e) {
           this.loading = false
-          this.$toast.global.error_save(e)
+          this.$toast.global.error_save(e + this.form.id + this.form.name + this.form.uf)
         }
       }
     }

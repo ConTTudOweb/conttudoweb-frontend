@@ -31,10 +31,12 @@
               <v-autocomplete
                 v-model="form.uf"
                 label="UF"
+                :rules="[rules.required]"
                 v-bind="propsFields"
                 :items="ufs"
                 item-text="name"
                 item-value="id"
+                class="required"
               ></v-autocomplete>
             </v-col>
           </v-row>
