@@ -34,6 +34,8 @@
                 :rules="[rules.required]"
                 v-bind="propsFields"
                 :items="ufs"
+                item-text="name"
+                item-value="id"
                 class="required"
               ></v-autocomplete>
             </v-col>
@@ -50,7 +52,6 @@
         <c-btn-save :loading="loading" :disabled="!validateForm" />
       </v-card-actions>
     </v-card>
-    ufs: {{ ufs }}
   </v-form>
 </template>
 
@@ -77,14 +78,14 @@ export default {
       this.form = await this.repository.show(id)
     }
     this.loadTitle()
-    this.ufs = await this.$nuxt.context.app.$federativeUnitRepository.lookup()
+    this.ufs = await this.$nuxt.context.app.$federativeUnitRepository.index()
     // this.test = await this.$nuxt.context.app.$federativeUnitRepository.lookup()
   },
   data() {
     return {
       repository: this.$nuxt.context.app.$cityRepository,
       name: 'city',
-      ufs: [],
+      ufs: []
       // test: []
     }
   }

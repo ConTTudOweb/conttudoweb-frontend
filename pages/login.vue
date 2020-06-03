@@ -38,7 +38,12 @@
             </v-card-text>
             <v-card-actions>
               <v-spacer />
-              <v-btn type="submit" color="primary" :disabled="!isValid" :loading="loading">
+              <v-btn
+                type="submit"
+                color="primary"
+                :disabled="!isValid"
+                :loading="loading"
+              >
                 Login
               </v-btn>
             </v-card-actions>

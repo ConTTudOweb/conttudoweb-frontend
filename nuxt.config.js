@@ -8,6 +8,10 @@ require('dotenv').config()
 export default {
   mode: 'spa',
 
+  generate: {
+    fallback: true
+  },
+
   watch: ['~/config/*.js'],
 
   head,

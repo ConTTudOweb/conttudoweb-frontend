@@ -5,11 +5,11 @@ export default ($axios) => (resource, title, fields) => ({
     return $axios.$get(`${resource}/`)
   },
 
-  lookup() {
-    return this.index().then((data) => {
-      return data.map(({ id, name }) => ({ value: id, text: name }))
-    })
-  },
+  // lookup() {
+  //   return this.index().then((data) => {
+  //     return data.map(({ id, name }) => ({ value: id, text: name }))
+  //   })
+  // },
 
   show(id) {
     return $axios.$get(`${resource}/${id}/`)
