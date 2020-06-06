@@ -4,6 +4,7 @@
     <v-data-table
       :items="items"
       :headers="headers"
+      :options.sync="options"
       :loading="$fetchState.pending"
       class="my-table-grid-list"
     >
@@ -39,6 +40,7 @@
               color="red lighten-2"
               @click="deleteItem(item)"
               v-on="on"
+              :disabled="false"
             >
               mdi-delete
             </v-icon>

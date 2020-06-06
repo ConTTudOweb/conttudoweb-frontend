@@ -60,6 +60,7 @@ export default {
     keepOnHover: true,
     theme: 'bubble',
     iconPack: 'mdi',
+    allowHtml: true,
     register: [
       // Register custom toasts
       {
@@ -67,9 +68,23 @@ export default {
         message: (payload) => {
           // if there is no message passed show default message
           if (!payload.message) {
-            return `Oops...Algo deu errado! :(\n${payload}`
+            return `Oops... Algo deu errado! :(<br />${payload}`
           }
-
+          // if there is a message show it with the message
+          return payload.message
+        },
+        options: {
+          type: 'error',
+          icon: 'message-alert'
+        }
+      },
+      {
+        name: 'error_delete',
+        message: (payload) => {
+          // if there is no message passed show default message
+          if (!payload.message) {
+            return `Oops... Algo deu errado! :(<br />${payload}`
+          }
           // if there is a message show it with the message
           return payload.message
         },
@@ -85,7 +100,21 @@ export default {
           if (!payload.message) {
             return 'Registro salvo!'
           }
-
+          // if there is a message show it with the message
+          return payload.message
+        },
+        options: {
+          type: 'success',
+          icon: 'check'
+        }
+      },
+      {
+        name: 'success_delete',
+        message: (payload) => {
+          // if there is no message passed show default message
+          if (!payload.message) {
+            return 'Registro apagado!'
+          }
           // if there is a message show it with the message
           return payload.message
         },

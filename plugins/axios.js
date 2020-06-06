@@ -14,7 +14,8 @@ export default function({ $axios, store }) {
 
     // Check is network error
     if (!response) {
-      throw new Error(error.message)
+      // throw new Error(error.message)
+      throw 'Erro de conexão!'
     }
 
     const { status } = response
@@ -23,7 +24,7 @@ export default function({ $axios, store }) {
     //   await store.dispatch('auth/doSignOut')
     // }
 
-    const checkStatus = status === 400 || status === 404 || status === 500
+    const checkStatus = status === 400 || status === 404 || status === 500 || status === 403
 
     if (checkStatus) {
       const { data } = response
@@ -35,7 +36,8 @@ export default function({ $axios, store }) {
           })
         } else {
           // eslint-disable-next-line unicorn/prefer-type-error
-          throw new Error(`${m}: ${data[m]}`)
+          // throw new Error(`${m}: ${data[m]}`)
+          throw new Error(`${data[m]}`)
         }
       })
     }

@@ -4,6 +4,7 @@
     <v-data-table
       :items="items"
       :headers="headers"
+      :options.sync="options"
       :loading="$fetchState.pending"
       class="my-table-grid-list"
     >

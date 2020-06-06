@@ -1,15 +1,28 @@
 // Provide nuxt-axios instance to use same configuration across the whole project
 // I've used typical CRUD method names and actions here
 export default ($axios) => (resource, title, fields) => ({
-  index() {
-    return $axios.$get(`${resource}/`)
+  index(page, itemsPerPage) {
+    let url = `${resource}/`;
+    let params;
+    if (page) {
+      if (params) {
+        params += '&'
+      }
+      params += `page=${page}`
+    }
+    if (itemsPerPage) {
+      if (params) {
+        params += '&'
+      }
+      params += `page_size=${itemsPerPage}`
+    }
+    if (params) {
+      url += `?${params}`
+    }
+    return $axios.$get(url).then((result) => {
+      return result.results
+    })
   },
-
-  // lookup() {
-  //   return this.index().then((data) => {
-  //     return data.map(({ id, name }) => ({ value: id, text: name }))
-  //   })
-  // },
 
   show(id) {
     return $axios.$get(`${resource}/${id}/`)

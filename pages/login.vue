@@ -3,7 +3,7 @@
     <v-row align="center" justify="center">
       <v-col cols="12" sm="8" md="6" lg="4" xl="3">
         <v-card class="elevation-12">
-          <v-toolbar color="primary" dark flat>
+          <v-toolbar dark flat>
             <v-toolbar-title>Acessar</v-toolbar-title>
           </v-toolbar>
           <v-form v-model="isValid" @submit.prevent="userLogin">

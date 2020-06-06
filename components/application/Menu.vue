@@ -1,12 +1,10 @@
 <template>
   <v-navigation-drawer
     v-model="drawer"
-    :mini-variant="miniVariant"
     :clipped="clipped"
-    fixed
+    temporary
     app
-    :dark="false"
-    color="primary darken-4"
+    dark
   >
     <v-list nav dense class="py-0">
       <v-divider :inset="false" class="py-1"></v-divider>
@@ -37,10 +35,10 @@ export default {
       default: () => []
     },
     clipped: Boolean,
-    miniVariant: {
-      type: Boolean,
-      default: () => false
-    },
+    // miniVariant: {
+    //   type: Boolean,
+    //   default: () => false
+    // },
     isDark: Boolean
   },
   data() {
