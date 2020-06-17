@@ -77,6 +77,14 @@ export default {
       passwordRules: [(v) => !!v || 'Senha obrigatória']
     }
   },
+  created() {
+    if (this.$store.state.subDomain === 'demo') {
+      this.credentials = {
+        username: 'admin@admin.com',
+        password: 'adminadmin'
+      }
+    }
+  },
   methods: {
     async userLogin() {
       try {
