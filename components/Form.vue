@@ -1,5 +1,5 @@
 <template>
-  <v-card shaped>
+  <v-card outlined>
     <v-toolbar flat dark>
       <v-toolbar-title>
         {{ title }}<br />

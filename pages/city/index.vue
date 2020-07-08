@@ -1,10 +1,13 @@
 <template>
   <section class="city">
     <c-fetch-error :fetch-state="$fetchState" />
+
     <v-data-table
       :items="items"
       :headers="headers"
       :options.sync="options"
+      :server-items-length="totalItems"
+      :search="search"
       :loading="$fetchState.pending"
       class="my-table-grid-list"
     >
@@ -16,6 +19,17 @@
             <v-icon>mdi-plus-circle</v-icon>
             <span v-if="$vuetify.breakpoint.smAndUp">Adicionar</span>
           </v-btn>
+
+          <template v-slot:extension>
+            <v-text-field
+              v-model="search"
+              append-icon="mdi-magnify"
+              label="Pesquisar"
+              single-line
+              hide-details
+            ></v-text-field>
+          </template>
+
         </v-toolbar>
       </template>
       <template v-slot:item._actions="{ item }">

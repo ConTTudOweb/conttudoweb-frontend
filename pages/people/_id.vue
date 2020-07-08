@@ -163,7 +163,8 @@ export default {
       this.form = await this.repository.show(id)
     }
     this.loadTitle()
-    this.cities = await this.$nuxt.context.app.$cityRepository.index()
+    const { results } = await this.$nuxt.context.app.$cityRepository.index()
+    this.cities = results
   },
   data() {
     return {

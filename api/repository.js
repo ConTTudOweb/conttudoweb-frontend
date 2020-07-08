@@ -1,9 +1,9 @@
 // Provide nuxt-axios instance to use same configuration across the whole project
 // I've used typical CRUD method names and actions here
 export default ($axios) => (resource, title, fields) => ({
-  index(page, itemsPerPage) {
+  index(page, itemsPerPage, sortBy, sortDesc, search) {
     let url = `${resource}/`;
-    let params;
+    let params = '';
     if (page) {
       if (params) {
         params += '&'
@@ -16,11 +16,30 @@ export default ($axios) => (resource, title, fields) => ({
       }
       params += `page_size=${itemsPerPage}`
     }
+
+    if (sortBy) {
+      if (params) {
+        params += '&'
+      }
+      if (sortDesc[0]) {
+        sortBy = `-${sortBy}`
+      }
+      params += `ordering=${sortBy}`
+    }
+
+    if (search) {
+      if (params) {
+        params += '&'
+      }
+      params += `search=${search}`
+    }
+
     if (params) {
       url += `?${params}`
     }
     return $axios.$get(url).then((result) => {
-      return result.results
+      // return result.results
+      return result
     })
   },
 

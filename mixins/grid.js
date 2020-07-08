@@ -3,7 +3,9 @@ export default {
     return {
       headers: [],
       items: [],
-      options: {}
+      totalItems: 0,
+      options: {},
+      search: ''
     }
   },
   watch: {
@@ -13,22 +15,23 @@ export default {
       },
       deep: true,
     },
+    search: {
+      async handler() {
+        await this.load()
+      },
+      deep: true,
+    },
   },
   methods: {
     async load() {
-      console.log('load...')
       const { sortBy, sortDesc, page, itemsPerPage } = this.options
-      console.log('sortBy'+sortBy)
-      console.log('sortDesc'+sortDesc)
-      console.log('page'+page)
-      console.log('itemsPerPage'+itemsPerPage)
-      this.items = await this.repository.index(page, itemsPerPage)
+      const { results, count } = await this.repository.index(page, itemsPerPage, sortBy, sortDesc, this.search)
+      this.items = results
+      this.totalItems = count
     },
     async loadData() {
-      // this.title = this.repository.props().title
       this.loadTitle()
       this.headers = this.repository.displayFields()
-      // this.fields = this.repository.formFields()
       this.booleanFieldsSlots = this.repository.booleanDisplayFields()
       await this.load()
     },
