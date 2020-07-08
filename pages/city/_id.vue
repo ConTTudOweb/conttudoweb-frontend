@@ -59,7 +59,8 @@ export default {
       this.form = await this.repository.show(id)
     }
     this.loadTitle()
-    this.ufs = await this.$nuxt.context.app.$federativeUnitRepository.index()
+    const { results } = await this.$nuxt.context.app.$federativeUnitRepository.index()
+      this.ufs = results
   },
   data() {
     return {

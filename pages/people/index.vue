@@ -88,12 +88,12 @@ export default {
   mixins: [crudMixin, gridMixin],
   async fetch() {
     await this.loadData()
-    this.cities = await this.$nuxt.context.app.$cityRepository.index()
+    // this.cities = await this.$nuxt.context.app.$cityRepository.index()
   },
   data() {
     return {
       repository: this.$nuxt.context.app.$peopleRepository,
-      cities: []
+      // cities: []
     }
   }
 }
