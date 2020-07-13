@@ -1,5 +1,5 @@
 <template>
-  <v-container class="fill-height secondary" fluid>
+  <v-container class="fill-height" fluid>
     <v-row align="center" justify="center">
       <v-col cols="12" sm="8" md="6" lg="4" xl="3">
         <v-card
@@ -53,7 +53,7 @@
               <v-spacer />
               <v-btn
                 type="submit"
-                color="primary"
+                color="success"
                 :disabled="!isValid"
                 :loading="loading"
               >
