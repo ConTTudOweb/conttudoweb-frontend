@@ -15,6 +15,12 @@
 
 <script>
 export default {
-  props: ['fetchState']
+  // props: ['fetchState']
+  props: {
+    fetchState: {
+      type: Object,
+      required: true
+    }
+  }
 }
 </script>

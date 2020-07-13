@@ -16,7 +16,9 @@ module.exports = {
   ],
   // add your custom rules here
   rules: {
-    'vue/no-v-html': 'off'
+    'vue/no-v-html': 'off',
+    'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
   },
   settings: {
     'import/core-modules': ['vue', 'vuex'] // these modules are included in nuxt.js

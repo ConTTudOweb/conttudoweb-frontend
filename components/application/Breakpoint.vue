@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="my-auto">
     <small class="font-weight-thin">
       <i
         >[{{ $vuetify.breakpoint.name }}] / [{{ $vuetify.breakpoint.width }} x

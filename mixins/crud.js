@@ -37,7 +37,7 @@ export default {
     // },
     loadTitle() {
       this.title = this.repository.props().title
-    },
+    }
     // async loadData() {
     //   // this.title = this.repository.props().title
     //   this.loadTitle()

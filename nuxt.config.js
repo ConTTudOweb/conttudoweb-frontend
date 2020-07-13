@@ -1,6 +1,5 @@
-import colors from 'vuetify/es5/util/colors'
 import pt from 'vuetify/es5/locale/pt'
-import light from './plugins/vuetify/light_theme.js'
+// import light from './plugins/vuetify/light_theme.js'
 import head from './config/head'
 
 require('dotenv').config()
@@ -22,7 +21,10 @@ export default {
   /*
    ** Global CSS
    */
-  css: ['@assets/custom.scss'],
+  css: [
+    '@assets/custom.scss'
+    // { src: '@assets/overrides.sass', lang: 'sass' }
+  ],
   /*
    ** Plugins to load before mounting the App
    */
@@ -30,7 +32,8 @@ export default {
     '~/plugins/vue-inject',
     '~/plugins/tenant',
     '~/plugins/axios',
-    '~/plugins/repository'
+    '~/plugins/repository',
+    '~/plugins/base'
   ],
   /*
    ** Nuxt.js dev-modules
@@ -46,6 +49,29 @@ export default {
    ** Nuxt.js modules
    */
   modules: [
+    ['nuxt-i18n', {
+      lazy: true,
+      locales: [
+        // {
+        //   code: 'en',
+        //   name: 'English',
+        //   iso: 'en-US',
+        //   langFile: 'en_US.js'
+        // },
+        {
+          code: 'pt',
+          name: 'Português',
+          iso: 'pt-BR',
+          file: 'pt-BR.js'
+        }
+      ],
+      loadLanguagesAsync: true,
+      langDir: 'locales/',
+      defaultLocale: 'pt',
+      vueI18n: {
+        fallbackLocale: 'pt'
+      }
+    }],
     '@nuxtjs/toast',
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
@@ -143,11 +169,11 @@ export default {
     watchLoggedIn: true,
     redirect: {
       login: '/login',
-      logout: '/dashboard',
+      logout: '/login',
       callback: '/login',
       home: '/dashboard'
     },
-    localStorage: false,
+    localStorage: true,
     cookie: false
   },
   /*
@@ -163,26 +189,31 @@ export default {
    ** https://github.com/nuxt-community/vuetify-module
    */
   vuetify: {
-    customVariables: ['~/assets/variables.scss'],
-    theme: {
-      dark: false,
-      themes: {
-        light,
-        dark: {
-          primary: colors.blue.darken2,
-          accent: colors.grey.darken3,
-          secondary: colors.amber.darken3,
-          info: colors.teal.lighten1,
-          warning: colors.amber.base,
-          error: colors.deepOrange.accent4,
-          success: colors.green.accent3
-        }
-      }
-    },
-    lang: {
-      locales: { pt },
-      current: 'pt'
-    }
+    customVariables: [
+      '~/assets/variables.scss',
+      '~/assets/overrides.sass',
+      // { src: '~assets/overrides.sass', lang: 'sass' }
+    ],
+    optionsPath: './vuetify.options.js'
+    // theme: {
+    //   dark: false,
+    //   themes: {
+    //     light
+    //     // dark: {
+    //     //   primary: colors.blue.darken2,
+    //     //   accent: colors.grey.darken3,
+    //     //   secondary: colors.amber.darken3,
+    //     //   info: colors.teal.lighten1,
+    //     //   warning: colors.amber.base,
+    //     //   error: colors.deepOrange.accent4,
+    //     //   success: colors.green.accent3
+    //     // }
+    //   }
+    // },
+    // lang: {
+    //   locales: { pt },
+    //   current: 'pt'
+    // }
   },
   router: {
     middleware: ['auth']

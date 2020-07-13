@@ -13,19 +13,25 @@ export default {
       async handler() {
         await this.load()
       },
-      deep: true,
+      deep: true
     },
     search: {
       async handler() {
         await this.load()
       },
-      deep: true,
-    },
+      deep: true
+    }
   },
   methods: {
     async load() {
       const { sortBy, sortDesc, page, itemsPerPage } = this.options
-      const { results, count } = await this.repository.index(page, itemsPerPage, sortBy, sortDesc, this.search)
+      const { results, count } = await this.repository.index(
+        page,
+        itemsPerPage,
+        sortBy,
+        sortDesc,
+        this.search
+      )
       this.items = results
       this.totalItems = count
     },

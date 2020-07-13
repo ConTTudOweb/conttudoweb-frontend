@@ -2,8 +2,8 @@
 // I've used typical CRUD method names and actions here
 export default ($axios) => (resource, title, fields) => ({
   index(page, itemsPerPage, sortBy, sortDesc, search) {
-    let url = `${resource}/`;
-    let params = '';
+    let url = `${resource}/`
+    let params = ''
     if (page) {
       if (params) {
         params += '&'

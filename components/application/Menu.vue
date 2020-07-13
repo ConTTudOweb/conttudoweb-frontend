@@ -4,6 +4,7 @@
     :clipped="clipped"
     temporary
     app
+    class="primary"
     dark
   >
     <v-list nav dense class="py-0">

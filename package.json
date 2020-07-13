@@ -37,6 +37,7 @@
     "@nuxtjs/toast": "^3.3.0",
     "@nuxtjs/vuetify": "^1.11.2",
     "nuxt": "^2.0.0",
+    "nuxt-i18n": "^6.13.1",
     "vuex-persistedstate": "^3.0.1"
   },
   "devDependencies": {

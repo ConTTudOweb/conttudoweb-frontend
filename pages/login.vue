@@ -1,11 +1,24 @@
 <template>
-  <v-container class="fill-height" fluid>
+  <v-container class="fill-height secondary" fluid>
     <v-row align="center" justify="center">
       <v-col cols="12" sm="8" md="6" lg="4" xl="3">
-        <v-card class="elevation-12">
-          <v-toolbar dark flat>
-            <v-toolbar-title>Acessar</v-toolbar-title>
-          </v-toolbar>
+        <v-card
+          class="px-5 py-3 v-card v-sheet theme--light v-card--material--has-heading"
+        >
+          <div class="d-flex grow flex-wrap">
+            <div
+              class="v-card--heading mb-n6 v-sheet theme--dark elevation-6 primary pa-7"
+              style="width: 100%;"
+            >
+              <div class="text-center">
+                <h1 class="display-2 font-weight-bold mb-2">Login</h1>
+              </div>
+            </div>
+          </div>
+
+          <!--<v-toolbar dark flat>-->
+          <!--  <v-toolbar-title>Acessar</v-toolbar-title>-->
+          <!--</v-toolbar>-->
           <v-form v-model="isValid" @submit.prevent="userLogin">
             <v-card-text>
               <v-text-field
@@ -96,7 +109,8 @@ export default {
           .then(() => this.$toast.success('Bem vindo!'))
         this.loading = false
       } catch (error) {
-        this.$toast.error(error)
+        console.error(error)
+        this.$toast.error(error.message)
         this.loading = false
       }
     }

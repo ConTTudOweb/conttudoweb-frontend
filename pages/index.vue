@@ -76,7 +76,6 @@
 </template>
 
 <script>
-// import Breakpoint from '~/components/application/Breakpoint'
 import CardServices from '~/components/site/CardServices'
 
 export default {

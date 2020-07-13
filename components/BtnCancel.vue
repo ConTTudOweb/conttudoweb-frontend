@@ -1,13 +1,14 @@
 <template>
   <v-btn
     :disabled="disabled"
-    color="red darken-1"
+    color="error"
     tabindex="-1"
     text
+    small
     @click="$emit('click')"
   >
     <v-icon small>mdi-cancel</v-icon>
-    <span v-if="$vuetify.breakpoint.smAndUp">Cancelar</span>
+    <span>Cancelar</span>
   </v-btn>
 </template>
 

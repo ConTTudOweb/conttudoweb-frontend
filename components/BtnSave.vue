@@ -2,12 +2,12 @@
   <v-btn
     :loading="loading"
     :disabled="disabled"
-    color="blue darken-1"
-    text
+    color="success"
+    class="mr-0"
     type="submit"
   >
     <v-icon small>mdi-content-save</v-icon>
-    <span v-if="$vuetify.breakpoint.smAndUp">Salvar</span>
+    <span>Salvar</span>
   </v-btn>
 </template>
 

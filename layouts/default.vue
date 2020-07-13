@@ -5,11 +5,11 @@
     <c-header
       :title="title"
       :clipped="clipped"
-      :is-dark="false"
+      :is-dark="true"
       @toggle-drawer="$refs.menu.drawer = !$refs.menu.drawer"
     />
 
-    <v-content>
+    <v-content class="secondary lighten-5">
       <v-container>
         <nuxt />
       </v-container>

@@ -1,6 +1,6 @@
 <template>
   <v-container
-    id="city"
+    id="people"
     fluid
     tag="section"
   >
@@ -24,6 +24,17 @@
         :loading="$fetchState.pending"
         class="my-table-grid-list"
       >
+        <template
+          v-for="(field, i) in booleanFieldsSlots"
+          v-slot:[getItemSlot(field)]="{ item }"
+        >
+          <template v-if="item[field] === true">
+            <v-icon :key="`${i}-${item.id}`" color="green">mdi-check</v-icon>
+          </template>
+          <template v-else>
+            <v-icon :key="`${i}-${item.id}`" color="red">mdi-close</v-icon>
+          </template>
+        </template>
         <template v-slot:top>
           <v-toolbar flat>
             <v-text-field
@@ -55,7 +66,6 @@
                 small
                 class="ma-2"
                 color="red lighten-2"
-                :disabled="false"
                 @click="deleteItem(item)"
                 v-on="on"
               >
@@ -82,15 +92,16 @@ export default {
   mixins: [crudMixin, gridMixin],
   async fetch() {
     await this.loadData()
+    // this.cities = await this.$nuxt.context.app.$cityRepository.index()
   },
   data() {
     return {
-      repository: this.$nuxt.context.app.$cityRepository
+      repository: this.$nuxt.context.app.$peopleRepository
     }
   },
   head() {
     return {
-      title: this.$t('menu.cities')
+      title: this.$t('menu.persons')
     }
   }
 }

@@ -1,40 +1,37 @@
 <template>
-  <v-card outlined>
-    <v-toolbar flat dark>
-      <v-toolbar-title>
-        {{ title }}<br />
-        <small>{{ formTitle }}</small>
-      </v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-toolbar-items>
+  <v-container class="py-0">
+    <slot name="fields" />
+
+    <v-row>
+      <v-col cols="12" sm="6">
+        <span class="required my-auto">
+          <small><label></label> Campos obrigatórios.</small>
+        </span>
+      </v-col>
+      <v-col cols="12" sm="6" class="text-right">
         <slot name="buttons" />
-      </v-toolbar-items>
-    </v-toolbar>
-
-    <v-card-text>
-      <v-container>
-        <slot name="fields" />
-      </v-container>
-    </v-card-text>
-
-    <v-card-actions>
-      <div class="required">
-        <small><label></label> Campos obrigatórios.</small>
-      </div>
-      <v-spacer />
-      <c-breakpoint /><v-spacer />
-      <slot name="buttons" />
-    </v-card-actions>
-  </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
 import CBreakpoint from '~/components/application/Breakpoint'
 
 export default {
-  props: ['title', 'formTitle'],
   components: {
     CBreakpoint
+  },
+  // props: ['title', 'formTitle'],
+  props: {
+    title: {
+      type: String,
+      required: true
+    },
+    formTitle: {
+      type: String,
+      required: true
+    }
   }
 }
 </script>
