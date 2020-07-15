@@ -4,6 +4,9 @@ const baseUrlAPI = '/api'
 const urlFederativeUnit = baseUrlAPI + '/federative-unit'
 const urlCity = baseUrlAPI + '/city'
 const urlPeople = baseUrlAPI + '/people'
+const urlUnitOfMeasure = baseUrlAPI + '/unit-of-measure'
+const urlCategory = baseUrlAPI + '/category'
+const urlSubcategory = baseUrlAPI + '/subcategory'
 
 const rules = {
   required: (value) => !!value || 'Campo obrigatório!',
@@ -257,6 +260,128 @@ export default (ctx, inject) => {
         allowGrid: false,
         allowForm: true,
         form: { type: fieldTypeTextTag }
+      }),
+      getField({
+        field: '_actions',
+        label: '',
+        sortable: false
+      })
+    ])
+  )
+  inject(
+    'unitOfMeasureRepository',
+    repositoryWithAxios(urlUnitOfMeasure, 'Unidade de Medida', [
+      getField({
+        field: 'id',
+        label: '#'
+      }),
+      getField({
+        field: 'initials',
+        label: 'sigla',
+        allowForm: true,
+        form: {
+          type: fieldTypeTextTag,
+          xs: 6,
+          sm: 4,
+          rules: [rules.required],
+          maxlength: 5,
+          autofocus: true
+        }
+      }),
+      getField({
+        field: 'description',
+        label: 'descrição',
+        allowForm: true,
+        form: {
+          type: fieldTypeTextTag,
+          sm: 8,
+          rules: [rules.required],
+          maxlength: 120
+        }
+      }),
+      getField({
+        field: '_actions',
+        label: '',
+        sortable: false
+      })
+    ])
+  )
+  inject(
+    'categoryRepository',
+    repositoryWithAxios(urlCategory, 'Categoria de Produto', [
+      getField({
+        field: 'id',
+        label: '#'
+      }),
+      getField({
+        field: 'code',
+        label: 'código',
+        allowForm: true,
+        form: {
+          type: fieldTypeTextTag,
+          xs: 6,
+          sm: 4,
+          maxlength: 20,
+          autofocus: true
+        }
+      }),
+      getField({
+        field: 'description',
+        label: 'descrição',
+        allowForm: true,
+        form: {
+          type: fieldTypeTextTag,
+          sm: 8,
+          rules: [rules.required],
+          maxlength: 120
+        }
+      }),
+      getField({
+        field: '_actions',
+        label: '',
+        sortable: false
+      })
+    ])
+  )
+  inject(
+    'subcategoryRepository',
+    repositoryWithAxios(urlSubcategory, 'Subcategoria de Produto', [
+      getField({
+        field: 'id',
+        label: '#'
+      }),
+      getField({
+        field: 'code',
+        label: 'código',
+        allowForm: true,
+        form: {
+          type: fieldTypeTextTag,
+          xs: 6,
+          sm: 4,
+          maxlength: 20,
+          autofocus: true
+        }
+      }),
+      getField({
+        field: 'category__description',
+        label: 'categoria'
+      }),
+      getField({
+        field: 'description',
+        label: 'descrição',
+        allowForm: true,
+        form: {
+          type: fieldTypeTextTag,
+          sm: 8,
+          rules: [rules.required],
+          maxlength: 120
+        }
+      }),
+      getField({
+        field: 'category',
+        label: 'categoria',
+        allowForm: true,
+        allowGrid: false
       }),
       getField({
         field: '_actions',

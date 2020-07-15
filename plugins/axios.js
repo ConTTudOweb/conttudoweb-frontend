@@ -24,6 +24,10 @@ export default function({ $axios, store }) {
     //   await store.dispatch('auth/doSignOut')
     // }
 
+    if (status === 423) {
+      throw new Error('Registro ainda está sendo referenciado por outros cadastros!')
+    }
+
     const checkStatus =
       status === 400 || status === 404 || status === 500 || status === 403
 

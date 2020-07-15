@@ -125,37 +125,22 @@
           icon: 'mdi-border-color',
           title: 'menu.persons',
           to: '/person'
+        },
+        {
+          icon: 'mdi-border-color',
+          title: 'menu.units-of-measure',
+          to: '/unit-of-measure'
+        },
+        {
+          icon: 'mdi-border-color',
+          title: 'menu.categories',
+          to: '/category'
+        },
+        {
+          icon: 'mdi-border-color',
+          title: 'menu.subcategories',
+          to: '/subcategory'
         }
-        // {
-        //   icon: 'mdi-account',
-        //   title: 'user',
-        //   to: '/pages/user',
-        // },
-        // {
-        //   title: 'rtables',
-        //   icon: 'mdi-clipboard-outline',
-        //   to: '/tables/regular-tables',
-        // },
-        // {
-        //   title: 'typography',
-        //   icon: 'mdi-format-font',
-        //   to: '/components/typography',
-        // },
-        // {
-        //   title: 'icons',
-        //   icon: 'mdi-chart-bubble',
-        //   to: '/components/icons',
-        // },
-        // {
-        //   title: 'google',
-        //   icon: 'mdi-map-marker',
-        //   to: '/maps/google-maps',
-        // },
-        // {
-        //   title: 'notifications',
-        //   icon: 'mdi-bell',
-        //   to: '/components/notifications',
-        // },
       ],
     }),
 
