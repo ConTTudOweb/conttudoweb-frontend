@@ -169,12 +169,13 @@ export default {
     watchLoggedIn: true,
     redirect: {
       login: '/login',
-      logout: '/login',
+      logout: '/',
       callback: '/login',
       home: '/dashboard'
     },
     localStorage: true,
-    cookie: false
+    cookie: false,
+    autoLogout: true
   },
   /*
    ** Axios module configuration

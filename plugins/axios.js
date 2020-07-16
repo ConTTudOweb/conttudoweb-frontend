@@ -1,4 +1,4 @@
-export default function({ $axios, store }) {
+export default function({ $axios, store, app }) {
   $axios.setHeader('Tenant', store.state.subDomain)
 
   // $axios.onRequest((config) => {
@@ -20,9 +20,9 @@ export default function({ $axios, store }) {
 
     const { status } = response
 
-    // if (status === 401) {
-    //   await store.dispatch('auth/doSignOut')
-    // }
+    if (status === 401) {
+      app.$auth.logout();
+    }
 
     if (status === 423) {
       throw new Error('Registro ainda está sendo referenciado por outros cadastros!')
