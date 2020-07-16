@@ -4,7 +4,7 @@
     fluid
     tag="section"
   >
-    <dashboard-fetch-error :fetch-state="$fetchState" />
+    <dashboard-error :message="errorMessage" />
 
     <base-material-card
       icon="mdi-clipboard-text"
@@ -21,7 +21,7 @@
         :options.sync="options"
         :server-items-length="totalItems"
         :search="search"
-        :loading="$fetchState.pending"
+        :loading="loading"
         class="my-table-grid-list"
       >
         <template
@@ -87,7 +87,7 @@ import gridMixin from '~/mixins/grid'
 export default {
   layout: 'Admin',
   components: {
-    DashboardFetchError: () => import('~/components/FetchError')
+    DashboardError: () => import('~/components/Error')
   },
   mixins: [crudMixin, gridMixin],
   async fetch() {

@@ -19,27 +19,33 @@ export default {
       async handler() {
         await this.load()
       },
-      deep: true
     }
   },
   methods: {
     async load() {
       const { sortBy, sortDesc, page, itemsPerPage } = this.options
-      const { results, count } = await this.repository.index(
-        page,
-        itemsPerPage,
-        sortBy,
-        sortDesc,
-        this.search
-      )
-      this.items = results
-      this.totalItems = count
+      this.loading = true
+      try {
+        const { results, count } = await this.repository.index(
+          page,
+          itemsPerPage,
+          sortBy,
+          sortDesc,
+          this.search
+        )
+        this.items = results
+        this.totalItems = count
+        this.loading = false
+      } catch (e) {
+        this.loading = false
+        this.errorMessage = e.message
+      }
     },
     async loadData() {
       this.loadTitle()
       this.headers = this.repository.displayFields()
       this.booleanFieldsSlots = this.repository.booleanDisplayFields()
-      await this.load()
+      // await this.load()
     },
     getItemSlot(field) {
       return `item.${field}`

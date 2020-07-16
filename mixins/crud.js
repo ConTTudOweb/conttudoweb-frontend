@@ -11,7 +11,8 @@ export default {
       // validateForm: false,
       loading: false,
       // editedIndex: -1,
-      booleanFieldsSlots: []
+      booleanFieldsSlots: [],
+      errorMessage: ''
     }
   },
   // computed: {
