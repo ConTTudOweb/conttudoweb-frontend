@@ -8,7 +8,6 @@
 
     <base-material-card
       icon="mdi-clipboard-text"
-      class="px-5 py-3"
     >
       <template v-slot:button>
         <v-btn color="info" outlined :to="$route.path + '/add'">

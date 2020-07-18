@@ -4,13 +4,7 @@
     fluid
     tag="section"
   >
-    <base-material-card>
-      <template v-slot:heading>
-        <div class="display-2 font-weight-light">
-          {{ $t(formTitle) }} {{ $t($route.name) }}
-        </div>
-      </template>
-
+    <base-material-card :title="formTitle">
       <v-form ref="form" v-model="validateForm" @submit.prevent="save">
         <dashboard-form :title="title" :form-title="formTitle">
           <template v-slot:buttons>

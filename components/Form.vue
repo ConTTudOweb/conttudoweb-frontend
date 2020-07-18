@@ -23,16 +23,16 @@ export default {
     CBreakpoint
   },
   // props: ['title', 'formTitle'],
-  props: {
-    title: {
-      type: String,
-      required: true
-    },
-    formTitle: {
-      type: String,
-      required: true
-    }
-  }
+  // props: {
+  //   title: {
+  //     type: String,
+  //     required: true
+  //   },
+  //   formTitle: {
+  //     type: String,
+  //     required: true
+  //   }
+  // }
 }
 </script>
 

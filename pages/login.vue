@@ -43,7 +43,9 @@
                 placeholder="****"
                 name="password"
                 prepend-inner-icon="mdi-lock"
-                type="password"
+                :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+                :type="showPassword ? 'text' : 'password'"
+                @click:append="showPassword = !showPassword"
                 required
                 outlined
                 rounded
@@ -83,6 +85,7 @@ export default {
   },
   data() {
     return {
+      showPassword: false,
       isValid: false,
       loading: false,
       credentials: {},

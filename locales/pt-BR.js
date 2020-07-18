@@ -13,12 +13,15 @@ const category = 'Categoria de produto'
 const categories = 'Categorias de produto'
 const subcategory = 'Subcategoria de produto'
 const subcategories = 'Subcategorias de produto'
+const product_size_register = 'Grade de produto'
+const product_size_registers = 'Grades de produto'
 
 export default {
   $vuetify: pt,
   'company.name': 'ConTTudOweb',
   avatar: 'ConTTudO <web/>',
   search: 'Pesquisar',
+  'add-row': 'Adicionar...',
 
   // menus
   'Dashboard___pt': dashboard,
@@ -41,12 +44,16 @@ export default {
   'subcategory___pt': subcategories,
   'subcategory-id___pt': subcategory,
   'menu.subcategories': subcategories,
+  'product-size-register___pt': product_size_registers,
+  'product-size-register-id___pt': product_size_register,
+  'menu.product-size-registers': product_size_registers,
+  'product-sizes': 'Itens da Grade',
 
   // terms
   'about-us': 'Sobre nós',
   'made-with': 'feito com',
   'by': 'por',
-  'new-item': 'Cadastrar',
-  'edit-item': 'Alterar',
+  'new-item': 'Adicionar',
+  'edit-item': 'Modificar',
   'logout': 'Sair'
 }

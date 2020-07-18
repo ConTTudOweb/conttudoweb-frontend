@@ -17,7 +17,8 @@ export default {
   },
   computed: {
     formTitle() {
-      return this.$route.params.id > 0 ? 'edit-item' : 'new-item'
+      const _type = this.$route.params.id > 0 ? 'edit-item' : 'new-item'
+      return this.$t(_type) + ' ' + this.$t(this.$route.name)
     }
   },
   methods: {

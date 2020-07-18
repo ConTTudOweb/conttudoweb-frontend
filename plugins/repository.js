@@ -7,6 +7,7 @@ const urlPeople = baseUrlAPI + '/people'
 const urlUnitOfMeasure = baseUrlAPI + '/unit-of-measure'
 const urlCategory = baseUrlAPI + '/category'
 const urlSubcategory = baseUrlAPI + '/subcategory'
+const urlProductSizeRegister = baseUrlAPI + '/product-size-register'
 
 const rules = {
   required: (value) => !!value || 'Campo obrigatório!',
@@ -27,7 +28,8 @@ export default (ctx, inject) => {
     allowForm = false,
     alignGrid = 'left',
     sortable = true,
-    form = {}
+    form = {},
+    align = 'start'
   }) {
     return {
       field,
@@ -38,7 +40,8 @@ export default (ctx, inject) => {
       allowForm,
       alignGrid,
       sortable,
-      form
+      form,
+      align
     }
   }
 
@@ -345,7 +348,7 @@ export default (ctx, inject) => {
   )
   inject(
     'subcategoryRepository',
-    repositoryWithAxios(urlSubcategory, 'Subcategoria de Produto', [
+    repositoryWithAxios(urlSubcategory, '', [
       getField({
         field: 'id',
         label: '#'
@@ -387,6 +390,25 @@ export default (ctx, inject) => {
         field: '_actions',
         label: '',
         sortable: false
+      })
+    ])
+  )
+  inject(
+    'productSizeRegisterRepository',
+    repositoryWithAxios(urlProductSizeRegister, '', [
+      getField({
+        field: 'id',
+        label: '#'
+      }),
+      getField({
+        field: 'description',
+        label: 'descrição'
+      }),
+      getField({
+        field: '_actions',
+        label: '',
+        sortable: false,
+        align: 'center'
       })
     ])
   )

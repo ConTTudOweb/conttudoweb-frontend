@@ -84,7 +84,7 @@ export default {
   },
   head() {
     return {
-      title: this.title
+      title: this.$t(this.$route.name)
     }
   }
 }

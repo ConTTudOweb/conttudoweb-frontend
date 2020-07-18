@@ -65,7 +65,8 @@ export default ($axios) => (resource, title, fields) => ({
       .map((m) => ({
         value: m.field,
         text: m.label.toUpperCase(),
-        sortable: m.sortable
+        sortable: m.sortable,
+        align: m.align
       }))
   },
 

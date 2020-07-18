@@ -14,8 +14,8 @@
 <script>
 export default {
   props: {
-    loading: { type: Boolean, require: true },
-    disabled: { type: Boolean, require: true }
+    loading: { type: Boolean, default: false },
+    disabled: { type: Boolean, default: false }
   }
 }
 </script>

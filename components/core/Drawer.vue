@@ -140,6 +140,11 @@
           icon: 'mdi-border-color',
           title: 'menu.subcategories',
           to: '/subcategory'
+        },
+        {
+          icon: 'mdi-border-color',
+          title: 'menu.product-size-registers',
+          to: '/product-size-register'
         }
       ],
     }),
