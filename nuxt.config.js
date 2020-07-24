@@ -78,7 +78,25 @@ export default {
     '@nuxtjs/pwa',
     // Doc: https://github.com/nuxt-community/dotenv-module
     '@nuxtjs/dotenv',
-    '@nuxtjs/auth'
+    '@nuxtjs/auth',
+    ['v-currency-field/nuxt', {
+      locale: 'pt-BR',
+      decimalLength: 2,
+      autoDecimalMode: true,
+      min: null,
+      max: null,
+      defaultValue: 0,
+      valueAsInteger: false,
+      allowNegative: true
+    }]
+    // ['vue-currency-input/nuxt', {
+    //   globalOptions: {
+    //     currency: 'BRL',
+    //     locale: 'pt-BR',
+    //     'auto-decimal-mode': true,
+    //     'distraction-free': false
+    //   }
+    // }]
   ],
   toast: {
     position: 'bottom-center',

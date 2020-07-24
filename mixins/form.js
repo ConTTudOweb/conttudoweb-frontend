@@ -6,7 +6,7 @@ export default {
       propsFields: {
         outlined: true,
         dense: true,
-        placeholder: ' ',
+        // placeholder: ' ',
         hideDetails: 'auto'
       },
       rules: {

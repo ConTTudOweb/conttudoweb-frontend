@@ -41,29 +41,26 @@
                 />
               </v-col>
               <v-col cols="12" sm="4">
-                <v-text-field
+                <v-currency-field
                   v-model="form.cost_price"
                   label="Preço de custo"
                   v-bind="propsFields"
-                  type="number"
                   prefix="R$"
                 />
               </v-col>
               <v-col cols="12" sm="4">
-                <v-text-field
+                <v-currency-field
                   v-model="form.sale_price"
                   label="Preço de venda"
                   v-bind="propsFields"
-                  type="number"
                   prefix="R$"
                 />
               </v-col>
               <v-col cols="12" sm="4">
-                <v-text-field
+                <v-currency-field
                   v-model="form.wholesale_selling_price"
                   label="Preço de venda atacado"
                   v-bind="propsFields"
-                  type="number"
                   prefix="R$"
                 />
               </v-col>

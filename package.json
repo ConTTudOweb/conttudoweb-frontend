@@ -38,6 +38,7 @@
     "@nuxtjs/vuetify": "^1.11.2",
     "nuxt": "^2.0.0",
     "nuxt-i18n": "^6.13.1",
+    "v-currency-field": "^3.0.11",
     "vuex-persistedstate": "^3.0.1"
   },
   "devDependencies": {
