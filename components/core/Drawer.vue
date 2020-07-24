@@ -145,6 +145,11 @@
           icon: 'mdi-border-color',
           title: 'menu.product-size-registers',
           to: '/product-size-register'
+        },
+        {
+          icon: 'mdi-border-color',
+          title: 'menu.products',
+          to: '/product'
         }
       ],
     }),

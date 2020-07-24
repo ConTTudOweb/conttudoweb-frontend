@@ -1,7 +1,7 @@
 // Provide nuxt-axios instance to use same configuration across the whole project
 // I've used typical CRUD method names and actions here
 export default ($axios) => (resource, title, fields) => ({
-  index(page, itemsPerPage, sortBy, sortDesc, search) {
+  index({page, itemsPerPage, sortBy, sortDesc, search, filters} = {}) {
     let url = `${resource}/`
     let params = ''
     if (page) {
@@ -32,6 +32,13 @@ export default ($axios) => (resource, title, fields) => ({
         params += '&'
       }
       params += `search=${search}`
+    }
+
+    if (filters) {
+      if (params) {
+        params += '&'
+      }
+      params += filters
     }
 
     if (params) {

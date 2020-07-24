@@ -15,6 +15,8 @@ const subcategory = 'Subcategoria de produto'
 const subcategories = 'Subcategorias de produto'
 const product_size_register = 'Grade de produto'
 const product_size_registers = 'Grades de produto'
+const product = 'Produto'
+const products = 'Produtos'
 
 export default {
   $vuetify: pt,
@@ -48,6 +50,10 @@ export default {
   'product-size-register-id___pt': product_size_register,
   'menu.product-size-registers': product_size_registers,
   'product-sizes': 'Itens da Grade',
+  'product___pt': products,
+  'product-id___pt': product,
+  'menu.products': products,
+  'product-by-supplier': 'Referências por Fornecedor',
 
   // terms
   'about-us': 'Sobre nós',

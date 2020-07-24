@@ -8,6 +8,7 @@ const urlUnitOfMeasure = baseUrlAPI + '/unit-of-measure'
 const urlCategory = baseUrlAPI + '/category'
 const urlSubcategory = baseUrlAPI + '/subcategory'
 const urlProductSizeRegister = baseUrlAPI + '/product-size-register'
+const urlProduct = baseUrlAPI + '/product'
 
 const rules = {
   required: (value) => !!value || 'Campo obrigatório!',
@@ -403,6 +404,41 @@ export default (ctx, inject) => {
       getField({
         field: 'description',
         label: 'descrição'
+      }),
+      getField({
+        field: '_actions',
+        label: '',
+        sortable: false,
+        align: 'center'
+      })
+    ])
+  )
+  inject(
+    'productRepository',
+    repositoryWithAxios(urlProduct, '', [
+      getField({
+        field: 'id',
+        label: '#'
+      }),
+      getField({
+        field: 'description',
+        label: 'descrição'
+      }),
+      getField({
+        field: 'unit_of_measure__str',
+        label: 'unidade de medida'
+      }),
+      getField({
+        field: 'ncm',
+        label: 'ncm'
+      }),
+      getField({
+        field: 'subcategory__str',
+        label: 'Subcategoria'
+      }),
+      getField({
+        field: 'cost_price_of_last_purchase',
+        label: 'Preço de custo da última compra'
       }),
       getField({
         field: '_actions',
