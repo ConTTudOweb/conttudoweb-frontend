@@ -79,7 +79,7 @@ export default {
     // Doc: https://github.com/nuxt-community/dotenv-module
     '@nuxtjs/dotenv',
     '@nuxtjs/auth',
-    ['v-currency-field/nuxt', {
+    ['v-currency-field/nuxt-treeshaking', {
       locale: 'pt-BR',
       decimalLength: 2,
       autoDecimalMode: true,
