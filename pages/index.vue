@@ -80,7 +80,7 @@ import CardServices from '~/components/site/CardServices'
 
 export default {
   layout: 'public',
-  auth: 'guest',
+  auth: 'false',
   middleware({ store, redirect }) {
     if (store.state.subDomain) {
       return redirect('/dashboard')

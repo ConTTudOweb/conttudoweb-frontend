@@ -5,8 +5,9 @@
     tag="section"
   >
     <base-v-component
-      heading="Bem vindo!!!"
+      :heading="`Olá, ${this.$auth.user.first_name}!`"
     />
+    {{ this.$auth.user.first_name }}
   </v-container>
 </template>
 

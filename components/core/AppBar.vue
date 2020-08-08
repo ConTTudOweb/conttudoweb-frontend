@@ -31,82 +31,83 @@
 
     <v-spacer />
 
-    <v-text-field
-      :label="$t('search')"
-      color="secondary"
-      hide-details
-      style="max-width: 165px;"
-      disabled
-    >
-      <template
-        v-if="$vuetify.breakpoint.mdAndUp"
-        v-slot:append-outer
-      >
-        <v-btn
-          class="mt-n2"
-          elevation="1"
-          fab
-          small
-        >
-          <v-icon>mdi-magnify</v-icon>
-        </v-btn>
-      </template>
-    </v-text-field>
-
-    <div class="mx-3" />
+<!--    <v-text-field-->
+<!--      :label="$t('search')"-->
+<!--      color="secondary"-->
+<!--      hide-details-->
+<!--      style="max-width: 165px;"-->
+<!--      disabled-->
+<!--    >-->
+<!--      <template-->
+<!--        v-if="$vuetify.breakpoint.mdAndUp"-->
+<!--        v-slot:append-outer-->
+<!--      >-->
+<!--        <v-btn-->
+<!--          class="mt-n2"-->
+<!--          elevation="1"-->
+<!--          fab-->
+<!--          small-->
+<!--        >-->
+<!--          <v-icon>mdi-magnify</v-icon>-->
+<!--        </v-btn>-->
+<!--      </template>-->
+<!--    </v-text-field>-->
+<!---->
+<!--    <div class="mx-3" />-->
 
     <v-btn
       class="ml-2"
       min-width="0"
       text
       to="/dashboard"
+      :title="$t('menu.dashboard')"
     >
       <v-icon>mdi-view-dashboard</v-icon>
     </v-btn>
 
-    <v-menu
-      bottom
-      left
-      offset-y
-      origin="top right"
-      transition="scale-transition"
-    >
-      <template v-slot:activator="{ attrs, on }">
-        <v-btn
-          class="ml-2"
-          min-width="0"
-          text
-          v-bind="attrs"
-          v-on="on"
-        >
-          <v-badge
-            color="red"
-            overlap
-            bordered
-          >
-            <template v-slot:badge>
-              <span>1</span>
-            </template>
+<!--    <v-menu-->
+<!--      bottom-->
+<!--      left-->
+<!--      offset-y-->
+<!--      origin="top right"-->
+<!--      transition="scale-transition"-->
+<!--    >-->
+<!--      <template v-slot:activator="{ attrs, on }">-->
+<!--        <v-btn-->
+<!--          class="ml-2"-->
+<!--          min-width="0"-->
+<!--          text-->
+<!--          v-bind="attrs"-->
+<!--          v-on="on"-->
+<!--        >-->
+<!--          <v-badge-->
+<!--            color="red"-->
+<!--            overlap-->
+<!--            bordered-->
+<!--          >-->
+<!--            <template v-slot:badge>-->
+<!--              <span>1</span>-->
+<!--            </template>-->
 
-            <v-icon>mdi-bell</v-icon>
-          </v-badge>
-        </v-btn>
-      </template>
+<!--            <v-icon>mdi-bell</v-icon>-->
+<!--          </v-badge>-->
+<!--        </v-btn>-->
+<!--      </template>-->
 
-      <v-list
-        :tile="false"
-        nav
-      >
-        <div>
-          <app-bar-item
-            v-for="(n, i) in notifications"
-            :key="`item-${i}`"
-          >
-            <v-list-item-title v-text="n" />
-          </app-bar-item>
-        </div>
-      </v-list>
-    </v-menu>
+<!--      <v-list-->
+<!--        :tile="false"-->
+<!--        nav-->
+<!--      >-->
+<!--        <div>-->
+<!--          <app-bar-item-->
+<!--            v-for="(n, i) in notifications"-->
+<!--            :key="`item-${i}`"-->
+<!--          >-->
+<!--            <v-list-item-title v-text="n" />-->
+<!--          </app-bar-item>-->
+<!--        </div>-->
+<!--      </v-list>-->
+<!--    </v-menu>-->
 
     <v-btn
       v-if="$auth.$state.loggedIn"
@@ -114,6 +115,7 @@
       min-width="0"
       text
       @click="$auth.logout()"
+      :title="$t('logout')"
     >
       <v-icon>mdi-logout</v-icon>
     </v-btn>

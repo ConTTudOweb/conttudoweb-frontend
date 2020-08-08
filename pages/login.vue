@@ -75,6 +75,7 @@
 
 export default {
   layout: 'empty',
+  auth: 'guest',
   // components: {
   //   Breakpoint
   // },

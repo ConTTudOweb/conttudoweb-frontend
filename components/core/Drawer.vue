@@ -57,7 +57,7 @@
 
       <template v-for="(item, i) in computedItems">
         <base-item-group
-          v-if="item.children"
+          v-if="item && item.children"
           :key="`group-${i}`"
           :item="item"
         >
@@ -109,47 +109,55 @@
         {
           icon: 'mdi-view-dashboard',
           title: 'menu.dashboard',
-          to: '/dashboard',
+          to: '/dashboard'
         },
         {
           icon: 'mdi-border-color',
           title: 'menu.federative-units',
-          to: '/federative-unit'
+          to: '/federative-unit',
+          permission: 'core.view_federativeunit'
         },
         {
           icon: 'mdi-border-color',
           title: 'menu.cities',
-          to: '/city'
+          to: '/city',
+          permission: 'core.view_city'
         },
         {
           icon: 'mdi-border-color',
           title: 'menu.persons',
-          to: '/person'
+          to: '/person',
+          permission: 'core.view_people'
         },
         {
           icon: 'mdi-border-color',
           title: 'menu.units-of-measure',
-          to: '/unit-of-measure'
+          to: '/unit-of-measure',
+          permission: 'inventory.view_unitofmeasure'
         },
         {
           icon: 'mdi-border-color',
           title: 'menu.categories',
-          to: '/category'
+          to: '/category',
+          permission: 'inventory.view_category'
         },
         {
           icon: 'mdi-border-color',
           title: 'menu.subcategories',
-          to: '/subcategory'
+          to: '/subcategory',
+          permission: 'inventory.view_subcategory'
         },
         {
           icon: 'mdi-border-color',
           title: 'menu.product-size-registers',
-          to: '/product-size-register'
+          to: '/product-size-register',
+          permission: 'inventory.view_productsizeregister'
         },
         {
           icon: 'mdi-border-color',
           title: 'menu.products',
-          to: '/product'
+          to: '/product',
+          permission: 'inventory.view_product'
         }
       ],
     }),
@@ -165,7 +173,11 @@
         },
       },
       computedItems () {
-        return this.items.map(this.mapItem)
+        const {user_permissions} = this.$auth.user
+        function hasPermission(value) {
+          return value.permission === undefined || user_permissions.includes(value.permission);
+        }
+        return this.items.filter(hasPermission).map(this.mapItem)
       },
       profile () {
         return {
@@ -177,10 +189,12 @@
 
     methods: {
       mapItem (item) {
-        return {
-          ...item,
-          children: item.children ? item.children.map(this.mapItem) : undefined,
-          title: this.$t(item.title),
+        if (this.$auth.user.user_permissions.some(elem => elem === item.permission || item.permission === undefined)) {
+          return {
+            ...item,
+            children: item.children ? item.children.map(this.mapItem) : undefined,
+            title: this.$t(item.title),
+          }
         }
       },
     },
