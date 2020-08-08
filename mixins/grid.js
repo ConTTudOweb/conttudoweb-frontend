@@ -26,13 +26,13 @@ export default {
       const { sortBy, sortDesc, page, itemsPerPage } = this.options
       this.loading = true
       try {
-        const { results, count } = await this.repository.index(
-          page,
-          itemsPerPage,
-          sortBy,
-          sortDesc,
-          this.search
-        )
+        const { results, count } = await this.repository.index({
+          page: page,
+          itemsPerPage: itemsPerPage,
+          sortBy: sortBy,
+          sortDesc: sortDesc,
+          search: this.search
+        })
         this.items = results
         this.totalItems = count
         this.loading = false
