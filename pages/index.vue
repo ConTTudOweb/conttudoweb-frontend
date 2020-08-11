@@ -83,7 +83,6 @@ export default {
   auth: false,
   middleware({ store, redirect }) {
     if (store.state.subDomain) {
-      alert('redirect to dashboard')
       return redirect('/dashboard')
     }
   },

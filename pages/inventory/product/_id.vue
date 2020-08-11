@@ -64,7 +64,7 @@
                   prefix="R$"
                 />
               </v-col>
-              <v-col cols="12">
+              <v-col v-if="hasCategoryViewPermission()" cols="12">
                 <v-autocomplete
                   v-model="form.category"
                   label="Categoria"
@@ -78,7 +78,7 @@
                   </template>
                 </v-autocomplete>
               </v-col>
-              <v-col cols="12">
+              <v-col v-if="hasUnitOfMeasureViewPermission()" cols="12">
                 <v-autocomplete
                   v-model="form.unit_of_measure"
                   label="Unidade de medida"
@@ -98,7 +98,7 @@
                   </template>
                 </v-autocomplete>
               </v-col>
-              <v-col cols="12">
+              <v-col v-if="hasProductSizeRegisterViewPermission()" cols="12">
                 <v-autocomplete
                   v-model="form.product_size_register"
                   label="Grade"
@@ -127,6 +127,7 @@
                 v-model="tab"
               >
                 <v-tab
+                  v-if="hasProductBySupplierViewPermission()"
                   key="product_by_supplier"
                 >
                   {{ $t('product-by-supplier') }}
@@ -139,6 +140,7 @@
 
                 <v-tabs-items v-model="tab">
                   <v-tab-item
+                    v-if="hasProductBySupplierViewPermission()"
                     key="product_by_supplier"
                     class="pa-3"
                   >
@@ -296,15 +298,15 @@
                                                 item-text="description"
                                                 item-value="id"
                                                 class="required"
+                                                autofocus
                                               ></v-autocomplete>
                                             </v-col>
                                             <v-col cols="12" sm="4">
-                                              <v-text-field
+                                              <v-currency-field
                                                 v-model="editedItem.quantity"
                                                 label="Quantidade"
                                                 v-bind="propsFields"
                                                 maxlength="20"
-                                                autofocus
                                               />
                                             </v-col>
                                           </v-row>
@@ -388,13 +390,25 @@ export default {
     }
     this.loadTitle()
 
-    // this.subcategories = await this.$nuxt.context.app.$subcategoryRepository.index()
-    await this.loadCategory()
-    // this.units_of_measure = await this.$nuxt.context.app.$unitOfMeasureRepository.index()
-    await this.loadUnitOfMeasure()
-    // this.product_size_registers = await this.$nuxt.context.app.$productSizeRegisterRepository.index()
-    await this.loadProductSizeRegister()
-    this.suppliers = await this.$nuxt.context.app.$peopleRepository.index({filters: 'supplier=true'})
+    if (this.hasCategoryViewPermission()) {
+      // this.subcategories = await this.$nuxt.context.app.$subcategoryRepository.index()
+      await this.loadCategory()
+    }
+
+    if (this.hasUnitOfMeasureViewPermission()) {
+      // this.units_of_measure = await this.$nuxt.context.app.$unitOfMeasureRepository.index()
+      await this.loadUnitOfMeasure()
+    }
+
+    if (this.hasProductSizeRegisterViewPermission()) {
+      // this.product_size_registers = await this.$nuxt.context.app.$productSizeRegisterRepository.index()
+      await this.loadProductSizeRegister()
+    }
+
+    if (this.hasProductBySupplierViewPermission() && this.hasPeopleViewPermission()) {
+      this.suppliers = await this.$nuxt.context.app.$peopleRepository.index({filters: 'supplier=true'})
+    }
+
     this.packaging_types = await this.$nuxt.context.app.$packagingTypeRepository.index()
   },
   data() {
@@ -445,6 +459,22 @@ export default {
     }
   },
   methods: {
+    hasCategoryViewPermission () {
+      return (this.$auth.user.user_permissions.some(elem => elem === 'inventory.view_category'))
+    },
+    hasUnitOfMeasureViewPermission () {
+      return (this.$auth.user.user_permissions.some(elem => elem === 'inventory.view_unitofmeasure'))
+    },
+    hasProductSizeRegisterViewPermission () {
+      return (this.$auth.user.user_permissions.some(elem => elem === 'inventory.view_productsizeregister'))
+    },
+    hasProductBySupplierViewPermission () {
+      return (this.$auth.user.user_permissions.some(elem => elem === 'inventory.view_productbysupplier'))
+    },
+    hasPeopleViewPermission () {
+      return (this.$auth.user.user_permissions.some(elem => elem === 'core.view_people'))
+    },
+
     editProductBySupplier (item) {
       this.editedIndex = this.form.productbysupplier_set.indexOf(item)
       this.editedItem = Object.assign({}, item)

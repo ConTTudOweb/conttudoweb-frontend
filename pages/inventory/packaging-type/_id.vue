@@ -21,6 +21,7 @@
                   v-bind="propsFields"
                   maxlength="60"
                   class="required"
+                  autofocus
                 />
               </v-col>
             </v-row>

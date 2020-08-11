@@ -281,15 +281,7 @@
             title: this.$t(item.title),
           }
         }
-      },
-      getItems (items) {
-        console.log(items)
-        const {user_permissions} = this.$auth.user
-        function hasPermission(value) {
-          return value.permission === undefined || user_permissions.includes(value.permission);
-        }
-        return items.filter(hasPermission).map(this.mapItem)
-      },
+      }
     },
   }
 </script>
