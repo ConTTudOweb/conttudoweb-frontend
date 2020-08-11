@@ -1,27 +1,29 @@
 <template>
-  <v-list-item
-    :href="href"
-    :rel="href && href !== '#' ? 'noopener' : undefined"
-    :target="href && href !== '#' ? '_blank' : undefined"
-    :to="item.to"
-    :active-class="`primary darken-2 ${!isDark ? 'black' : 'white'}--text`"
+  <v-list-group
+    :group="item.group"
+    :active-class="`${!isDark ? 'black' : 'white'}--text`"
+    no-action
   >
-    <v-list-item-icon
-      v-if="text"
-      class="v-list-item__icon--text"
-      v-text="computedText"
-    />
+    <template v-slot:activator>
+      <v-list-item-icon
+        v-if="text"
+        class="v-list-item__icon--text"
+        v-text="computedText"
+      />
 
-    <v-list-item-icon v-else-if="item.icon">
-      <v-icon v-text="item.icon" />
-    </v-list-item-icon>
+      <v-list-item-icon v-else-if="item.icon">
+        <v-icon v-text="item.icon" />
+      </v-list-item-icon>
 
-    <v-list-item-content v-if="item.title || item.subtitle">
-      <v-list-item-title v-text="item.title" />
+      <v-list-item-content v-if="item.title || item.subtitle">
+        <v-list-item-title v-text="item.title" />
 
-      <v-list-item-subtitle v-text="item.subtitle" />
-    </v-list-item-content>
-  </v-list-item>
+        <v-list-item-subtitle v-text="item.subtitle" />
+      </v-list-item-content>
+    </template>
+
+    <slot />
+  </v-list-group>
 </template>
 
 <script>

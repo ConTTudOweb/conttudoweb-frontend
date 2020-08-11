@@ -1,6 +1,6 @@
 <template>
   <v-container
-    id="unit-of-measure"
+    id="category"
     fluid
     tag="section"
   >
@@ -86,12 +86,12 @@ export default {
   },
   data() {
     return {
-      repository: this.$nuxt.context.app.$unitOfMeasureRepository
+      repository: this.$nuxt.context.app.$categoryRepository
     }
   },
   head() {
     return {
-      title: this.$t('menu.units-of-measure')
+      title: this.$t('menu.inventory.categories')
     }
   }
 }

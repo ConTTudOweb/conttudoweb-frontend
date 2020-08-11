@@ -1,6 +1,6 @@
 <template>
   <v-container
-    id="federative-unit"
+    id="city"
     fluid
     tag="section"
   >
@@ -54,6 +54,7 @@
                 small
                 class="ma-2"
                 color="red lighten-2"
+                :disabled="false"
                 @click="deleteItem(item)"
                 v-on="on"
               >
@@ -69,29 +70,26 @@
 </template>
 
 <script>
-import crudMixin from "@/mixins/crud";
-import gridMixin from "@/mixins/grid";
+import crudMixin from '~/mixins/crud'
+import gridMixin from '~/mixins/grid'
 
 export default {
   layout: 'Admin',
   components: {
     DashboardError: () => import('~/components/Error')
   },
-  mixins: [
-    crudMixin,
-    gridMixin
-  ],
+  mixins: [crudMixin, gridMixin],
   async fetch() {
     await this.loadData()
   },
   data() {
     return {
-      repository: this.$nuxt.context.app.$federativeUnitRepository
+      repository: this.$nuxt.context.app.$cityRepository
     }
   },
   head() {
     return {
-      title: this.$t('menu.federative-units')
+      title: this.$t('menu.core.cities')
     }
   }
 }

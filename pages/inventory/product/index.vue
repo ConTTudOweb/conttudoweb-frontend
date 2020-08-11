@@ -1,6 +1,6 @@
 <template>
   <v-container
-    id="people"
+    id="product"
     fluid
     tag="section"
   >
@@ -23,17 +23,6 @@
         :loading="loading"
         class="my-table-grid-list"
       >
-        <template
-          v-for="(field, i) in booleanFieldsSlots"
-          v-slot:[getItemSlot(field)]="{ item }"
-        >
-          <template v-if="item[field] === true">
-            <v-icon :key="`${i}-${item.id}`" color="green">mdi-check</v-icon>
-          </template>
-          <template v-else>
-            <v-icon :key="`${i}-${item.id}`" color="red">mdi-close</v-icon>
-          </template>
-        </template>
         <template v-slot:top>
           <v-toolbar flat>
             <v-text-field
@@ -80,27 +69,29 @@
 </template>
 
 <script>
-import crudMixin from '~/mixins/crud'
-import gridMixin from '~/mixins/grid'
+import crudMixin from "@/mixins/crud";
+import gridMixin from "@/mixins/grid";
 
 export default {
   layout: 'Admin',
   components: {
     DashboardError: () => import('~/components/Error')
   },
-  mixins: [crudMixin, gridMixin],
+  mixins: [
+    crudMixin,
+    gridMixin
+  ],
   async fetch() {
     await this.loadData()
-    // this.cities = await this.$nuxt.context.app.$cityRepository.index()
   },
   data() {
     return {
-      repository: this.$nuxt.context.app.$peopleRepository
+      repository: this.$nuxt.context.app.$productRepository
     }
   },
   head() {
     return {
-      title: this.$t('menu.persons')
+      title: this.$t('menu.inventory.products')
     }
   }
 }

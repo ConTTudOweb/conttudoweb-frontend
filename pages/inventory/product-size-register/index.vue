@@ -1,6 +1,6 @@
 <template>
   <v-container
-    id="product"
+    id="product-size-register"
     fluid
     tag="section"
   >
@@ -86,12 +86,12 @@ export default {
   },
   data() {
     return {
-      repository: this.$nuxt.context.app.$productRepository
+      repository: this.$nuxt.context.app.$productSizeRegisterRepository
     }
   },
   head() {
     return {
-      title: this.$t('menu.products')
+      title: this.$t('menu.inventory.product-size-registers')
     }
   }
 }

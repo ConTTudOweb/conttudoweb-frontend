@@ -8,6 +8,7 @@ const urlUnitOfMeasure = baseUrlAPI + '/unit-of-measure'
 const urlCategory = baseUrlAPI + '/category'
 const urlSubcategory = baseUrlAPI + '/subcategory'
 const urlProductSizeRegister = baseUrlAPI + '/product-size-register'
+const urlPackagingType = baseUrlAPI + '/packaging-type'
 const urlProduct = baseUrlAPI + '/product'
 
 const rules = {
@@ -318,6 +319,17 @@ export default (ctx, inject) => {
         label: '#'
       }),
       getField({
+        field: 'str',
+        label: 'descrição',
+        allowForm: true,
+        form: {
+          type: fieldTypeTextTag,
+          sm: 8,
+          rules: [rules.required],
+          maxlength: 120
+        }
+      }),
+      getField({
         field: 'code',
         label: 'código',
         allowForm: true,
@@ -327,17 +339,6 @@ export default (ctx, inject) => {
           sm: 4,
           maxlength: 20,
           autofocus: true
-        }
-      }),
-      getField({
-        field: 'description',
-        label: 'descrição',
-        allowForm: true,
-        form: {
-          type: fieldTypeTextTag,
-          sm: 8,
-          rules: [rules.required],
-          maxlength: 120
         }
       }),
       getField({
@@ -414,6 +415,25 @@ export default (ctx, inject) => {
     ])
   )
   inject(
+    'packagingTypeRepository',
+    repositoryWithAxios(urlPackagingType, '', [
+      getField({
+        field: 'id',
+        label: '#'
+      }),
+      getField({
+        field: 'description',
+        label: 'descrição'
+      }),
+      getField({
+        field: '_actions',
+        label: '',
+        sortable: false,
+        align: 'center'
+      })
+    ])
+  )
+  inject(
     'productRepository',
     repositoryWithAxios(urlProduct, '', [
       getField({
@@ -433,13 +453,13 @@ export default (ctx, inject) => {
         label: 'ncm'
       }),
       getField({
-        field: 'subcategory__str',
-        label: 'Subcategoria'
+        field: 'category__str',
+        label: 'Categoria'
       }),
-      getField({
-        field: 'cost_price_of_last_purchase',
-        label: 'Preço de custo da última compra'
-      }),
+      // getField({
+      //   field: 'cost_price_of_last_purchase',
+      //   label: 'Preço de custo da última compra'
+      // }),
       getField({
         field: '_actions',
         label: '',

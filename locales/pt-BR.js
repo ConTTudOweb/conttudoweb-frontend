@@ -1,6 +1,8 @@
 import pt from 'vuetify/es5/locale/pt'
 
 const dashboard = 'Painel'
+const core = 'Cadastros'
+const inventory = 'Inventário'
 const federative_unit = 'Unidade federativa'
 const federative_units = 'Unidades federativas'
 const city = 'Cidade'
@@ -15,6 +17,8 @@ const subcategory = 'Subcategoria de produto'
 const subcategories = 'Subcategorias de produto'
 const product_size_register = 'Grade de produto'
 const product_size_registers = 'Grades de produto'
+const packaging_type = 'Tipo de embalagem'
+const packaging_types = 'Tipos de embalagem'
 const product = 'Produto'
 const products = 'Produtos'
 
@@ -28,32 +32,38 @@ export default {
   // menus
   'Dashboard___pt': dashboard,
   'menu.dashboard': dashboard,
-  'federative-unit___pt': federative_units,
-  'federative-unit-id___pt': federative_unit,
-  'menu.federative-units': federative_units,
-  'city___pt': cities,
-  'city-id___pt': city,
-  'menu.cities': cities,
-  'person___pt': persons,
-  'person-id___pt': person,
-  'menu.persons': persons,
-  'unit-of-measure___pt': units_of_measure,
-  'unit-of-measure-id___pt': unit_of_measure,
-  'menu.units-of-measure': units_of_measure,
-  'category___pt': categories,
-  'category-id___pt': category,
-  'menu.categories': categories,
-  'subcategory___pt': subcategories,
-  'subcategory-id___pt': subcategory,
-  'menu.subcategories': subcategories,
-  'product-size-register___pt': product_size_registers,
-  'product-size-register-id___pt': product_size_register,
-  'menu.product-size-registers': product_size_registers,
+  'menu.core': core,
+  'menu.inventory': inventory,
+  'core-federative-unit___pt': federative_units,
+  'core-federative-unit-id___pt': federative_unit,
+  'menu.core.federative-units': federative_units,
+  'core-city___pt': cities,
+  'core-city-id___pt': city,
+  'menu.core.cities': cities,
+  'core-person___pt': persons,
+  'core-person-id___pt': person,
+  'menu.core.persons': persons,
+  'inventory-unit-of-measure___pt': units_of_measure,
+  'inventory-unit-of-measure-id___pt': unit_of_measure,
+  'menu.inventory.units-of-measure': units_of_measure,
+  'inventory-category___pt': categories,
+  'inventory-category-id___pt': category,
+  'menu.inventory.categories': categories,
+  'inventory-subcategory___pt': subcategories,
+  'inventory-subcategory-id___pt': subcategory,
+  'menu.inventory.subcategories': subcategories,
+  'inventory-product-size-register___pt': product_size_registers,
+  'inventory-product-size-register-id___pt': product_size_register,
+  'menu.inventory.product-size-registers': product_size_registers,
+  'inventory-packaging-type___pt': packaging_types,
+  'inventory-packaging-type-id___pt': packaging_type,
+  'menu.inventory.packaging-types': packaging_types,
   'product-sizes': 'Itens da Grade',
-  'product___pt': products,
-  'product-id___pt': product,
-  'menu.products': products,
+  'inventory-product___pt': products,
+  'inventory-product-id___pt': product,
+  'menu.inventory.products': products,
   'product-by-supplier': 'Referências por Fornecedor',
+  'packaging': 'Embalagens',
 
   // terms
   'about-us': 'Sobre nós',

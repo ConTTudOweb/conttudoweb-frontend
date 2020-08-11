@@ -66,18 +66,15 @@
               </v-col>
               <v-col cols="12">
                 <v-autocomplete
-                  v-model="form.subcategory"
-                  label="Subcategoria"
+                  v-model="form.category"
+                  label="Categoria"
                   v-bind="propsFields"
-                  :items="subcategories.results"
+                  :items="categories.results"
                   item-text="str"
                   item-value="id"
                 >
-                  <template v-slot:item="{ item }">
-                    <v-list-item-content>
-                      <v-list-item-title v-text="item.category__description"></v-list-item-title>
-                      <v-list-item-subtitle v-text="item.description"></v-list-item-subtitle>
-                    </v-list-item-content>
+                  <template v-slot:append-outer>
+                    <v-icon color="warning" @click="loadCategory" tabindex="-1">mdi-sync</v-icon>
                   </template>
                 </v-autocomplete>
               </v-col>
@@ -90,6 +87,9 @@
                   item-text="initials"
                   item-value="id"
                 >
+                  <template v-slot:append-outer>
+                    <v-icon color="warning" @click="loadUnitOfMeasure" tabindex="-1">mdi-sync</v-icon>
+                  </template>
                   <template v-slot:item="{ item }">
                     <v-list-item-content>
                       <v-list-item-title v-text="item.initials"></v-list-item-title>
@@ -107,6 +107,9 @@
                   item-text="description"
                   item-value="id"
                 >
+                  <template v-slot:append-outer>
+                    <v-icon color="warning" @click="loadProductSizeRegister" tabindex="-1">mdi-sync</v-icon>
+                  </template>
                   <template v-slot:item="{ item }">
                     <v-list-item-content>
                       <v-list-item-title v-text="item.description"></v-list-item-title>
@@ -127,6 +130,11 @@
                   key="product_by_supplier"
                 >
                   {{ $t('product-by-supplier') }}
+                </v-tab>
+                <v-tab
+                  key="packaging"
+                >
+                  {{ $t('packaging') }}
                 </v-tab>
 
                 <v-tabs-items v-model="tab">
@@ -242,6 +250,111 @@
                       </template>
                     </v-data-table>
                   </v-tab-item>
+
+                  <v-tab-item
+                    key="packaging"
+                    class="pa-3"
+                  >
+                    <v-data-table
+                      :items="form.packaging_set"
+                      :headers="headers_packaging"
+                      class="my-table-subgrid-list"
+                    >
+                      <template v-slot:body.append="{ headers }">
+                        <tr>
+                          <td :colspan="headers.length">
+                            <v-dialog v-model="dialogPackaging" max-width="500px" persistent>
+                              <template v-slot:activator="{ on, attrs }">
+                                <v-btn
+                                  text
+                                  small
+                                  color="info"
+                                  v-bind="attrs"
+                                  v-on="on"
+                                  class="text-overline"
+                                ><v-icon>mdi-plus-circle</v-icon>{{ $t('add-row') }}</v-btn>
+                              </template>
+
+                              <v-card>
+                                <v-form ref="formPackaging" @submit.prevent="savePackaging">
+                                  <v-card-title>
+                                    <span class="headline">{{ formTitle }}</span>
+                                  </v-card-title>
+
+                                  <v-card-text>
+                                    <v-container>
+                                      <dashboard-form>
+                                        <template v-slot:fields>
+                                          <v-row>
+                                            <v-col cols="12" sm="8">
+                                              <v-autocomplete
+                                                v-model="editedItem.packaging_type"
+                                                label="Tipo de embalagem"
+                                                :rules="[rules.required]"
+                                                v-bind="propsFields"
+                                                :items="packaging_types.results"
+                                                item-text="description"
+                                                item-value="id"
+                                                class="required"
+                                              ></v-autocomplete>
+                                            </v-col>
+                                            <v-col cols="12" sm="4">
+                                              <v-text-field
+                                                v-model="editedItem.quantity"
+                                                label="Quantidade"
+                                                v-bind="propsFields"
+                                                maxlength="20"
+                                                autofocus
+                                              />
+                                            </v-col>
+                                          </v-row>
+                                        </template>
+                                      </dashboard-form>
+                                    </v-container>
+                                  </v-card-text>
+
+                                  <v-card-actions>
+                                    <v-spacer></v-spacer>
+                                    <dashboard-btn-cancel @click="cancelPackaging()" />
+                                    <dashboard-btn-save />
+                                  </v-card-actions>
+                                </v-form>
+                              </v-card>
+                            </v-dialog>
+                          </td>
+                        </tr>
+                      </template>
+                      <template v-slot:item._actions="{ item }">
+                        <v-tooltip top>
+                          <template v-slot:activator="{ on }">
+                            <v-icon
+                              class="ma-2"
+                              color="yellow darken-2"
+                              @click="editPackaging(item)"
+                              v-on="on"
+                            >
+                              mdi-pencil
+                            </v-icon>
+                          </template>
+                          <span>Editar</span>
+                        </v-tooltip>
+                        <v-tooltip top>
+                          <template v-slot:activator="{ on }">
+                            <v-icon
+                              small
+                              class="ma-2"
+                              color="red lighten-2"
+                              @click="deletePackaging(item)"
+                              v-on="on"
+                            >
+                              mdi-delete
+                            </v-icon>
+                          </template>
+                          <span>Remover</span>
+                        </v-tooltip>
+                      </template>
+                    </v-data-table>
+                  </v-tab-item>
                 </v-tabs-items>
               </v-tabs>
             </v-card>
@@ -275,19 +388,24 @@ export default {
     }
     this.loadTitle()
 
-    this.subcategories = await this.$nuxt.context.app.$subcategoryRepository.index()
-    this.units_of_measure = await this.$nuxt.context.app.$unitOfMeasureRepository.index()
-    this.product_size_registers = await this.$nuxt.context.app.$productSizeRegisterRepository.index()
+    // this.subcategories = await this.$nuxt.context.app.$subcategoryRepository.index()
+    await this.loadCategory()
+    // this.units_of_measure = await this.$nuxt.context.app.$unitOfMeasureRepository.index()
+    await this.loadUnitOfMeasure()
+    // this.product_size_registers = await this.$nuxt.context.app.$productSizeRegisterRepository.index()
+    await this.loadProductSizeRegister()
     this.suppliers = await this.$nuxt.context.app.$peopleRepository.index({filters: 'supplier=true'})
+    this.packaging_types = await this.$nuxt.context.app.$packagingTypeRepository.index()
   },
   data() {
     return {
       form: {
-        productbysupplier_set: []
+        productbysupplier_set: [],
+        packaging_set: []
       },
       repository: this.$nuxt.context.app.$productRepository,
       name: 'product',
-      subcategories: [],
+      categories: [],
       units_of_measure: [],
       product_size_registers: [],
       headers_product_by_supplier: [
@@ -296,17 +414,31 @@ export default {
         { value: 'description', text: 'DESCRIÇÃO' },
         { value: '_actions', sortable: false, align: 'center' }
       ],
+      headers_packaging: [
+        { value: 'packaging_type__str', text: 'TIPO DE EMBALAGEM' },
+        { value: 'quantity', text: 'QUANTIDADE' },
+        { value: '_actions', sortable: false, align: 'center' }
+      ],
       tab: null,
       dialog: false,
+      dialogPackaging: false,
       editedItem: {},
       editedIndex: -1,
-      suppliers: []
+      suppliers: [],
+      packaging_types: []
     }
   },
   watch: {
     dialog(value) {
       if (!value) {
         this.$refs.formProductBySupplier.resetValidation()
+        this.editedItem = {}
+        this.editedIndex = -1
+      }
+    },
+    dialogPackaging(value) {
+      if (!value) {
+        this.$refs.formPackaging.resetValidation()
         this.editedItem = {}
         this.editedIndex = -1
       }
@@ -336,6 +468,42 @@ export default {
       }
       this.cancelProductBySupplier()
     },
+
+    editPackaging (item) {
+      this.editedIndex = this.form.packaging_set.indexOf(item)
+      this.editedItem = Object.assign({}, item)
+      this.dialogPackaging = true
+    },
+
+    deletePackaging (item) {
+      const index = this.form.packaging_set.indexOf(item)
+      confirm(`Tem certeza que deseja deletar o registro: "${item.packaging_type}"?`) && this.form.packaging_set.splice(index, 1)
+    },
+
+    cancelPackaging () {
+      this.dialogPackaging = false
+    },
+
+    savePackaging () {
+      if (this.editedIndex > -1) {
+        Object.assign(this.form.packaging_set[this.editedIndex], this.editedItem)
+      } else {
+        this.form.packaging_set.push(this.editedItem)
+      }
+      this.cancelPackaging()
+    },
+
+    async loadCategory () {
+      this.categories = await this.$nuxt.context.app.$categoryRepository.index()
+    },
+
+    async loadUnitOfMeasure () {
+      this.units_of_measure = await this.$nuxt.context.app.$unitOfMeasureRepository.index()
+    },
+
+    async loadProductSizeRegister () {
+      this.product_size_registers = await this.$nuxt.context.app.$productSizeRegisterRepository.index()
+    }
   }
 }
 </script>

@@ -1,6 +1,6 @@
 <template>
   <v-container
-    id="product-size-register"
+    id="federative-unit"
     fluid
     tag="section"
   >
@@ -86,12 +86,12 @@ export default {
   },
   data() {
     return {
-      repository: this.$nuxt.context.app.$productSizeRegisterRepository
+      repository: this.$nuxt.context.app.$federativeUnitRepository
     }
   },
   head() {
     return {
-      title: this.$t('menu.product-size-registers')
+      title: this.$t('menu.core.federative-units')
     }
   }
 }

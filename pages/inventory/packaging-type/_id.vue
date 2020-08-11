@@ -1,6 +1,6 @@
 <template>
   <v-container
-    id="category-form"
+    id="packaging-type-form"
     fluid
     tag="section"
   >
@@ -13,22 +13,13 @@
           </template>
           <template v-slot:fields>
             <v-row>
-              <v-col cols="6" sm="2">
-                <v-text-field
-                  v-model="form.code"
-                  label="Código"
-                  v-bind="propsFields"
-                  maxlength="20"
-                  autofocus
-                />
-              </v-col>
-              <v-col cols="12" sm="10">
+              <v-col cols="12">
                 <v-text-field
                   v-model="form.description"
                   label="Descrição"
                   :rules="[rules.required]"
                   v-bind="propsFields"
-                  maxlength="120"
+                  maxlength="60"
                   class="required"
                 />
               </v-col>
@@ -64,8 +55,8 @@ export default {
   },
   data() {
     return {
-      repository: this.$nuxt.context.app.$categoryRepository,
-      name: 'category'
+      repository: this.$nuxt.context.app.$packagingTypeRepository
+      // name: 'category',
     }
   }
 }

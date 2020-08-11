@@ -57,19 +57,40 @@
 
       <template v-for="(item, i) in computedItems">
         <base-item-group
-          v-if="item && item.children"
+          v-if="item && item.children && item.children.length > 0"
           :key="`group-${i}`"
           :item="item"
         >
-          <!--  -->
+          <template v-for="(item, i) in item.children">
+            <base-item
+              :key="`item-${i}`"
+              :item="item"
+            />
+          </template>
         </base-item-group>
 
         <base-item
-          v-else
+          v-else-if="!item.children"
           :key="`item-${i}`"
           :item="item"
         />
       </template>
+
+<!--      <template v-for="(item, i) in computedItems">-->
+<!--        <base-item-group-->
+<!--          v-if="item && item.children && 1===0"-->
+<!--          :key="`group-${i}`"-->
+<!--          :item="item"-->
+<!--        >-->
+<!--          &lt;!&ndash;  &ndash;&gt;-->
+<!--        </base-item-group>-->
+
+<!--        <base-item-->
+<!--          v-else-->
+<!--          :key="`item-${i}`"-->
+<!--          :item="item"-->
+<!--        />-->
+<!--      </template>-->
 
       <!-- Style cascading bug  -->
       <!-- https://github.com/vuetifyjs/vuetify/pull/8574 -->
@@ -113,52 +134,111 @@
         },
         {
           icon: 'mdi-border-color',
-          title: 'menu.federative-units',
-          to: '/federative-unit',
-          permission: 'core.view_federativeunit'
+          title: 'menu.core',
+          group: 'core',
+          children: [
+            {
+              title: 'menu.core.persons',
+              to: '/core/person',
+              permission: 'core.view_people'
+            },
+            {
+              title: 'menu.core.federative-units',
+              to: '/core/federative-unit',
+              permission: 'core.view_federativeunit'
+            },
+            {
+              title: 'menu.core.cities',
+              to: '/core/city',
+              permission: 'core.view_city'
+            }
+          ],
         },
         {
           icon: 'mdi-border-color',
-          title: 'menu.cities',
-          to: '/city',
-          permission: 'core.view_city'
+          title: 'menu.inventory',
+          group: 'inventory',
+          children: [
+            {
+              title: 'menu.inventory.products',
+              to: '/inventory/product',
+              permission: 'inventory.view_product'
+            },
+            {
+              title: 'menu.inventory.units-of-measure',
+              to: '/inventory/unit-of-measure',
+              permission: 'inventory.view_unitofmeasure'
+            },
+            {
+              title: 'menu.inventory.categories',
+              to: '/inventory/category',
+              permission: 'inventory.view_category'
+            },
+            {
+              title: 'menu.inventory.subcategories',
+              to: '/inventory/subcategory',
+              permission: 'inventory.view_subcategory'
+            },
+            {
+              title: 'menu.inventory.product-size-registers',
+              to: '/inventory/product-size-register',
+              permission: 'inventory.view_productsizeregister'
+            },
+            {
+              title: 'menu.inventory.packaging-types',
+              to: '/inventory/packaging-type',
+              permission: 'inventory.view_packagingtype'
+            }
+          ],
         },
-        {
-          icon: 'mdi-border-color',
-          title: 'menu.persons',
-          to: '/person',
-          permission: 'core.view_people'
-        },
-        {
-          icon: 'mdi-border-color',
-          title: 'menu.units-of-measure',
-          to: '/unit-of-measure',
-          permission: 'inventory.view_unitofmeasure'
-        },
-        {
-          icon: 'mdi-border-color',
-          title: 'menu.categories',
-          to: '/category',
-          permission: 'inventory.view_category'
-        },
-        {
-          icon: 'mdi-border-color',
-          title: 'menu.subcategories',
-          to: '/subcategory',
-          permission: 'inventory.view_subcategory'
-        },
-        {
-          icon: 'mdi-border-color',
-          title: 'menu.product-size-registers',
-          to: '/product-size-register',
-          permission: 'inventory.view_productsizeregister'
-        },
-        {
-          icon: 'mdi-border-color',
-          title: 'menu.products',
-          to: '/product',
-          permission: 'inventory.view_product'
-        }
+        // {
+        //   icon: 'mdi-border-color',
+        //   title: 'menu.federative-units',
+        //   to: '/federative-unit',
+        //   permission: 'core.view_federativeunit'
+        // },
+        // {
+        //   icon: 'mdi-border-color',
+        //   title: 'menu.cities',
+        //   to: '/city',
+        //   permission: 'core.view_city'
+        // },
+        // {
+        //   icon: 'mdi-border-color',
+        //   title: 'menu.persons',
+        //   to: '/person',
+        //   permission: 'core.view_people'
+        // },
+        // {
+        //   icon: 'mdi-border-color',
+        //   title: 'menu.units-of-measure',
+        //   to: '/unit-of-measure',
+        //   permission: 'inventory.view_unitofmeasure'
+        // },
+        // {
+        //   icon: 'mdi-border-color',
+        //   title: 'menu.categories',
+        //   to: '/category',
+        //   permission: 'inventory.view_category'
+        // },
+        // {
+        //   icon: 'mdi-border-color',
+        //   title: 'menu.subcategories',
+        //   to: '/subcategory',
+        //   permission: 'inventory.view_subcategory'
+        // },
+        // {
+        //   icon: 'mdi-border-color',
+        //   title: 'menu.product-size-registers',
+        //   to: '/product-size-register',
+        //   permission: 'inventory.view_productsizeregister'
+        // },
+        // {
+        //   icon: 'mdi-border-color',
+        //   title: 'menu.products',
+        //   to: '/product',
+        //   permission: 'inventory.view_product'
+        // }
       ],
     }),
 
@@ -174,7 +254,12 @@
       },
       computedItems () {
         const {user_permissions} = this.$auth.user
+        const self = this
         function hasPermission(value) {
+          if (value.children) {
+            value.children = value.children.filter(hasPermission).map(self.mapItem)
+            return value.children !== []
+          }
           return value.permission === undefined || user_permissions.includes(value.permission);
         }
         return this.items.filter(hasPermission).map(this.mapItem)
@@ -196,6 +281,14 @@
             title: this.$t(item.title),
           }
         }
+      },
+      getItems (items) {
+        console.log(items)
+        const {user_permissions} = this.$auth.user
+        function hasPermission(value) {
+          return value.permission === undefined || user_permissions.includes(value.permission);
+        }
+        return items.filter(hasPermission).map(this.mapItem)
       },
     },
   }
