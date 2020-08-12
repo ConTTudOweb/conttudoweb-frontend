@@ -191,6 +191,18 @@
             }
           ],
         },
+        {
+          icon: 'mdi-border-color',
+          title: 'menu.sale',
+          group: 'sale',
+          children: [
+            {
+              title: 'menu.sale.sale-order',
+              to: '/sale/sale-order',
+              permission: 'sale.view_saleorder'
+            }
+          ],
+        }
         // {
         //   icon: 'mdi-border-color',
         //   title: 'menu.federative-units',
@@ -253,6 +265,8 @@
         },
       },
       computedItems () {
+        if (!this.$auth.user) return
+
         const {user_permissions} = this.$auth.user
         const self = this
         function hasPermission(value) {

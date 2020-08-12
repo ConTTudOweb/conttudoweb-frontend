@@ -10,6 +10,7 @@ const urlSubcategory = baseUrlAPI + '/subcategory'
 const urlProductSizeRegister = baseUrlAPI + '/product-size-register'
 const urlPackagingType = baseUrlAPI + '/packaging-type'
 const urlProduct = baseUrlAPI + '/product'
+const urlSaleOrder = baseUrlAPI + '/sale-order'
 
 const rules = {
   required: (value) => !!value || 'Campo obrigatório!',
@@ -468,4 +469,31 @@ export default (ctx, inject) => {
       })
     ])
   )
+
+
+  inject(
+    'saleOrderRepository',
+    repositoryWithAxios(urlSaleOrder, '', [
+      getField({
+        field: 'id',
+        label: '#'
+      }),
+      getField({
+        field: 'date_order',
+        label: 'Data de emissão',
+        align: 'center'
+      }),
+      getField({
+        field: 'customer__str',
+        label: 'Cliente'
+      }),
+      getField({
+        field: '_actions',
+        label: '',
+        sortable: false,
+        align: 'center'
+      })
+    ])
+  )
+
 }

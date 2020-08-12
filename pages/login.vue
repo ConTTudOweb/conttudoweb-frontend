@@ -3,7 +3,7 @@
     <v-row align="center" justify="center">
       <v-col cols="12" sm="8" md="6" lg="4" xl="3">
         <v-card
-          class="px-5 py-3 v-card v-sheet theme--light v-card--material--has-heading"
+          class="px-5 py-3 v-card--material v-sheet theme--light v-card--material--has-heading"
         >
           <div class="d-flex grow flex-wrap">
             <div

@@ -3,6 +3,7 @@ import pt from 'vuetify/es5/locale/pt'
 const dashboard = 'Painel'
 const core = 'Cadastros'
 const inventory = 'Inventário'
+const sale = 'Vendas'
 const federative_unit = 'Unidade federativa'
 const federative_units = 'Unidades federativas'
 const city = 'Cidade'
@@ -22,8 +23,12 @@ const packaging_types = 'Tipos de embalagem'
 const product = 'Produto'
 const products = 'Produtos'
 
+const sale_order = 'Pedido'
+const sale_orders = 'Pedidos'
+
 export default {
   $vuetify: pt,
+
   'company.name': 'ConTTudOweb',
   avatar: 'ConTTudO <web/>',
   search: 'Pesquisar',
@@ -34,6 +39,7 @@ export default {
   'menu.dashboard': dashboard,
   'menu.core': core,
   'menu.inventory': inventory,
+  'menu.sale': sale,
   'core-federative-unit___pt': federative_units,
   'core-federative-unit-id___pt': federative_unit,
   'menu.core.federative-units': federative_units,
@@ -64,6 +70,11 @@ export default {
   'menu.inventory.products': products,
   'product-by-supplier': 'Referências por Fornecedor',
   'packaging': 'Embalagens',
+
+  'sale-sale-order___pt': sale_orders,
+  'sale-sale-order-id___pt': sale_order,
+  'menu.sale.sale-order': sale_orders,
+  'sale-order-items': 'Itens do Pedido',
 
   // terms
   'about-us': 'Sobre nós',

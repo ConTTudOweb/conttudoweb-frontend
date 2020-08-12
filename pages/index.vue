@@ -81,9 +81,13 @@ import CardServices from '~/components/site/CardServices'
 export default {
   layout: 'public',
   auth: false,
-  middleware({ store, redirect }) {
+  middleware({ store, redirect, $auth }) {
     if (store.state.subDomain) {
-      return redirect('/dashboard')
+      if (!$auth.loggedIn) {
+        return redirect('/login')
+      } else {
+        return redirect('/dashboard')
+      }
     }
   },
   components: {

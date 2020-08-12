@@ -55,6 +55,7 @@
 <!---->
 <!--    <div class="mx-3" />-->
 
+    <span>Bem vindo(a), {{$auth.user.first_name}}</span>
     <v-btn
       class="ml-2"
       min-width="0"
@@ -114,7 +115,7 @@
       class="ml-2"
       min-width="0"
       text
-      @click="$auth.logout()"
+      @click="userLogout()"
       :title="$t('logout')"
     >
       <v-icon>mdi-logout</v-icon>
@@ -179,6 +180,10 @@
       ...mapMutations({
         setDrawer: 'SET_DRAWER',
       }),
+
+      async userLogout() {
+        await this.$auth.logout()
+      },
     },
   }
 </script>

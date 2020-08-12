@@ -33,7 +33,8 @@ export default {
     '~/plugins/tenant',
     '~/plugins/axios',
     '~/plugins/repository',
-    '~/plugins/base'
+    '~/plugins/base',
+    { src: '~/plugins/currency', ssr: false }
   ],
   /*
    ** Nuxt.js dev-modules
@@ -187,7 +188,7 @@ export default {
     watchLoggedIn: true,
     redirect: {
       login: '/login',
-      logout: '/',
+      logout: '/login',
       callback: '/login',
       home: '/dashboard'
     },
