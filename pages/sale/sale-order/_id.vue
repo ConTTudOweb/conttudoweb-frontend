@@ -114,7 +114,7 @@
                                               <v-row>
                                                 <v-col cols="12">
                                                   <v-autocomplete
-                                                    v-model="editedItem.product"
+                                                    v-model="selectedProduct"
                                                     label="Produto"
                                                     :rules="[rules.required]"
                                                     v-bind="propsFields"
@@ -255,7 +255,10 @@ export default {
       tab: null,
       dialog: false,
       editedItem: {},
-      editedIndex: -1
+      editedIndex: -1,
+      selectedProduct: null,
+      _sale_price: 0,
+      _product__str: null
     }
   },
 
@@ -269,12 +272,27 @@ export default {
     dialog(value) {
       if (!value) {
         this.$refs.formSaleOrderItems.resetValidation()
+        this.selectedProduct = null
         this.editedItem = {}
         this.editedIndex = -1
+      }
+    },
+    selectedProduct(val, oldval) {
+      if (val !== null && ((this.editedIndex > -1 && oldval !== null) || this.editedIndex === -1)) {
+        if (!val) return
+
+        this._sale_price = this.products.results.find(x => x.id === val).sale_price
+        this._product__str = this.products.results.find(x => x.id === val).description
+        if (this.editedItem.price === 0 || confirm(`Deseja alterar o preço de venda de "${this.editedItem.price}" para "${this._sale_price}"`)) {
+          this.editedItem.price = this._sale_price
+        }
       }
     }
   },
   methods: {
+    // changeProduct () {
+    //
+    // }
     // formatDate (date) {
     //   if (!date) return null
     //
@@ -285,6 +303,7 @@ export default {
     editSaleOrderItems(item) {
       this.editedIndex = this.form.saleorderitems_set.indexOf(item)
       this.editedItem = Object.assign({}, item)
+      this.selectedProduct = this.editedItem.product
       this.dialog = true
     },
 
@@ -298,6 +317,11 @@ export default {
     },
 
     saveSaleOrderItems() {
+      if (this.editedItem.product !== this.selectedProduct) {
+        this.editedItem.product = this.selectedProduct
+        this.editedItem.product__str = this._product__str
+      }
+
       if (this.editedIndex > -1) {
         Object.assign(this.form.saleorderitems_set[this.editedIndex], this.editedItem)
       } else {
