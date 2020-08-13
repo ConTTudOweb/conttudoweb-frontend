@@ -145,6 +145,16 @@
                                                     class="required"
                                                   />
                                                 </v-col>
+                                                <v-col cols="12" sm="4">
+                                                  <v-autocomplete
+                                                    v-model="selectedPacking"
+                                                    label="Embalagem"
+                                                    v-bind="propsFields"
+                                                    :items="packaging"
+                                                    item-text="packaging_type__str"
+                                                    item-value="id"
+                                                  ></v-autocomplete>
+                                                </v-col>
                                               </v-row>
                                             </template>
                                           </dashboard-form>
@@ -257,34 +267,51 @@ export default {
       editedItem: {},
       editedIndex: -1,
       selectedProduct: null,
-      _sale_price: 0,
-      _product__str: null
+      selectedPacking: null,
+      _product: null,
+      packaging: []
     }
   },
-
-  // computed: {
-  //   computedDateOrderFormatted () {
-  //     return this.formatDate(this.form.date_order)
-  //   },
-  // },
 
   watch: {
     dialog(value) {
       if (!value) {
         this.$refs.formSaleOrderItems.resetValidation()
+        this.selectedPacking = null
         this.selectedProduct = null
         this.editedItem = {}
         this.editedIndex = -1
       }
     },
+    selectedPacking(val, oldval) {
+      // Entra no if caso a "embalagem tenha sido escolhida"
+      // E
+      // Esteja "trocando a embalagem do item"  OU  "seja um item novo"
+      if (val && ((this.editedIndex > -1 && oldval) || this.editedIndex === -1)) {
+        this.editedItem.packaging_type = this.packaging.find(x => x.id === val).packaging_type
+      }
+    },
     selectedProduct(val, oldval) {
+      // Entra no if caso o "produto tenha sido escolhido"
+      // E
+      // Esteja "trocando o produto do item"  OU  "seja um item novo"
       if (val !== null && ((this.editedIndex > -1 && oldval !== null) || this.editedIndex === -1)) {
-        if (!val) return
+        this._product = this.products.results.find(x => x.id === val)
+        // this._sale_price = this.products.results.find(x => x.id === val).sale_price
+        // this._product__str = this.products.results.find(x => x.id === val).description
+        this.packaging = this.products.results.find(x => x.id === val).packaging_set
+        if (this.editedItem.price === 0 || confirm(`Deseja alterar o preço de venda de "${this.editedItem.price}" para "${this._product.sale_price}"`)) {
+          this.editedItem.price = this._product.sale_price
+        }
 
-        this._sale_price = this.products.results.find(x => x.id === val).sale_price
-        this._product__str = this.products.results.find(x => x.id === val).description
-        if (this.editedItem.price === 0 || confirm(`Deseja alterar o preço de venda de "${this.editedItem.price}" para "${this._sale_price}"`)) {
-          this.editedItem.price = this._sale_price
+        if (this.packaging.length === 0) {
+          this.selectedPacking = null
+        }
+        else if (this.packaging.length === 1) {
+          this.selectedPacking = this.packaging[0].id
+        }
+        else if (this.selectedPacking) {
+          this.selectedPacking = this.packaging.find(elem => elem.packaging_type === this.editedItem.packaging_type).id
         }
       }
     }
@@ -304,6 +331,10 @@ export default {
       this.editedIndex = this.form.saleorderitems_set.indexOf(item)
       this.editedItem = Object.assign({}, item)
       this.selectedProduct = this.editedItem.product
+      if (this.editedItem.packing) {
+        this.selectedPacking = this.editedItem.packing
+      }
+      this.packaging = this.products.results.find(x => x.id === this.selectedProduct).packaging_set
       this.dialog = true
     },
 
@@ -319,7 +350,10 @@ export default {
     saveSaleOrderItems() {
       if (this.editedItem.product !== this.selectedProduct) {
         this.editedItem.product = this.selectedProduct
-        this.editedItem.product__str = this._product__str
+        this.editedItem.product__str = this._product.description
+      }
+      if (this.editedItem.packing !== this.selectedPacking) {
+        this.editedItem.packing = this.selectedPacking
       }
 
       if (this.editedIndex > -1) {

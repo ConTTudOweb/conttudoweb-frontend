@@ -81,15 +81,15 @@ import CardServices from '~/components/site/CardServices'
 export default {
   layout: 'public',
   auth: false,
-  middleware({ store, redirect, $auth }) {
-    if (store.state.subDomain) {
-      if (!$auth.loggedIn) {
-        return redirect('/login')
-      } else {
-        return redirect('/dashboard')
-      }
-    }
-  },
+  // middleware({ store, redirect, $auth }) {
+  //   if (store.state.subDomain) {
+  //     if (!$auth.loggedIn) {
+  //       return redirect('/login')
+  //     } else {
+  //       return redirect('/dashboard')
+  //     }
+  //   }
+  // },
   components: {
     // Breakpoint,
     CardServices

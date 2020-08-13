@@ -44,8 +44,14 @@ export default {
     '@nuxt/typescript-build',
     // Doc: https://github.com/nuxt-community/stylelint-module
     '@nuxtjs/stylelint-module',
-    '@nuxtjs/vuetify'
+    '@nuxtjs/vuetify',
+    '@nuxtjs/date-fns'
   ],
+  // dateFns: {
+  //   locales: ['pt-BR',],
+  //   defaultLocale: 'pt-BR',
+  //   format: 'yyyy-MM'
+  // },
   /*
    ** Nuxt.js modules
    */

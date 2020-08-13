@@ -36,7 +36,7 @@
         </template>
 
         <template v-slot:item.date_order="{ item }">
-          <span>{{new Date(item.date_order).toLocaleDateString()}}</span>
+          <span>{{ $dateFns.format(item.date_order, 'dd/MM/yyyy') }}</span>
         </template>
 
         <template v-slot:item._actions="{ item }">

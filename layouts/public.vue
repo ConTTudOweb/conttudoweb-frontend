@@ -32,6 +32,15 @@ import CHeader from '~/components/application/Header.vue'
 import CFooter from '~/components/application/Footer.vue'
 
 export default {
+  middleware({ store, redirect, $auth }) {
+    if (store.state.subDomain) {
+      if (!$auth.loggedIn) {
+        return redirect('/login')
+      } else {
+        return redirect('/dashboard')
+      }
+    }
+  },
   components: {
     // CMenu,
     CHeader,

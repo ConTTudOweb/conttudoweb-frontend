@@ -303,6 +303,7 @@
                                             </v-col>
                                             <v-col cols="12" sm="4">
                                               <v-currency-field
+                                                :auto-decimal-mode="false"
                                                 v-model="editedItem.quantity"
                                                 label="Quantidade"
                                                 v-bind="propsFields"
@@ -515,6 +516,8 @@ export default {
     },
 
     savePackaging () {
+      this.editedItem.packaging_type__str = this.packaging_types.results.find(x => x.id === this.editedItem.packaging_type).description
+
       if (this.editedIndex > -1) {
         Object.assign(this.form.packaging_set[this.editedIndex], this.editedItem)
       } else {
