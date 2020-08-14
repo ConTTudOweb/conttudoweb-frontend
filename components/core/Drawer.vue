@@ -197,7 +197,7 @@
           group: 'sale',
           children: [
             {
-              title: 'menu.sale.sale-order',
+              title: 'menu.sale.sale-orders',
               to: '/sale/sale-order',
               permission: 'sale.view_saleorder'
             }

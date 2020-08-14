@@ -73,7 +73,7 @@ export default {
 
   'sale-sale-order___pt': sale_orders,
   'sale-sale-order-id___pt': sale_order,
-  'menu.sale.sale-order': sale_orders,
+  'menu.sale.sale-orders': sale_orders,
   'sale-order-items': 'Itens do Pedido',
 
   // terms
