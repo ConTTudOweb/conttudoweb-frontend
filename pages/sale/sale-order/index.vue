@@ -35,8 +35,16 @@
           </v-toolbar>
         </template>
 
+        <template v-slot:item.id="{ item }">
+          <span>{{ formatSaleOrderId(item.id) }}</span>
+        </template>
+
         <template v-slot:item.date_order="{ item }">
           <span>{{ $dateFns.format(item.date_order, 'dd/MM/yyyy') }}</span>
+        </template>
+
+        <template v-slot:item.valor_total_sale_order="{ item }">
+          <span>{{ getValorTotalSaleOrder(item) | currency }}</span>
         </template>
 
         <template v-slot:item._actions="{ item }">
@@ -94,6 +102,25 @@ export default {
       repository: this.$nuxt.context.app.$saleOrderRepository
     }
   },
+
+  methods: {
+    getValorTotalSaleOrder(sale_order) {
+      let _total = 0
+      sale_order.saleorderitems_set.forEach(element => {
+        _total += this.getTotalBrutoSaleOrderItem(element.quantity, element.price)
+      });
+      return _total - (_total * (sale_order.discount_percentage/100))
+    },
+
+    getTotalBrutoSaleOrderItem(quantity, price) {
+      return quantity * price
+    },
+
+    formatSaleOrderId(id) {
+      return '#' + id.toString().padStart(6, '0')
+    }
+  },
+  
   head() {
     return {
       title: this.$t('menu.sale.sale-orders')

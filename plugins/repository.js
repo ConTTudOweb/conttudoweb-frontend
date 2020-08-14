@@ -488,6 +488,16 @@ export default (ctx, inject) => {
         label: 'Cliente'
       }),
       getField({
+        field: 'discount_percentage',
+        label: '% Desconto',
+        align: 'end'
+      }),
+      getField({
+        field: 'valor_total_sale_order',
+        label: 'Total',
+        align: 'end'
+      }),
+      getField({
         field: '_actions',
         label: '',
         sortable: false,

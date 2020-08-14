@@ -1,5 +1,14 @@
 export default {
   data() {
+    const props_fields = {
+      outlined: true,
+      dense: true,
+      // placeholder: ' ',
+      hideDetails: 'auto',
+      autoSelectFirst: true
+      // chips: true,
+      // deletableChips: true
+    }
     return {
       form: Object.assign({}, {}),
       validateForm: false,
@@ -7,8 +16,14 @@ export default {
         outlined: true,
         dense: true,
         // placeholder: ' ',
-        hideDetails: 'auto'
+        hideDetails: 'auto',
+        autoSelectFirst: true,
+        // chips: true,
+        // deletableChips: true
       },
+      propsAutocomplete: Object.assign({}, props_fields, {
+        // clearable: true
+      }),
       rules: {
         required: (value) => !!value || 'Campo obrigatório.',
         email: (v) => !v || /.+@.+\..+/.test(v) || 'E-mail inválido.'
@@ -32,10 +47,18 @@ export default {
       if (this.$refs.form.validate()) {
         this.loading = true
         try {
+          // No Vuetify quando limpa um combo por exemplo ele coloca o valor undefined ao invés de null
+          let _form = this.form
+          Object.keys(_form).forEach(function(key) {
+            if (_form[key] === undefined) {
+              _form[key] = null
+            }
+          })
+
           if (this.$route.params.id > 0) {
-            await this.repository.update(this.form.id, this.form)
+            await this.repository.update(_form.id, _form)
           } else {
-            await this.repository.create(this.form)
+            await this.repository.create(_form)
           }
           // await this.load()
           this.loading = false

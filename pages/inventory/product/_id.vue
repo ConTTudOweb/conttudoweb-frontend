@@ -56,15 +56,15 @@
                   prefix="R$"
                 />
               </v-col>
-              <v-col cols="12" sm="4">
-                <v-currency-field
-                  v-model="form.wholesale_selling_price"
-                  label="Preço de venda atacado"
-                  v-bind="propsFields"
-                  prefix="R$"
-                />
-              </v-col>
-              <v-col v-if="hasCategoryViewPermission()" cols="12">
+<!--              <v-col cols="12" sm="4">-->
+<!--                <v-currency-field-->
+<!--                  v-model="form.wholesale_selling_price"-->
+<!--                  label="Preço de venda atacado"-->
+<!--                  v-bind="propsFields"-->
+<!--                  prefix="R$"-->
+<!--                />-->
+<!--              </v-col>-->
+              <v-col v-show="categories.results" cols="12">
                 <v-autocomplete
                   v-model="form.category"
                   label="Categoria"
@@ -78,7 +78,7 @@
                   </template>
                 </v-autocomplete>
               </v-col>
-              <v-col v-if="hasUnitOfMeasureViewPermission()" cols="12">
+              <v-col v-show="units_of_measure.results" cols="12">
                 <v-autocomplete
                   v-model="form.unit_of_measure"
                   label="Unidade de medida"
@@ -98,11 +98,11 @@
                   </template>
                 </v-autocomplete>
               </v-col>
-              <v-col v-if="hasProductSizeRegisterViewPermission()" cols="12">
+              <v-col v-show="product_size_registers.results" cols="12">
                 <v-autocomplete
                   v-model="form.product_size_register"
                   label="Grade"
-                  v-bind="propsFields"
+                  v-bind="propsAutocomplete"
                   :items="product_size_registers.results"
                   item-text="description"
                   item-value="id"
@@ -411,6 +411,20 @@ export default {
     }
 
     this.packaging_types = await this.$nuxt.context.app.$packagingTypeRepository.index()
+
+    // // Tentei preencher os combos que só tivessem uma opção mas não deu certo!
+    // console.log(id)
+    // if (id === 'add') {
+    //   console.log('this.categories.results.length', this.categories.results.length)
+    //   if (this.categories.results.length === 1) {
+    //     this.form.category = this.categories.results[0].id
+    //   }
+    //   console.log('this.units_of_measure.results.length', this.units_of_measure.results.length)
+    //   if (this.units_of_measure.results.length === 1) {
+    //     console.log('this.units_of_measure.results[0].id', this.units_of_measure.results[0].id)
+    //     this.form.unit_of_measure = this.units_of_measure.results[0].id
+    //   }
+    // }
   },
   data() {
     return {
@@ -459,6 +473,7 @@ export default {
       }
     }
   },
+
   methods: {
     hasCategoryViewPermission () {
       return (this.$auth.user.user_permissions.some(elem => elem === 'inventory.view_category'))

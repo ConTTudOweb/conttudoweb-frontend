@@ -58,6 +58,15 @@
                 </v-autocomplete>
               </v-col>
 
+              <v-col cols="12" sm="4">
+                <v-currency-field
+                  v-model="form.discount_percentage"
+                  label="% Desconto"
+                  v-bind="propsFields"
+                  prefix="%"
+                />
+              </v-col>
+
             </v-row>
 
             <v-row>
@@ -86,7 +95,7 @@
                             <tr>
                               <td :colspan="headers.length">
 
-                                <v-dialog v-model="dialog" max-width="500px" persistent>
+                                <v-dialog v-model="dialog" max-width="890px" persistent>
                                   <template v-slot:activator="{ on, attrs }">
                                     <v-btn
                                       text
@@ -125,8 +134,9 @@
                                                     autofocus
                                                   ></v-autocomplete>
                                                 </v-col>
-                                                <v-col cols="12" sm="4">
+                                                <v-col cols="12" sm="3">
                                                   <v-currency-field
+                                                    :default-value="null"
                                                     :auto-decimal-mode="false"
                                                     v-model="editedItem.quantity"
                                                     label="Quantidade"
@@ -145,7 +155,15 @@
                                                     class="required"
                                                   />
                                                 </v-col>
-                                                <v-col cols="12" sm="4">
+                                                <!-- <v-col cols="12" sm="4">
+                                                  <v-currency-field
+                                                    v-model="editedItem.discount_percentage"
+                                                    label="% Desconto"
+                                                    v-bind="propsFields"
+                                                    prefix="%"
+                                                  />
+                                                </v-col> -->
+                                                <v-col cols="12" sm="5">
                                                   <v-autocomplete
                                                     v-model="selectedPacking"
                                                     label="Embalagem"
@@ -176,6 +194,12 @@
                           </template>
                           <template v-slot:item.price="{ item }">
                             <span>{{ item.price | currency }}</span>
+                          </template>
+                          <template v-slot:item.volumes="{ item }">
+                            <span v-text="getVolumes(item.quantity, item.packaging__quantity)" />
+                          </template>
+                          <template v-slot:item.total_bruto="{ item }">
+                            <span>{{ getTotalBrutoSaleOrderItem(item.quantity, item.price) | currency }}</span>
                           </template>
                           <template v-slot:item._actions="{ item }">
                             <v-tooltip top>
@@ -211,6 +235,14 @@
                     </v-tabs-items>
                   </v-tabs>
                 </v-card>
+              </v-col>
+            </v-row>
+
+            <v-divider />
+
+            <v-row>
+              <v-col class="text-right body-1">
+                <span>TOTAL: </span><strong>{{ valor_total_sale_order | currency }}</strong>
               </v-col>
             </v-row>
 
@@ -258,8 +290,10 @@ export default {
       // menuDateOrder: false,
       headers_sale_order_items: [
         {value: 'product__str', text: 'PRODUTO'},
-        {value: 'quantity', text: 'QUANTIDADE'},
-        {value: 'price', text: 'PREÇO'},
+        {value: 'quantity', text: 'QUANTIDADE', align: 'end'},
+        {value: 'price', text: 'PREÇO', align: 'end'},
+        {value: 'volumes', text: 'VOLUMES', align: 'end'},
+        {value: 'total_bruto', text: 'TOTAL BRUTO', align: 'end'},
         {value: '_actions', sortable: false, align: 'center'}
       ],
       tab: null,
@@ -289,6 +323,7 @@ export default {
       // Esteja "trocando a embalagem do item"  OU  "seja um item novo"
       if (val && ((this.editedIndex > -1 && oldval) || this.editedIndex === -1)) {
         this.editedItem.packaging_type = this.packaging.find(x => x.id === val).packaging_type
+        this.editedItem.packaging__quantity = this.packaging.find(x => x.id === val).quantity
       }
     },
     selectedProduct(val, oldval) {
@@ -316,16 +351,24 @@ export default {
       }
     }
   },
+  computed: {
+    valor_total_sale_order() {
+      let _total = 0
+      this.form.saleorderitems_set.forEach(element => {
+        _total += this.getTotalBrutoSaleOrderItem(element.quantity, element.price)
+      });
+      return _total - (_total * (this.form.discount_percentage/100))
+    }
+  },
   methods: {
-    // changeProduct () {
-    //
-    // }
-    // formatDate (date) {
-    //   if (!date) return null
-    //
-    //   const [year, month, day] = date.split('-')
-    //   return `${day}/${month}/${year}`
-    // },
+    getTotalBrutoSaleOrderItem(quantity, price) {
+      return quantity * price
+    },
+
+    getVolumes (qtdItens, capacidade) {
+      if (!capacidade) return
+      return qtdItens / capacidade
+    },
 
     editSaleOrderItems(item) {
       this.editedIndex = this.form.saleorderitems_set.indexOf(item)
@@ -348,20 +391,22 @@ export default {
     },
 
     saveSaleOrderItems() {
-      if (this.editedItem.product !== this.selectedProduct) {
-        this.editedItem.product = this.selectedProduct
-        this.editedItem.product__str = this._product.description
-      }
-      if (this.editedItem.packing !== this.selectedPacking) {
-        this.editedItem.packing = this.selectedPacking
-      }
+      if (this.$refs.formSaleOrderItems.validate()) {
+        if (this.editedItem.product !== this.selectedProduct) {
+          this.editedItem.product = this.selectedProduct
+          this.editedItem.product__str = this._product.description
+        }
+        if (this.editedItem.packing !== this.selectedPacking) {
+          this.editedItem.packing = this.selectedPacking
+        }
 
-      if (this.editedIndex > -1) {
-        Object.assign(this.form.saleorderitems_set[this.editedIndex], this.editedItem)
-      } else {
-        this.form.saleorderitems_set.push(this.editedItem)
+        if (this.editedIndex > -1) {
+          Object.assign(this.form.saleorderitems_set[this.editedIndex], this.editedItem)
+        } else {
+          this.form.saleorderitems_set.push(this.editedItem)
+        }
+        this.cancelSaleOrderItems()
       }
-      this.cancelSaleOrderItems()
     },
 
     async loadCustomer() {
