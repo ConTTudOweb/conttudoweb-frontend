@@ -1,4 +1,10 @@
+import baseMixin from "@/mixins/base";
+
 export default {
+  mixins: [
+    baseMixin
+  ],
+  
   data() {
     return {
       headers: [],

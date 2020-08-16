@@ -4,6 +4,8 @@ const dashboard = 'Painel'
 const core = 'Cadastros'
 const inventory = 'Inventário'
 const sale = 'Vendas'
+const report = 'Relatórios'
+
 const federative_unit = 'Unidade federativa'
 const federative_units = 'Unidades federativas'
 const city = 'Cidade'
@@ -26,6 +28,8 @@ const products = 'Produtos'
 const sale_order = 'Pedido'
 const sale_orders = 'Pedidos'
 
+const sales_by_product = 'Vendas por Produto'
+
 export default {
   $vuetify: pt,
 
@@ -40,6 +44,8 @@ export default {
   'menu.core': core,
   'menu.inventory': inventory,
   'menu.sale': sale,
+  'menu.report': report,
+
   'core-federative-unit___pt': federative_units,
   'core-federative-unit-id___pt': federative_unit,
   'menu.core.federative-units': federative_units,
@@ -75,6 +81,9 @@ export default {
   'sale-sale-order-id___pt': sale_order,
   'menu.sale.sale-orders': sale_orders,
   'sale-order-items': 'Itens do Pedido',
+
+  'report-sales-by-product___pt': sales_by_product,
+  'menu.report.sales-by-product': sales_by_product,
 
   // terms
   'about-us': 'Sobre nós',

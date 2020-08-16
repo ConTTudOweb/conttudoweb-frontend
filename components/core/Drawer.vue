@@ -12,7 +12,6 @@
   >
     <template v-slot:img="props">
       <v-img
-        :gradient="`to bottom, ${barColor}`"
         v-bind="props"
       />
     </template>
@@ -194,11 +193,23 @@
         {
           icon: 'mdi-border-color',
           title: 'menu.sale',
-          group: 'sale',
+          group: '/sale/',
           children: [
             {
               title: 'menu.sale.sale-orders',
               to: '/sale/sale-order',
+              permission: 'sale.view_saleorder'
+            }
+          ],
+        },
+        {
+          icon: 'mdi-view-list',
+          title: 'menu.report',
+          group: '/report/',
+          children: [
+            {
+              title: 'menu.report.sales-by-product',
+              to: '/report/sales-by-product',
               permission: 'sale.view_saleorder'
             }
           ],

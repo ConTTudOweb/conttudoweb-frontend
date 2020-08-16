@@ -12,6 +12,8 @@ const urlPackagingType = baseUrlAPI + '/packaging-type'
 const urlProduct = baseUrlAPI + '/product'
 const urlSaleOrder = baseUrlAPI + '/sale-order'
 
+const urlSalesByProductList = baseUrlAPI + '/sales-by-product-list'
+
 const rules = {
   required: (value) => !!value || 'Campo obrigatório!',
   counter: (value) => value.length <= 20 || 'Max 20 characters',
@@ -504,6 +506,11 @@ export default (ctx, inject) => {
         align: 'center'
       })
     ])
+  )
+
+  inject(
+    'salesByProductRepository',
+    repositoryWithAxios(urlSalesByProductList, '', [])
   )
 
 }

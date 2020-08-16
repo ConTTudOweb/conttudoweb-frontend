@@ -1,4 +1,10 @@
+import baseMixin from "@/mixins/base";
+
 export default {
+  mixins: [
+    baseMixin
+  ],
+
   data() {
     return {
       repository: null,
@@ -12,7 +18,7 @@ export default {
       loading: false,
       // editedIndex: -1,
       booleanFieldsSlots: [],
-      errorMessage: ''
+      // errorMessage: ''
     }
   },
   // computed: {

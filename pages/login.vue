@@ -7,7 +7,7 @@
         >
           <div class="d-flex grow flex-wrap">
             <div
-              class="v-card--heading mb-n6 v-sheet theme--dark elevation-6 primary pa-7"
+              class="v-card--material__heading mb-n6 v-sheet theme--dark elevation-6 primary pa-7"
               style="width: 100%;"
             >
               <div class="text-center">
