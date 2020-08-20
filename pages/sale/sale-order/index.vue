@@ -43,8 +43,8 @@
           <span>{{ $dateFns.format(item.date_order, 'dd/MM/yyyy') }}</span>
         </template>
 
-        <template v-slot:item.valor_total_sale_order="{ item }">
-          <span>{{ getValorTotalSaleOrder(item) | currency }}</span>
+        <template v-slot:item.net_total="{ item }">
+          <span>{{ item.net_total | currency }}</span>
         </template>
 
         <template v-slot:item._actions="{ item }">
@@ -104,17 +104,17 @@ export default {
   },
 
   methods: {
-    getValorTotalSaleOrder(sale_order) {
-      let _total = 0
-      sale_order.saleorderitems_set.forEach(element => {
-        _total += this.getTotalBrutoSaleOrderItem(element.quantity, element.price)
-      });
-      return _total - (_total * (sale_order.discount_percentage/100))
-    },
+    // getValorTotalSaleOrder(sale_order) {
+    //   let _total = 0
+    //   sale_order.saleorderitems_set.forEach(element => {
+    //     _total += element.net_total
+    //   });
+    //   return _total
+    // },
 
-    getTotalBrutoSaleOrderItem(quantity, price) {
-      return quantity * price
-    },
+    // getTotalBrutoSaleOrderItem(quantity, price) {
+    //   return quantity * price
+    // },
 
     formatSaleOrderId(id) {
       return '#' + id.toString().padStart(6, '0')

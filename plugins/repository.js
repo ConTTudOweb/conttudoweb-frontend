@@ -478,7 +478,8 @@ export default (ctx, inject) => {
     repositoryWithAxios(urlSaleOrder, '', [
       getField({
         field: 'id',
-        label: '#'
+        label: '#',
+        align: 'end'
       }),
       getField({
         field: 'date_order',
@@ -495,7 +496,7 @@ export default (ctx, inject) => {
         align: 'end'
       }),
       getField({
-        field: 'valor_total_sale_order',
+        field: 'net_total',
         label: 'Total',
         align: 'end'
       }),

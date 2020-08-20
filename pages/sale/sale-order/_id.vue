@@ -58,7 +58,7 @@
                 </v-autocomplete>
               </v-col>
 
-              <v-col cols="12" sm="4">
+              <v-col cols="12" sm="6" md="4" lg="3">
                 <v-currency-field
                   v-model="form.discount_percentage"
                   label="% Desconto"
@@ -198,8 +198,8 @@
                           <template v-slot:item.volumes="{ item }">
                             <span v-text="getVolumes(item.quantity, item.packaging__quantity)" />
                           </template>
-                          <template v-slot:item.total_bruto="{ item }">
-                            <span>{{ getTotalBrutoSaleOrderItem(item.quantity, item.price) | currency }}</span>
+                          <template v-slot:item.net_total="{ item }">
+                            <span>{{ item.net_total | currency }}</span>
                           </template>
                           <template v-slot:item._actions="{ item }">
                             <v-tooltip top>
@@ -293,7 +293,7 @@ export default {
         {value: 'quantity', text: 'QUANTIDADE', align: 'end'},
         {value: 'price', text: 'PREÇO', align: 'end'},
         {value: 'volumes', text: 'VOLUMES', align: 'end'},
-        {value: 'total_bruto', text: 'TOTAL BRUTO', align: 'end'},
+        {value: 'net_total', text: 'TOTAL LÍQUIDO', align: 'end'},
         {value: '_actions', sortable: false, align: 'center'}
       ],
       tab: null,
@@ -355,15 +355,15 @@ export default {
     valor_total_sale_order() {
       let _total = 0
       this.form.saleorderitems_set.forEach(element => {
-        _total += this.getTotalBrutoSaleOrderItem(element.quantity, element.price)
+        _total += element.net_total
       });
-      return _total - (_total * (this.form.discount_percentage/100))
+      return _total
     }
   },
   methods: {
-    getTotalBrutoSaleOrderItem(quantity, price) {
-      return quantity * price
-    },
+    // getTotalBrutoSaleOrderItem(quantity, price) {
+    //   return quantity * price
+    // },
 
     getVolumes (qtdItens, capacidade) {
       if (!capacidade) return
