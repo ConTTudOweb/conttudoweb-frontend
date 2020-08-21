@@ -16,6 +16,64 @@
         </v-btn>
       </template>
 
+      <v-row>
+        <v-col cols="6" sm="4">
+          <v-menu
+            v-model="menuStartDate"
+            :close-on-content-click="false"
+            transition="scale-transition"
+            offset-y
+            max-width="290px"
+            min-width="290px"
+          >
+            <template v-slot:activator="{ on, attrs }">
+              <v-text-field
+                v-model="startDateFormatted"
+                label="Data inicial"
+                persistent-hint
+                prepend-icon="mdi-calendar"
+                readonly
+                v-bind="attrs"
+                v-on="on"
+              ></v-text-field>
+            </template>
+            <v-date-picker v-model="startDate" no-title @input="menuStartDate = false"></v-date-picker>
+          </v-menu>
+        </v-col>
+
+        <v-col cols="6" sm="4">
+          <v-menu
+            v-model="menuEndDate"
+            :close-on-content-click="false"
+            transition="scale-transition"
+            offset-y
+            max-width="290px"
+            min-width="290px"
+          >
+            <template v-slot:activator="{ on, attrs }">
+              <v-text-field
+                v-model="endDateFormatted"
+                label="Data final"
+                persistent-hint
+                prepend-icon="mdi-calendar"
+                readonly
+                v-bind="attrs"
+                v-on="on"
+              ></v-text-field>
+            </template>
+            <v-date-picker v-model="endDate" no-title @input="menuEndDate = false"></v-date-picker>
+          </v-menu>
+        </v-col>
+
+        <v-spacer />
+
+        <v-col cols="3">
+          <v-btn class="float-right my-auto" color="primary" outlined @click="search()">
+            <v-icon>mdi-filter</v-icon>Pesquisar
+          </v-btn>
+        </v-col>
+      </v-row>
+
       <div id="salesByProductTable">
         <v-simple-table dense>
           <caption id="salesByProductTable_title">{{ `Relatório de ${$t('menu.report.sales-by-product')}` }}</caption>
@@ -61,45 +119,6 @@
               </tr>
               <br :key="i">
             </template>
-
-            <!-- <br><br><br><br>
-            <tr>
-              <td style="border-bottom-style: dashed;" colspan="3">Produto xxx</td>
-            </tr>
-            <tr>
-              <td class="text-right">2020/08</td>
-              <td class="text-right">
-                2
-              </td>
-              <td class="text-right">
-                40
-              </td>
-            </tr>
-            <br>
-
-            <tr>
-              <td style="border-bottom-style: dashed;" colspan="3">Produto 222</td>
-            </tr>
-            <tr>
-              <td style="border-style: hidden !important;" class="text-right">2020/08</td>
-              <td style="border-style: hidden !important;" class="text-right">
-                2
-              </td>
-              <td style="border-style: hidden !important;" class="text-right">
-                40
-              </td>
-            </tr>
-            <tr>
-              <td style="border-style: hidden !important;" class="text-right">2020/08</td>
-              <td style="border-style: hidden !important;" class="text-right">
-                2
-              </td>
-              <td style="border-style: hidden !important;" class="text-right">
-                40
-              </td>
-            </tr>
-            <br> -->
-
           </tbody>
         </v-simple-table>
       </div>
@@ -124,29 +143,59 @@ export default {
   ],
 
   async fetch() {
-    await this.loadData()
+    this.setDateFilters()
+
+    await this.search()
   },
 
   data() {
     return {
-      repository: this.$nuxt.context.app.$salesByProductRepository
+      repository: this.$nuxt.context.app.$salesByProductRepository,
+      menuStartDate: false,
+      menuEndDate: false,
+      startDate: new Date().toISOString().substr(0, 10),
+      endDate: null
     }
   },
 
+  computed: {
+    startDateFormatted () {
+      return this.formatDate(this.startDate)
+    },
+
+    endDateFormatted () {
+      return this.formatDate(this.endDate)
+    },
+  },
+
   methods: {
+    async search() {
+      await this.load({filters: `start_date_order=${this.startDate}&end_date_order=${this.endDate}`})
+    },
+
+    setDateFilters() {
+      let _date = new Date();
+      _date.setMonth(_date.getMonth()-1)
+      const y = _date.getFullYear()
+      const m = _date.getMonth()
+
+      this.startDate = new Date(y, m, 1).toISOString().substr(0, 10)
+      this.endDate = new Date(y, m+1, 0).toISOString().substr(0, 10)
+    },
+
+    formatDate (date) {
+      if (!date) return null
+
+      const [year, month, day] = date.split('-')
+      return `${day}/${month}/${year}`
+    },
+
     getVolumes(qtdItens, capacidade) {
       if (!capacidade) return
       return qtdItens / capacidade
     },
 
     printTable() {
-      // let tableToPrint = document.getElementById("salesByProductTable");
-      // alert(tableToPrint.outerHTML)
-      // const newWin = window.open("");
-      // newWin.document.write(tableToPrint.outerHTML);
-      // newWin.print();
-      // newWin.close();
-
       window.print();
     }
   },
@@ -160,12 +209,6 @@ export default {
 </script>
 
 <style lang="SCSS">
-/* tr.product-line-item>td {
-  border-top-style: solid !important;
-  border-top-width: thin !important;
-  border-top-color: rgba(0, 0, 0, 0.5);
-  border-bottom-style: dashed !important;
-} */
 tr.product-line-item>td {
   border-top-style: dashed !important;
   border-top-width: thin !important;

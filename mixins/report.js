@@ -28,11 +28,12 @@ export default {
   //   }
   // },
   methods: {
-    async load() {
-      // const { sortBy, sortDesc, page, itemsPerPage } = this.options
+    async load({filters} = {}) {
       this.loading = true
       try {
-        const { results } = await this.repository.index()
+        const { results } = await this.repository.index({
+          filters: filters
+        })
         this.items = results
         // this.totalItems = count
         this.loading = false
@@ -41,12 +42,12 @@ export default {
         this.errorMessage = e.message
       }
     },
-    async loadData() {
-      // this.loadTitle()
-      // this.headers = this.repository.displayFields()
-      // this.booleanFieldsSlots = this.repository.booleanDisplayFields()
-      await this.load()
-    },
+    // async loadData() {
+    //   // this.loadTitle()
+    //   // this.headers = this.repository.displayFields()
+    //   // this.booleanFieldsSlots = this.repository.booleanDisplayFields()
+    //   await this.load()
+    // },
     // getItemSlot(field) {
     //   return `item.${field}`
     // },
