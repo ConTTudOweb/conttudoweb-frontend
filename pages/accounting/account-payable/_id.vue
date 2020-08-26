@@ -5,12 +5,12 @@
     tag="section"
   >
     <base-material-card :title="formTitle">
-      <v-form ref="form" v-model="validateForm" @submit.prevent="save" :disabled="form.liquidated">
+      <v-form ref="form" v-model="validateForm" @submit.prevent="save" :disabled="form.liquidated_date && form.liquidated_date !== null">
         <dashboard-form :title="title" :form-title="formTitle">
           <template v-slot:buttons>
             <dashboard-btn-cancel :disabled="loading" @click="cancel()" />
 
-            <dashboard-btn-re-open v-if="form.liquidated" :disabled="loading" @click="estornar()" />
+            <dashboard-btn-re-open v-if="form.liquidated_date && form.liquidated_date !== null" :disabled="loading" @click="estornar()" />
             <dashboard-btn-save v-else :loading="loading" :disabled="!validateForm" />
           </template>
           <template v-slot:fields>
@@ -267,6 +267,7 @@ export default {
 
     estornar() {
       this.form.liquidated = false
+      this.form.liquidated_date = null
     }
   }
 }
