@@ -73,9 +73,7 @@ export default {
       this.form = await this.repository.show(id)
     }
     this.loadTitle()
-    const {
-      results
-    } = await this.$nuxt.context.app.$categoryRepository.index()
+    const { results = [] } = await this.$nuxt.context.app.$categoryRepository.index()
     this.categories = results
   },
   data() {

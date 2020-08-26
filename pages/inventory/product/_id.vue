@@ -64,12 +64,12 @@
 <!--                  prefix="R$"-->
 <!--                />-->
 <!--              </v-col>-->
-              <v-col v-show="categories.results" cols="12">
+              <v-col v-show="categories" cols="12">
                 <v-autocomplete
                   v-model="form.category"
                   label="Categoria"
                   v-bind="propsFields"
-                  :items="categories.results"
+                  :items="categories"
                   item-text="str"
                   item-value="id"
                 >
@@ -78,12 +78,12 @@
                   </template>
                 </v-autocomplete>
               </v-col>
-              <v-col v-show="units_of_measure.results" cols="12">
+              <v-col v-show="units_of_measure" cols="12">
                 <v-autocomplete
                   v-model="form.unit_of_measure"
                   label="Unidade de medida"
                   v-bind="propsFields"
-                  :items="units_of_measure.results"
+                  :items="units_of_measure"
                   item-text="initials"
                   item-value="id"
                 >
@@ -98,12 +98,12 @@
                   </template>
                 </v-autocomplete>
               </v-col>
-              <v-col v-show="product_size_registers.results" cols="12">
+              <v-col v-show="product_size_registers" cols="12">
                 <v-autocomplete
                   v-model="form.product_size_register"
                   label="Grade"
                   v-bind="propsAutocomplete"
-                  :items="product_size_registers.results"
+                  :items="product_size_registers"
                   item-text="description"
                   item-value="id"
                 >
@@ -181,7 +181,7 @@
                                                     label="Fornecedor"
                                                     :rules="[rules.required]"
                                                     v-bind="propsFields"
-                                                    :items="suppliers.results"
+                                                    :items="suppliers"
                                                     item-text="name"
                                                     item-value="id"
                                                     class="required"
@@ -294,7 +294,7 @@
                                                 label="Tipo de embalagem"
                                                 :rules="[rules.required]"
                                                 v-bind="propsFields"
-                                                :items="packaging_types.results"
+                                                :items="packaging_types"
                                                 item-text="description"
                                                 item-value="id"
                                                 class="required"
@@ -392,37 +392,36 @@ export default {
     this.loadTitle()
 
     if (this.hasCategoryViewPermission()) {
-      // this.subcategories = await this.$nuxt.context.app.$subcategoryRepository.index()
       await this.loadCategory()
     }
 
     if (this.hasUnitOfMeasureViewPermission()) {
-      // this.units_of_measure = await this.$nuxt.context.app.$unitOfMeasureRepository.index()
       await this.loadUnitOfMeasure()
     }
 
     if (this.hasProductSizeRegisterViewPermission()) {
-      // this.product_size_registers = await this.$nuxt.context.app.$productSizeRegisterRepository.index()
       await this.loadProductSizeRegister()
     }
 
     if (this.hasProductBySupplierViewPermission() && this.hasPeopleViewPermission()) {
-      this.suppliers = await this.$nuxt.context.app.$peopleRepository.index({filters: 'supplier=true'})
+      const { results = [] } = await this.$nuxt.context.app.$peopleRepository.index({filters: 'supplier=true'})
+      this.suppliers = results
     }
 
-    this.packaging_types = await this.$nuxt.context.app.$packagingTypeRepository.index()
+    const { results = [] } = await this.$nuxt.context.app.$packagingTypeRepository.index()
+    this.packaging_types = results
 
     // // Tentei preencher os combos que só tivessem uma opção mas não deu certo!
     // console.log(id)
     // if (id === 'add') {
-    //   console.log('this.categories.results.length', this.categories.results.length)
-    //   if (this.categories.results.length === 1) {
-    //     this.form.category = this.categories.results[0].id
+    //   console.log('this.categories.length', this.categories.length)
+    //   if (this.categories.length === 1) {
+    //     this.form.category = this.categories[0].id
     //   }
-    //   console.log('this.units_of_measure.results.length', this.units_of_measure.results.length)
-    //   if (this.units_of_measure.results.length === 1) {
-    //     console.log('this.units_of_measure.results[0].id', this.units_of_measure.results[0].id)
-    //     this.form.unit_of_measure = this.units_of_measure.results[0].id
+    //   console.log('this.units_of_measure.length', this.units_of_measure.length)
+    //   if (this.units_of_measure.length === 1) {
+    //     console.log('this.units_of_measure[0].id', this.units_of_measure[0].id)
+    //     this.form.unit_of_measure = this.units_of_measure[0].id
     //   }
     // }
   },
@@ -531,7 +530,7 @@ export default {
     },
 
     savePackaging () {
-      this.editedItem.packaging_type__str = this.packaging_types.results.find(x => x.id === this.editedItem.packaging_type).description
+      this.editedItem.packaging_type__str = this.packaging_types.find(x => x.id === this.editedItem.packaging_type).description
 
       if (this.editedIndex > -1) {
         Object.assign(this.form.packaging_set[this.editedIndex], this.editedItem)
@@ -542,15 +541,18 @@ export default {
     },
 
     async loadCategory () {
-      this.categories = await this.$nuxt.context.app.$categoryRepository.index()
+      const { results = [] } = await this.$nuxt.context.app.$categoryRepository.index()
+      this.categories = results
     },
 
     async loadUnitOfMeasure () {
-      this.units_of_measure = await this.$nuxt.context.app.$unitOfMeasureRepository.index()
+      const { results = [] } = await this.$nuxt.context.app.$unitOfMeasureRepository.index()
+      this.units_of_measure = results
     },
 
     async loadProductSizeRegister () {
-      this.product_size_registers = await this.$nuxt.context.app.$productSizeRegisterRepository.index()
+      const { results = [] } = await this.$nuxt.context.app.$productSizeRegisterRepository.index()
+      this.product_size_registers = results
     }
   }
 }

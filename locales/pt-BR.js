@@ -4,6 +4,7 @@ const dashboard = 'Painel'
 const core = 'Cadastros'
 const inventory = 'Inventário'
 const sale = 'Vendas'
+const accounting = 'Financeiro'
 const report = 'Relatórios'
 
 const federative_unit = 'Unidade federativa'
@@ -30,6 +31,16 @@ const sale_orders = 'Pedidos'
 
 const sales_by_product = 'Vendas por Produto'
 
+// Accounting
+const accounting_account_payable = 'Conta a pagar'
+const accounting_accounts_payable = 'Contas a pagar'
+const accounting_category = 'Categoria financeira'
+const accounting_categories = 'Categorias financeiras'
+const accounting_deposit_account = 'Conta financeira'
+const accounting_deposit_accounts = 'Contas financeiras'
+const accounting_classification_center = 'Centro de Custo/Despesa'
+const accounting_classification_centers = 'Centros de Custo/Despesa'
+
 export default {
   $vuetify: pt,
 
@@ -44,6 +55,7 @@ export default {
   'menu.core': core,
   'menu.inventory': inventory,
   'menu.sale': sale,
+  'menu.accounting': accounting,
   'menu.report': report,
 
   'core-federative-unit___pt': federative_units,
@@ -84,6 +96,23 @@ export default {
 
   'report-sales-by-product___pt': sales_by_product,
   'menu.report.sales-by-product': sales_by_product,
+
+  // Accounting
+  'menu.accounting.account-payable': accounting_accounts_payable,
+  'accounting-account-payable___pt': accounting_accounts_payable,
+  'accounting-account-payable-id___pt': accounting_account_payable,
+  //
+  'menu.accounting.category': accounting_categories,
+  'accounting-category___pt': accounting_categories,
+  'accounting-category-id___pt': accounting_category,
+  //
+  'menu.accounting.deposit-account': accounting_deposit_accounts,
+  'accounting-deposit-account___pt': accounting_deposit_accounts,
+  'accounting-deposit-account-id___pt': accounting_deposit_account,
+  //
+  'menu.accounting.classification-centers': accounting_classification_centers,
+  'accounting-classification-center___pt': accounting_classification_centers,
+  'accounting-classification-center-id___pt': accounting_classification_center,
 
   // terms
   'about-us': 'Sobre nós',

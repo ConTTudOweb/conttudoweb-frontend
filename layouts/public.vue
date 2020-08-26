@@ -6,7 +6,7 @@
       :clipped="clipped"
       @toggle-drawer="$refs.menu.drawer = !$refs.menu.drawer"
     />
-    <v-content>
+    <v-main>
       <v-btn
         v-if="$vuetify.breakpoint.smAndUp"
         fixed
@@ -21,7 +21,7 @@
         <v-icon>mdi-whatsapp</v-icon>
       </v-btn>
       <nuxt />
-    </v-content>
+    </v-main>
     <c-footer />
   </v-app>
 </template>

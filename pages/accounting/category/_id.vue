@@ -1,6 +1,6 @@
 <template>
   <v-container
-    id="federative-unit-form"
+    id="accounting-category-form"
     fluid
     tag="section"
   >
@@ -15,8 +15,8 @@
             <v-row>
               <v-col cols="12">
                 <v-text-field
-                  v-model="form.name"
-                  label="Nome"
+                  v-model="form.description"
+                  label="Descrição"
                   :rules="[rules.required]"
                   v-bind="propsFields"
                   maxlength="255"
@@ -24,16 +24,15 @@
                   autofocus
                 />
               </v-col>
+
               <v-col cols="12">
                 <v-autocomplete
-                  v-model="form.uf"
-                  label="UF"
-                  :rules="[rules.required]"
+                  v-model="form.parent"
+                  label="Categoria"
                   v-bind="propsFields"
-                  :items="ufs"
-                  item-text="name"
+                  :items="categories"
+                  item-text="str"
                   item-value="id"
-                  class="required"
                 ></v-autocomplete>
               </v-col>
             </v-row>
@@ -45,8 +44,8 @@
 </template>
 
 <script>
-import crudMixin from '~/mixins/crud'
-import formMixin from '~/mixins/form'
+import crudMixin from "@/mixins/crud";
+import formMixin from "@/mixins/form";
 
 export default {
   layout: 'Admin',
@@ -65,14 +64,15 @@ export default {
       this.form = await this.repository.show(id)
     }
     this.loadTitle()
-    const { results = [] } = await this.$nuxt.context.app.$federativeUnitRepository.index()
-    this.ufs = results
+
+    const { results = [] } = await this.repository.index()
+    this.categories = results
   },
   data() {
     return {
-      repository: this.$nuxt.context.app.$cityRepository,
-      name: 'city',
-      ufs: []
+      repository: this.$nuxt.context.app.$accountingCategoryRepository,
+      // name: 'category',
+      categories: []
     }
   }
 }

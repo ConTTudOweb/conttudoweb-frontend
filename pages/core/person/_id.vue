@@ -1,6 +1,6 @@
 <template>
   <v-container
-    id="federative-unit-form"
+    id="person-form"
     fluid
     tag="section"
   >
@@ -169,7 +169,7 @@ export default {
       this.form = await this.repository.show(id)
     }
     this.loadTitle()
-    const { results } = await this.$nuxt.context.app.$cityRepository.index()
+    const { results = [] } = await this.$nuxt.context.app.$cityRepository.index()
     this.cities = results
   },
   data() {

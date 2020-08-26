@@ -1,6 +1,6 @@
 <template>
   <v-container
-    id="federative-unit-form"
+    id="accounting-classification-center-form"
     fluid
     tag="section"
   >
@@ -13,28 +13,32 @@
           </template>
           <template v-slot:fields>
             <v-row>
+              <v-col cols="6">
+                <v-checkbox
+                  ref="firstItem"
+                  v-model="form.cost_center"
+                  label="Centro de custo?"
+                  v-bind="propsFields"
+                />
+              </v-col>
+              <v-col cols="6">
+                <v-checkbox
+                  v-model="form.revenue_center"
+                  label="Centro de receita?"
+                  v-bind="propsFields"
+                />
+              </v-col>
+
               <v-col cols="12">
                 <v-text-field
                   v-model="form.name"
                   label="Nome"
                   :rules="[rules.required]"
                   v-bind="propsFields"
-                  maxlength="255"
+                  maxlength="30"
                   class="required"
                   autofocus
                 />
-              </v-col>
-              <v-col cols="12">
-                <v-autocomplete
-                  v-model="form.uf"
-                  label="UF"
-                  :rules="[rules.required]"
-                  v-bind="propsFields"
-                  :items="ufs"
-                  item-text="name"
-                  item-value="id"
-                  class="required"
-                ></v-autocomplete>
               </v-col>
             </v-row>
           </template>
@@ -45,8 +49,8 @@
 </template>
 
 <script>
-import crudMixin from '~/mixins/crud'
-import formMixin from '~/mixins/form'
+import crudMixin from "@/mixins/crud";
+import formMixin from "@/mixins/form";
 
 export default {
   layout: 'Admin',
@@ -65,14 +69,10 @@ export default {
       this.form = await this.repository.show(id)
     }
     this.loadTitle()
-    const { results = [] } = await this.$nuxt.context.app.$federativeUnitRepository.index()
-    this.ufs = results
   },
   data() {
     return {
-      repository: this.$nuxt.context.app.$cityRepository,
-      name: 'city',
-      ufs: []
+      repository: this.$nuxt.context.app.$accountingClassificationCenterRepository
     }
   }
 }

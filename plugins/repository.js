@@ -14,6 +14,13 @@ const urlSaleOrder = baseUrlAPI + '/sale-order'
 
 const urlSalesByProductList = baseUrlAPI + '/sales-by-product-list'
 
+// Accounting
+const urlAccountingCategory = baseUrlAPI + '/accounting/category'
+const urlAccountingBank = baseUrlAPI + '/accounting/bank'
+const urlAccountingDepositAccount = baseUrlAPI + '/accounting/deposit-account'
+const urlAccountingClassificationCenter = baseUrlAPI + '/accounting/classification-center'
+const urlAccountingAccountPayable = baseUrlAPI + '/accounting/account-payable'
+
 const rules = {
   required: (value) => !!value || 'Campo obrigatório!',
   counter: (value) => value.length <= 20 || 'Max 20 characters',
@@ -324,25 +331,25 @@ export default (ctx, inject) => {
       getField({
         field: 'str',
         label: 'descrição',
-        allowForm: true,
-        form: {
-          type: fieldTypeTextTag,
-          sm: 8,
-          rules: [rules.required],
-          maxlength: 120
-        }
+        // allowForm: true,
+        // form: {
+        //   type: fieldTypeTextTag,
+        //   sm: 8,
+        //   rules: [rules.required],
+        //   maxlength: 120
+        // }
       }),
       getField({
         field: 'code',
         label: 'código',
-        allowForm: true,
-        form: {
-          type: fieldTypeTextTag,
-          xs: 6,
-          sm: 4,
-          maxlength: 20,
-          autofocus: true
-        }
+        // allowForm: true,
+        // form: {
+        //   type: fieldTypeTextTag,
+        //   xs: 6,
+        //   sm: 4,
+        //   maxlength: 20,
+        //   autofocus: true
+        // }
       }),
       getField({
         field: '_actions',
@@ -512,6 +519,162 @@ export default (ctx, inject) => {
   inject(
     'salesByProductRepository',
     repositoryWithAxios(urlSalesByProductList, '', [])
+  )
+
+
+  // Accounting
+  inject(
+    'accountingCategoryRepository',
+    repositoryWithAxios(urlAccountingCategory, '', [
+      getField({
+        field: 'id',
+        label: '#'
+      }),
+      getField({
+        field: 'str',
+        label: 'descrição'
+      }),
+      getField({
+        field: '_actions',
+        label: '',
+        sortable: false
+      })
+    ])
+  )
+
+  inject(
+    'accountingBankRepository',
+    repositoryWithAxios(urlAccountingBank, '', [
+      getField({
+        field: 'id',
+        label: '#'
+      }),
+      getField({
+        field: 'code',
+        label: 'código'
+      }),
+      getField({
+        field: 'description',
+        label: 'descrição'
+      }),
+      getField({
+        field: '_actions',
+        label: '',
+        sortable: false
+      })
+    ])
+  )
+
+  inject(
+    'accountingDepositAccountRepository',
+    repositoryWithAxios(urlAccountingDepositAccount, '', [
+      getField({
+        field: 'id',
+        label: '#'
+      }),
+      getField({
+        field: 'name',
+        label: 'Descrição'
+      }),
+      getField({
+        field: 'type_display',
+        label: 'Tipo'
+      }),
+      getField({
+        field: 'agency_display',
+        label: 'Agência'
+      }),
+      getField({
+        field: 'account_display',
+        label: 'Conta'
+      }),
+      getField({
+        field: 'bank__str',
+        label: 'Banco'
+      }),
+      getField({
+        field: '_actions',
+        label: '',
+        sortable: false
+      })
+    ])
+  )
+
+  inject(
+    'accountingClassificationCenterRepository',
+    repositoryWithAxios(urlAccountingClassificationCenter, '', [
+      getField({
+        field: 'id',
+        label: '#'
+      }),
+      getField({
+        field: 'name',
+        label: 'Nome'
+      }),
+      getField({
+        field: 'cost_center',
+        label: 'Centro de custo?',
+        type: 'boolean'
+      }),
+      getField({
+        field: 'revenue_center',
+        label: 'Centro de receita?',
+        type: 'boolean'
+      }),
+      getField({
+        field: '_actions',
+        label: '',
+        sortable: false
+      })
+    ])
+  )
+
+  inject(
+    'accountPayableRepository',
+    repositoryWithAxios(urlAccountingAccountPayable, '', [
+      getField({
+        field: 'id',
+        label: '#',
+        align: 'end'
+      }),
+      getField({
+        field: 'due_date',
+        label: 'Vencimento',
+        align: 'center'
+      }),
+      getField({
+        field: 'amount',
+        label: 'Valor',
+        align: 'end'
+      }),
+      getField({
+        field: 'description',
+        label: 'Descrição'
+      }),
+      getField({
+        field: 'category__str',
+        label: 'Categoria'
+      }),
+      getField({
+        field: 'person__str',
+        label: 'Fornecedor'
+      }),
+      getField({
+        field: 'expected_deposit_account__str',
+        label: 'Conta Financeira'
+      }),
+      getField({
+        field: 'liquidated_date',
+        label: 'Liquidação',
+        align: 'center'
+      }),
+      getField({
+        field: '_actions',
+        label: '',
+        sortable: false,
+        align: 'center'
+      })
+    ])
   )
 
 }

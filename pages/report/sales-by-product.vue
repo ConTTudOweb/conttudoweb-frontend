@@ -37,7 +37,7 @@
                 v-on="on"
               ></v-text-field>
             </template>
-            <v-date-picker v-model="startDate" no-title @input="menuStartDate = false"></v-date-picker>
+            <v-date-picker v-model="startDate" no-title @input="menuStartDate = false" locale='pt-br'></v-date-picker>
           </v-menu>
         </v-col>
 
@@ -61,13 +61,13 @@
                 v-on="on"
               ></v-text-field>
             </template>
-            <v-date-picker v-model="endDate" no-title @input="menuEndDate = false"></v-date-picker>
+            <v-date-picker v-model="endDate" no-title @input="menuEndDate = false" locale='pt-br'></v-date-picker>
           </v-menu>
         </v-col>
 
         <v-spacer />
 
-        <v-col cols="3">
+        <v-col cols="12" sm="3">
           <v-btn class="float-right my-auto" color="primary" outlined @click="search()">
             <v-icon>mdi-filter</v-icon>Pesquisar
           </v-btn>
@@ -153,7 +153,7 @@ export default {
       repository: this.$nuxt.context.app.$salesByProductRepository,
       menuStartDate: false,
       menuEndDate: false,
-      startDate: new Date().toISOString().substr(0, 10),
+      startDate: null,
       endDate: null
     }
   },

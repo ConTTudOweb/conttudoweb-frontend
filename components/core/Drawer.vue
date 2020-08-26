@@ -5,9 +5,9 @@
     dark
     :expand-on-hover="expandOnHover"
     :right="$vuetify.rtl"
-    mobile-break-point="960"
+    mobile-breakpoint="960"
     app
-    width="260"
+    width="270"
     v-bind="$attrs"
   >
     <template v-slot:img="props">
@@ -203,6 +203,33 @@
           ],
         },
         {
+          icon: 'mdi-border-color',
+          title: 'menu.accounting',
+          group: '/accounting/',
+          children: [
+            {
+              title: 'menu.accounting.account-payable',
+              to: '/accounting/account-payable',
+              permission: 'accounting.view_accountpayable'
+            },
+            {
+              title: 'menu.accounting.category',
+              to: '/accounting/category',
+              permission: 'accounting.view_category'
+            },
+            {
+              title: 'menu.accounting.deposit-account',
+              to: '/accounting/deposit-account',
+              permission: 'accounting.view_depositaccount'
+            },
+            {
+              title: 'menu.accounting.classification-centers',
+              to: '/accounting/classification-center',
+              permission: 'accounting.view_classificationcenter'
+            }
+          ],
+        },
+        {
           icon: 'mdi-view-list',
           title: 'menu.report',
           group: '/report/',
@@ -214,54 +241,6 @@
             }
           ],
         }
-        // {
-        //   icon: 'mdi-border-color',
-        //   title: 'menu.federative-units',
-        //   to: '/federative-unit',
-        //   permission: 'core.view_federativeunit'
-        // },
-        // {
-        //   icon: 'mdi-border-color',
-        //   title: 'menu.cities',
-        //   to: '/city',
-        //   permission: 'core.view_city'
-        // },
-        // {
-        //   icon: 'mdi-border-color',
-        //   title: 'menu.persons',
-        //   to: '/person',
-        //   permission: 'core.view_people'
-        // },
-        // {
-        //   icon: 'mdi-border-color',
-        //   title: 'menu.units-of-measure',
-        //   to: '/unit-of-measure',
-        //   permission: 'inventory.view_unitofmeasure'
-        // },
-        // {
-        //   icon: 'mdi-border-color',
-        //   title: 'menu.categories',
-        //   to: '/category',
-        //   permission: 'inventory.view_category'
-        // },
-        // {
-        //   icon: 'mdi-border-color',
-        //   title: 'menu.subcategories',
-        //   to: '/subcategory',
-        //   permission: 'inventory.view_subcategory'
-        // },
-        // {
-        //   icon: 'mdi-border-color',
-        //   title: 'menu.product-size-registers',
-        //   to: '/product-size-register',
-        //   permission: 'inventory.view_productsizeregister'
-        // },
-        // {
-        //   icon: 'mdi-border-color',
-        //   title: 'menu.products',
-        //   to: '/product',
-        //   permission: 'inventory.view_product'
-        // }
       ],
     }),
 

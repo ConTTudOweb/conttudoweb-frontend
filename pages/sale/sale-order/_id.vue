@@ -23,32 +23,13 @@
                   class="required"
                   autofocus
                 />
-                <!--<v-menu-->
-                <!--  v-model="menuDateOrder"-->
-                <!--  :close-on-content-click="false"-->
-                <!--  transition="scale-transition"-->
-                <!--  offset-y-->
-                <!--  max-width="290px"-->
-                <!--  min-width="290px"-->
-                <!--&gt;-->
-                <!--  <template v-slot:activator="{ on, attrs }">-->
-                <!--    <v-text-field-->
-                <!--      v-model="computedDateOrderFormatted"-->
-                <!--      label="Data de emissão"-->
-                <!--      readonly-->
-                <!--      v-bind="propsFields"-->
-                <!--      v-on="on"-->
-                <!--    ></v-text-field>-->
-                <!--  </template>-->
-                <!--  <v-date-picker v-model="form.date_order" no-title @input="menuDateOrder = false" locale="pt-br"></v-date-picker>-->
-                <!--</v-menu>-->
               </v-col>
               <v-col cols="12">
                 <v-autocomplete
                   v-model="form.customer"
                   label="Cliente"
                   v-bind="propsFields"
-                  :items="customers.results"
+                  :items="customers"
                   item-text="name"
                   item-value="id"
                 >
@@ -127,7 +108,7 @@
                                                     label="Produto"
                                                     :rules="[rules.required]"
                                                     v-bind="propsFields"
-                                                    :items="products.results"
+                                                    :items="products"
                                                     item-text="description"
                                                     item-value="id"
                                                     class="required"
@@ -277,7 +258,8 @@ export default {
 
     await this.loadCustomer()
 
-    this.products = await this.$nuxt.context.app.$productRepository.index()
+    const { results = [] } = await this.$nuxt.context.app.$productRepository.index()
+    this.products = results
   },
   data() {
     return {
@@ -331,10 +313,10 @@ export default {
       // E
       // Esteja "trocando o produto do item"  OU  "seja um item novo"
       if (val !== null && ((this.editedIndex > -1 && oldval !== null) || this.editedIndex === -1)) {
-        this._product = this.products.results.find(x => x.id === val)
-        // this._sale_price = this.products.results.find(x => x.id === val).sale_price
-        // this._product__str = this.products.results.find(x => x.id === val).description
-        this.packaging = this.products.results.find(x => x.id === val).packaging_set
+        this._product = this.products.find(x => x.id === val)
+        // this._sale_price = this.products.find(x => x.id === val).sale_price
+        // this._product__str = this.products.find(x => x.id === val).description
+        this.packaging = this.products.find(x => x.id === val).packaging_set
         if (this.editedItem.price === 0 || confirm(`Deseja alterar o preço de venda de "${this.editedItem.price}" para "${this._product.sale_price}"`)) {
           this.editedItem.price = this._product.sale_price
         }
@@ -377,7 +359,7 @@ export default {
       if (this.editedItem.packing) {
         this.selectedPacking = this.editedItem.packing
       }
-      this.packaging = this.products.results.find(x => x.id === this.selectedProduct).packaging_set
+      this.packaging = this.products.find(x => x.id === this.selectedProduct).packaging_set
       this.dialog = true
     },
 
@@ -410,7 +392,8 @@ export default {
     },
 
     async loadCustomer() {
-      this.customers = await this.$nuxt.context.app.$peopleRepository.index({filters: 'customer=true'})
+      const { results = [] } = await this.$nuxt.context.app.$peopleRepository.index({filters: 'customer=true'})
+      this.customers = results
     }
   }
 }

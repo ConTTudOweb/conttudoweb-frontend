@@ -37,7 +37,7 @@
                   v-model="form.parent"
                   label="Categoria"
                   v-bind="propsFields"
-                  :items="categories.results"
+                  :items="categories"
                   item-text="str"
                   item-value="id"
                 ></v-autocomplete>
@@ -72,7 +72,8 @@ export default {
     }
     this.loadTitle()
 
-    this.categories = await this.repository.index()
+    const { results = [] } = await this.repository.index()
+    this.categories = results
   },
   data() {
     return {

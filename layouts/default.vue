@@ -9,11 +9,11 @@
       @toggle-drawer="$refs.menu.drawer = !$refs.menu.drawer"
     />
 
-    <v-content class="secondary lighten-5">
+    <v-main class="secondary lighten-5">
       <v-container>
         <nuxt />
       </v-container>
-    </v-content>
+    </v-main>
 
     <c-footer :is-dark="true" />
   </v-app>

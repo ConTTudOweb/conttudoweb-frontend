@@ -10,12 +10,19 @@ export default ($axios) => (resource, title, fields) => ({
       }
       params += `page=${page}`
     }
-    if (itemsPerPage) {
-      if (params) {
-        params += '&'
-      }
-      params += `page_size=${itemsPerPage}`
+
+    if (!itemsPerPage) itemsPerPage = -1
+    if (params) {
+      params += '&'
     }
+    params += `page_size=${itemsPerPage}`
+
+    // if (itemsPerPage) {
+    //   if (params) {
+    //     params += '&'
+    //   }
+    //   params += `page_size=${itemsPerPage}`
+    // }
 
     if (sortBy) {
       if (params) {

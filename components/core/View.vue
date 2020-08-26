@@ -1,9 +1,9 @@
 <template>
-    <v-content>
+    <v-main>
     <nuxt />
 
     <dashboard-core-footer />
-  </v-content>
+  </v-main>
 </template>
 
 <script>
