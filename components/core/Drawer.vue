@@ -154,7 +154,7 @@
           ],
         },
         {
-          icon: 'mdi-border-color',
+          icon: 'mdi-package-variant',
           title: 'menu.inventory',
           group: 'inventory',
           children: [
@@ -191,7 +191,7 @@
           ],
         },
         {
-          icon: 'mdi-border-color',
+          icon: 'mdi-sale',
           title: 'menu.sale',
           group: '/sale/',
           children: [
@@ -203,7 +203,7 @@
           ],
         },
         {
-          icon: 'mdi-border-color',
+          icon: 'mdi-cash',
           title: 'menu.accounting',
           group: '/accounting/',
           children: [
