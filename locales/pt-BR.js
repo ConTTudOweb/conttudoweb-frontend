@@ -41,6 +41,8 @@ const accounting_deposit_accounts = 'Contas financeiras'
 const accounting_classification_center = 'Centro de Custo/Despesa'
 const accounting_classification_centers = 'Centros de Custo/Despesa'
 
+const accounts_payable_by_due_date = 'Despesas por vencimento'
+
 export default {
   $vuetify: pt,
 
@@ -113,6 +115,9 @@ export default {
   'menu.accounting.classification-centers': accounting_classification_centers,
   'accounting-classification-center___pt': accounting_classification_centers,
   'accounting-classification-center-id___pt': accounting_classification_center,
+  //
+  'report-accounts-payable-by-due-date___pt': accounts_payable_by_due_date,
+  'menu.report.accounts-payable-by-due-date': accounts_payable_by_due_date,
 
   // terms
   'about-us': 'Sobre nós',

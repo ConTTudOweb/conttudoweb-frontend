@@ -21,6 +21,8 @@ const urlAccountingDepositAccount = baseUrlAPI + '/accounting/deposit-account'
 const urlAccountingClassificationCenter = baseUrlAPI + '/accounting/classification-center'
 const urlAccountingAccountPayable = baseUrlAPI + '/accounting/account-payable'
 
+const urlAccountsPayableByDueDateList = baseUrlAPI + '/accounts-payable-by-due-date-list'
+
 const rules = {
   required: (value) => !!value || 'Campo obrigatório!',
   counter: (value) => value.length <= 20 || 'Max 20 characters',
@@ -675,6 +677,11 @@ export default (ctx, inject) => {
         align: 'center'
       })
     ])
+  )
+
+  inject(
+    'accountsPayableByDueDateRepository',
+    repositoryWithAxios(urlAccountsPayableByDueDateList, '', [])
   )
 
 }

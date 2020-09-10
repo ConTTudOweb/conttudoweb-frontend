@@ -238,6 +238,11 @@
               title: 'menu.report.sales-by-product',
               to: '/report/sales-by-product',
               permission: 'sale.view_saleorder'
+            },
+            {
+              title: 'menu.report.accounts-payable-by-due-date',
+              to: '/report/accounts-payable-by-due-date',
+              permission: 'accounting.view_accountpayable'
             }
           ],
         }

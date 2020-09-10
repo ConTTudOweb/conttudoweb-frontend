@@ -1,6 +1,6 @@
 <template>
   <v-container
-    id="sale-by-product"
+    id="accounts-payable-report"
     fluid
     tag="section"
   >
@@ -8,7 +8,7 @@
 
     <base-material-card
       icon="mdi-clipboard-text"
-      :title="`Relatório de ${$t('menu.report.sales-by-product')}`"
+      :title="`Relatório de ${$t('menu.report.accounts-payable-by-due-date')}`"
     >
       <template v-slot:button>
         <v-btn color="primary" outlined @click="printTable()" title="Imprimir">
@@ -29,7 +29,7 @@
             <template v-slot:activator="{ on, attrs }">
               <v-text-field
                 v-model="startDateFormatted"
-                label="Data inicial"
+                label="Data de Vencimento inicial"
                 persistent-hint
                 prepend-icon="mdi-calendar"
                 readonly
@@ -53,7 +53,7 @@
             <template v-slot:activator="{ on, attrs }">
               <v-text-field
                 v-model="endDateFormatted"
-                label="Data final"
+                label="Data de Vencimento final"
                 persistent-hint
                 prepend-icon="mdi-calendar"
                 readonly
@@ -74,57 +74,32 @@
         </v-col>
       </v-row>
 
-      <div id="salesByProductTable">
+      <div id="accountsPayableReportTable">
         <v-simple-table dense>
-          <caption id="salesByProductTable_title">{{ `Relatório de ${$t('menu.report.sales-by-product')}` }}</caption>
+          <caption id="accountsPayableReportTable_title">{{ `Relatório de ${$t('menu.report.accounts-payable-by-due-date')}` }}</caption>
           <thead>
             <tr>
-              <th colspan="4" class="primary--text">
-                PRODUTO
-              </th>
-            </tr>
-            <tr>
               <th class="primary--text text-right">
-                DATA
+                VENCIMENTO
+              </th>
+              <th class="primary--text">
+                DESCRIÇÃO
               </th>
               <th class="primary--text text-right">
-                VOLUMES
-              </th>
-              <th class="primary--text text-right">
-                QUANTIDADE
-              </th>
-              <th class="primary--text text-right">
-                VALOR LÍQUIDO
+                VALOR
               </th>
             </tr>
           </thead>
 
           <tbody>
-            <template v-for="(item, i) in items">
-              <tr class="product-line-item" :key="`product-line-${i}`">
-                <td colspan="4"><strong>{{ item.product__description }}</strong></td>
-              </tr>
-              <template v-for="(item_d, i_d) in item.details">
-                <tr class="product-line-item-detail" :key="`product-line-${i}-detail-${i_d}`">
-                  <td class="text-right">{{ $dateFns.format(item_d.sale_order__date_order, 'dd/MM/yyyy') }}</td>
-                  <td class="text-right">{{ getVolumes(item_d.quantity, item_d.packing__quantity) }}</td>
-                  <td class="text-right">{{ item_d.quantity }}</td>
-                  <td class="text-right">{{ item_d.net_total | currency({symbolSpacing: false}) }}</td>
-                </tr>
-              </template>
-              <tr class="product-line-item-detail" :key="`product-line-${i}-total`">
-                <td class="text-right"><strong>TOTAIS >>></strong></td>
-                <td class="text-right"><hr><strong>{{ sumVolumes(item.details) }}</strong></td>
-                <td class="text-right"><hr><strong>{{ item.quantity__sum }}</strong></td>
-                <td class="text-right"><hr><strong>{{ item.net_total__sum | currency({symbolSpacing: false}) }}</strong></td>
-              </tr>
-              <br :key="i">
-            </template>
+            <tr class="account-line-item" :key="`account-line-${i}`" v-for="(item, i) in items">
+              <td class="text-right">{{ $dateFns.format(item.due_date, 'dd/MM/yyyy') }}</td>
+              <td>{{ item.description }}</td>
+              <td class="text-right">{{ item.amount | currency({symbolSpacing: false}) }}</td>
+            </tr>
             <br>
-            <tr>
-              <td class="success--text text-right"><strong>TOTAIS GERAIS >>></strong></td>
-              <td class="success--text text-right"><hr><strong>{{ totalVolumes() }}</strong></td>
-              <td class="success--text text-right"><hr><strong>{{ qtdTotal }}</strong></td>
+            <tr class="account-line-item-detail">
+              <td class="success--text text-right" colspan="2"><strong>TOTAl >>></strong></td>
               <td class="success--text text-right"><hr><strong>{{ vlrTotal | currency({symbolSpacing: false}) }}</strong></td>
             </tr>
           </tbody>
@@ -158,12 +133,11 @@ export default {
 
   data() {
     return {
-      repository: this.$nuxt.context.app.$salesByProductRepository,
+      repository: this.$nuxt.context.app.$accountsPayableByDueDateRepository,
       menuStartDate: false,
       menuEndDate: false,
       startDate: null,
       endDate: null,
-      qtdTotal: null,
       vlrTotal: null
     }
   },
@@ -180,12 +154,10 @@ export default {
 
   methods: {
     async search() {
-      await this.load({filters: `start_date_order=${this.startDate}&end_date_order=${this.endDate}`})
-      this.qtdTotal = 0
+      await this.load({filters: `start_date=${this.startDate}&end_date=${this.endDate}`})
       this.vlrTotal = 0
       for (const item of this.items) {
-        this.qtdTotal += item.quantity__sum
-        this.vlrTotal += item.net_total__sum
+        this.vlrTotal += item.amount
       }
     },
 
@@ -206,32 +178,6 @@ export default {
       return `${day}/${month}/${year}`
     },
 
-    getVolumes(qtdItens, capacidade) {
-      if (!capacidade) return
-      return qtdItens / capacidade
-    },
-
-    sumVolumes(items) {
-      let volumes = 0
-      for (const item of items) {
-        const _vol = this.getVolumes(item.quantity, item.packing__quantity)
-        if (_vol > 0) {
-          volumes += _vol
-        }
-      }
-      if (Number.isNaN(volumes))
-        volumes = 0; // zerando caso seja NaN
-      return volumes
-    },
-
-    totalVolumes() {
-      let volumes = 0.0
-      for (const item of this.items) {
-        volumes += this.sumVolumes(item.details)
-      }
-      return volumes
-    },
-
     printTable() {
       window.print();
     }
@@ -239,24 +185,24 @@ export default {
 
   head() {
     return {
-      title: this.$t('menu.report.sales-by-product')
+      title: this.$t('menu.report.accounts-payable-by-due-date')
     }
   }
 }
 </script>
 
 <style lang="SCSS">
-tr.product-line-item>td {
+tr.account-line-item>td {
   border-top-style: dashed !important;
   border-top-width: thin !important;
   border-top-color: rgba(0, 0, 0, 0.5);
 }
 
-tr.product-line-item-detail>td {
+tr.account-line-item-detail>td {
   border-style: hidden !important;
 }
 
-#salesByProductTable_title {
+#accountsPayableReportTable_title {
   visibility: hidden;
 }
 
@@ -274,17 +220,7 @@ tr.product-line-item-detail>td {
       position: fixed !important;
     }
 
-    /* #salesByProductTable * {
-      visibility: visible;
-      width: 100%;
-    }
-    #salesByProductTable>table{
-      position: fixed;
-      left: 0;
-      top: 0;
-    } */
-
-    #salesByProductTable, #salesByProductTable * {
+    #accountsPayableReportTable, #accountsPayableReportTable * {
       width: 100%;
       visibility: visible;
       border-bottom: none;
