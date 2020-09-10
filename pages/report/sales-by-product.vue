@@ -119,6 +119,12 @@
               </tr>
               <br :key="i">
             </template>
+            <br>
+            <tr class="product-line-item-detail">
+              <td class="success--text text-right" colspan="2"><strong>TOTAIS GERAIS >>></strong></td>
+              <td class="success--text text-right"><hr><strong>{{ qtdTotal }}</strong></td>
+              <td class="success--text text-right"><hr><strong>{{ vlrTotal | currency({symbolSpacing: false}) }}</strong></td>
+            </tr>
           </tbody>
         </v-simple-table>
       </div>
@@ -154,7 +160,9 @@ export default {
       menuStartDate: false,
       menuEndDate: false,
       startDate: null,
-      endDate: null
+      endDate: null,
+      qtdTotal: null,
+      vlrTotal: null
     }
   },
 
@@ -171,6 +179,12 @@ export default {
   methods: {
     async search() {
       await this.load({filters: `start_date_order=${this.startDate}&end_date_order=${this.endDate}`})
+      this.qtdTotal = 0
+      this.vlrTotal = 0
+      for (const item of this.items) {
+        this.qtdTotal += item.quantity__sum
+        this.vlrTotal += item.net_total__sum
+      }
     },
 
     setDateFilters() {
