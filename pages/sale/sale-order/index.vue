@@ -43,6 +43,10 @@
           <span>{{ $dateFns.format(item.date_order, 'dd/MM/yyyy') }}</span>
         </template>
 
+        <template v-slot:item.gross_total="{ item }">
+          <small><span>{{ item.gross_total | currency }}</span></small>
+        </template>
+
         <template v-slot:item.net_total="{ item }">
           <span>{{ item.net_total | currency }}</span>
         </template>
@@ -120,7 +124,7 @@ export default {
       return '#' + id.toString().padStart(6, '0')
     }
   },
-  
+
   head() {
     return {
       title: this.$t('menu.sale.sale-orders')

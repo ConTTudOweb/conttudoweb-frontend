@@ -222,8 +222,10 @@
             <v-divider />
 
             <v-row>
-              <v-col class="text-right body-1">
-                <span>TOTAL: </span><strong>{{ valor_total_sale_order | currency }}</strong>
+              <v-col class="text-right body-1" cols="12">
+                <small><span>TOTAL BRUTO: </span><strong>{{ valor_total_bruto_sale_order | currency }}</strong></small>
+                <br>
+                <span>TOTAL LÍQUIDO: </span><strong>{{ valor_total_liquido_sale_order | currency }}</strong>
               </v-col>
             </v-row>
 
@@ -264,6 +266,7 @@ export default {
   data() {
     return {
       form: {
+        discount_percentage: this.$store.state.subDomain === 'mettaflores' ? 12.00 : null,
         saleorderitems_set: []
       },
       repository: this.$nuxt.context.app.$saleOrderRepository,
@@ -308,6 +311,11 @@ export default {
         this.editedItem.packaging__quantity = this.packaging.find(x => x.id === val).quantity
       }
     },
+    customers(val, oldval) {
+      if (this.customers.length === 1 && this.form.customer === undefined) {
+        this.form.customer = this.customers[0].id
+      }
+    },
     selectedProduct(val, oldval) {
       // Entra no if caso o "produto tenha sido escolhido"
       // E
@@ -334,7 +342,14 @@ export default {
     }
   },
   computed: {
-    valor_total_sale_order() {
+    valor_total_bruto_sale_order() {
+      let _total = 0
+      this.form.saleorderitems_set.forEach(element => {
+        _total += element.gross_total
+      });
+      return _total
+    },
+    valor_total_liquido_sale_order() {
       let _total = 0
       this.form.saleorderitems_set.forEach(element => {
         _total += element.net_total

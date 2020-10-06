@@ -505,8 +505,13 @@ export default (ctx, inject) => {
         align: 'end'
       }),
       getField({
+        field: 'gross_total',
+        label: 'Total bruto',
+        align: 'end'
+      }),
+      getField({
         field: 'net_total',
-        label: 'Total',
+        label: 'Total líquido',
         align: 'end'
       }),
       getField({
