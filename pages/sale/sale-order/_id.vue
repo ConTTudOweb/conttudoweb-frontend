@@ -266,7 +266,8 @@ export default {
   data() {
     return {
       form: {
-        discount_percentage: this.$store.state.subDomain === 'mettaflores' ? 12.00 : null,
+        // TODO: Criar campo no cliente para definir desconto padrão
+        discount_percentage: this.$store.state.subDomain === 'mettaflores' && this.$route.params.id === '1' ? 12.00 : null,
         saleorderitems_set: []
       },
       repository: this.$nuxt.context.app.$saleOrderRepository,
