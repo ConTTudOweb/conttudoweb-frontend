@@ -266,8 +266,6 @@ export default {
   data() {
     return {
       form: {
-        // TODO: Criar campo no cliente para definir desconto padrão
-        discount_percentage: this.$store.state.subDomain === 'mettaflores' && this.$route.params.id === '1' ? 12.00 : null,
         saleorderitems_set: []
       },
       repository: this.$nuxt.context.app.$saleOrderRepository,
@@ -317,6 +315,18 @@ export default {
         this.form.customer = this.customers[0].id
       }
     },
+
+    // TODO: Criar campo no cliente para definir desconto padrão
+    'form.customer'(val, oldval) {
+      if (val !== oldval) {
+        if (val === 1 && !this.form.discount_percentage) {
+          this.form.discount_percentage = 12
+        } else if (oldval && val > 1 && this.form.discount_percentage) {
+          this.form.discount_percentage = undefined
+        }
+      }
+    },
+
     selectedProduct(val, oldval) {
       // Entra no if caso o "produto tenha sido escolhido"
       // E
